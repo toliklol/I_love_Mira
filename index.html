@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Личная страница</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="random_stickerbg()" id="body">
+
+    <!-- ===== ФОН С ПАДАЮЩИМИ СЕРДЕЧКАМИ/ЛЕПЕСТКАМИ ===== -->
+    <div class="falling-container" id="fallingContainer"></div>
+
+    <!-- ===== ГЛАВНАЯ КАРТОЧКА ===== -->
+    <div class="app-wrapper" id="app">
+
+        <!-- ШАПКА -->
+        <div class="header">
+            <div class="timer-block">
+                <span class="timer-label">❤️ Дней с нашей встречи</span>
+                <span class="timer-value" id="timerDisplay">0 <span>дней</span></span>
+            </div>
+            <button class="burger-btn" id="burgerBtn" aria-label="Открыть меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
+        <!-- ===== БОКОВОЕ МЕНЮ (СКРЫТО через display: none) ===== -->
+        <div class="menu-overlay" id="menuOverlay"></div>
+        <nav class="menu-panel" id="menuPanel">
+            <a href="#" data-page="page1" onclick="random_stickerbg()">👤 Главная</a>
+            <a href="#" data-page="page2" onclick="random_stickerbg()">🖼️ Любимые мемы и стикеры</a>
+            <a href="#" data-page="page3" onclick="random_stickerbg()">😉 Наши повадки и приколы</a>
+            <a href="#" data-page="page4" onclick="random_stickerbg()">💚 Комплименты</a>
+            <a href="#" data-page="page5" onclick="random_stickerbg()" >📕 Мои рассказы</a>
+            <a href="#" data-page="page6" onclick="random_stickerbg()" class="active-link" id="music">🔒 Закрыто </a>
+            <a href="#" data-page="page7" onclick="random_stickerbg()" >😏 Продолжение следует...</a>
+        </nav>
+
+        <!-- ===== СТРАНИЦА 1 ===== -->
+        <section class="page " id="page1">
+            <div class="profile-wrap">
+                <div class="avatar-frame">
+                    <div class="sun-rays" aria-hidden="true"></div>
+                    <img class="profile-photo" id="profilePhoto" src="assets/avatars/avatar0.jpg" alt="Фото">
+                </div>
+                <div class="profile-description">
+                    <h1>Мира Сергеевна</h1>
+                    <span class="sub">✨ моя любимая зая</span>
+                    <p>
+                        Самая невероятная девушка с добрым сердцем, чувством юмора
+                        и любовью к жизни, которая умеет делать мир ярче одним своим присутствием.
+                    </p>
+                    <div>
+                        <span class="tag">💤 Сон</span>
+                        <span class="tag">📚 Книги</span>
+                        <span class="tag">☕ Кофе</span>
+                        <span class="tag">🎥 Фильмы</span>
+                        <span class="tag">♊ Близнецы</span>
+                        <span class="tag">🍀 Удача</span>
+                        <span class="tag">🥳 Веселье</span>
+                        <span class="tag">🎮 Игры</span>
+                        <span class="tag">🌸 Красота</span>
+                        <span class="tag">💌 Поэт</span>
+                        <span class="tag">✒️ Писатель</span>
+                        <span class="tag">🧠 Гений</span>
+                    </div>
+                    <div class="profile-quote">
+                        💬 «Ты — мой самый любимый человек»
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== СТРАНИЦА 2 ===== -->
+        <section class="page" id="page2">
+            <div class="page-subtitle">
+                🖼️ Любимые мемы и стикеры <span>Наши</span>
+            </div>
+            <div class="meme-grid">
+                <div class="meme-card meme-card_video" data-stickers="😎😱🙈🐰🐇👮‍♂️🪓🔫">
+                    <video class="video-placeholder" src="assets/video/banbu.mp4" alt="мем" loop autoplay></video>
+                    <div class="caption">🐰 Банбу облава 🐰</div>
+                </div>
+                <div class="meme-card meme-card_video" data-stickers="🤗🤑💃🙏💰💵💸💳🦉🌟">
+                    <video class="video-placeholder" src="assets/video/30k.mp4" alt="мем" controls loop></video>
+                    <div class="caption">💸 Можешь дать мне 30 тыс 💵</div>
+                </div>
+                <div class="meme-card meme-card_video" data-stickers="🕳💫🛑⚠🤦‍♀️🤪😵☠🗻">
+                    <video class="video-placeholder" src="assets/video/estella.mp4" alt="мем" controls loop></video>
+                    <div class="caption">🤦‍♀️ Эстелла и маячок 👷‍♀️</div>
+                </div>
+                <div class="meme-card meme-card_video" data-stickers="👱‍♀️👉💅😦🙀😽😭😥😿">
+                    <img src="assets/comics1.jpg" alt="мем">
+                    <div class="caption">😻 Комикс, с котоженой 😿</div>
+                </div>
+                <div class="meme-card meme-card_video" data-stickers="😡🦊🎃🪓👊🤚">
+                    <img src="assets/comics2.jpg" alt="мем" style="height: 600px;">
+                    <div class="caption">👩 Комикс с Гил и Эмбер 😡</div>
+                </div>
+                <div class="meme-card" data-stickers="❤👱‍♀️🚶‍♀️👋🤗😊">
+                    <img src="assets/awayM.webp" alt="мем">
+                    <div class="caption">👱‍♀️ А это мы...</div>
+                </div>
+                <div class="meme-card" data-stickers="❤🧑🚶‍♂️👋🤗😊🐾🐤🐥">
+                    <img src="assets/awayT.webp" alt="мем">
+                    <div class="caption">...когда рассходимся))) 🧑</div>
+                </div>
+                <div class="meme-card" data-stickers="❣❤💖💞🤚✨🥰">
+                    <img src="assets/goodboy.webp" alt="мем">
+                    <div class="caption">💘 А это когда...</div>
+                </div>
+                <div class="meme-card" data-stickers="😍😘🤗💗💕">
+                    <img src="assets/headpet.webp" alt="мем">
+                    <div class="caption">...ты гладишь меня по голове))) 💝</div>
+                </div>
+                <div class="meme-card" data-stickers="😍😘🤗💗💕🍧🍦🍨💦">
+                    <img src="assets/icecream1.webp" alt="мем">
+                    <div class="caption">🍧 А это моё...</div>
+                </div>
+                <div class="meme-card" data-stickers="😍😘🤗💗💕🍧🍦🍨💦">
+                    <img src="assets/icecream2.webp" alt="мем">
+                    <div class="caption">...любимое мороженное))) 🍦</div>
+                </div>
+                <div class="meme-card" data-stickers="🤩😜👩‍🎤💃🙌✨🎉🎆🎇💝⚡🎶">
+                    <img src="assets/Liino.webp" alt="мем">
+                    <div class="caption">🎶 А это твои любимые...</div>
+                </div>
+                <div class="meme-card" data-stickers="👩✊😎🐲🐉💪✨🍀⭐🌟⚡🌸🌺🌷🌹🌼💮">
+                    <img src="assets/Chjuan.webp" alt="мем">
+                    <div class="caption">...стики с игрой 🌸</div>
+                </div>
+                <div class="meme-card" data-stickers="😠👊🤬😱🤦‍♀️💢⁉‼❌📛🔞">
+                    <img src="assets/MiraAngry.webp" alt="мем">
+                    <div class="caption">😠 Злая Мира 😡</div>
+                </div>
+                <div class="meme-card" data-stickers="😥😯😔😞☹😭😧😰🥺💢">
+                    <img src="assets/MiraCry.webp" alt="мем">
+                    <div class="caption">😥 Грустная Мира 😭</div>
+                </div>
+                <div class="meme-card" data-stickers="☺😏😮😳🤭💋👁‍🗨👀">
+                    <img src="assets/MiraBlink.webp" alt="мем">
+                    <div class="caption">☺ Подмигивающая Мира 😏</div>
+                </div>
+                <div class="meme-card" data-stickers="🫡😎👍✊🤠😀👷‍♂️👨‍💻">
+                    <img src="assets/MiraGo.webp" alt="мем">
+                    <div class="caption">🫡 Уважающая Мира 👌</div>
+                </div>
+                <div class="meme-card" data-stickers="😄😁😆😊🤩🤗🎈🥳🎉✨💖">
+                    <img src="assets/MiraHappy.webp" alt="мем">
+                    <div class="caption">✨ Счастливая Мира 😄</div>
+                </div>
+                <div class="meme-card" data-stickers="😘😍🥰💋❤💓💗💘📱">
+                    <img src="assets/MiraKiss.webp" alt="мем">
+                    <div class="caption">😘 Целующаяся Мира 📲</div>
+                </div>
+                <div class="meme-card" data-stickers="😳😏😍☺🤗😛😜🥵🤭👏💕🔞">
+                    <img src="assets/MiraHvat.webp" alt="мем">
+                    <div class="caption">😳 Хватающая Мира) 😏</div>
+                </div>
+                <div class="meme-card" data-stickers="💝✨💃🤩😍👑">
+                    <img src="assets/MiraQueen.webp" alt="мем">
+                    <div class="caption">👑 Королева Мира 👸</div>
+                </div>
+                <div class="meme-card" data-stickers="😅😪😯😴🥱😌🤤🛌💤💭">
+                    <img src="assets/MiraSleep.webp" alt="мем">
+                    <div class="caption">🛌 Сонная Мира 😪</div>
+                </div>
+                <div class="meme-card" data-stickers="🤔🤨😐😶💟😮🙃🔈🧃">
+                    <img src="assets/MiraWait.webp" alt="мем">
+                    <div class="caption">🧃 Ожидающая Мира 😐</div>
+                </div>
+                <div class="confetti-canvas" id="confettiCanvas"></div>
+            </div>
+            <p style="margin-top: 16px; color: rgba(255,255,255,0.2); font-size: 0.8rem; text-align: center;">
+                * тапни по карточке
+            </p>
+        </section>
+
+        <!-- ===== СТРАНИЦА 3 ===== -->
+        <section class="page" id="page3">
+            <div class="page-subtitle">
+                😉 Наши повадки и приколы <span>🔥</span>
+            </div>
+            <div class="jokes-list">
+                <div class="joke-item">♾ «Наша с тобой синхронизация)))»</div>
+                <div class="joke-item">💤 «Ритуал перед сном, после которого приятно спать с улыбкой)))»</div>
+                <div class="joke-item">🌅 «Как мы друг другу, говорим до сегодня/утра/до обеда xD»</div>
+                <div class="joke-item">🖥 «Наши приколы с танками и как я заставляю тебя поиграть»</div>
+                <div class="joke-item">👨 «Я 25 летний xD»</div>
+                <div class="joke-item">👩‍🦰 «Твоя сестра Эмили из зетки xD»</div>
+                <div class="joke-item">⌛ «Моё нету времени»</div>
+                <div class="joke-item">⏲ «То самое моё ПОТОМ))»</div>
+                <div class="joke-item">👨‍⚖️ «Мой вечный суд и "Расскажешь в суде" xD»</div>
+                <div class="joke-item">🏠 «Тик ток, это наш дом)))»</div>
+                <div class="joke-item">🏚 «Деревня-дом, город-отпуск xD»</div>
+                <div class="joke-item">⁉ «Наша проверка задержки в ТТ)»</div>
+            </div>
+        </section>
+
+        <!-- ===== СТРАНИЦА 4 ===== -->
+        <section class="page" id="page4">
+            <div class="page-subtitle">
+                💚 Слова, которые я хочу сказать тебе <span>∞</span>
+            </div>
+            <div class="compliments-container" id="complimentList">
+                <!-- Заполняется JS -->
+            </div>
+            <p style="margin-top: 12px; font-size: 0.7rem; color: rgba(255,255,255,0.15); text-align: center;">
+                листай вниз ❤️
+            </p>
+        </section>
+
+        <!-- ===== СТРАНИЦА 5 ===== -->
+        <section class="page" id="page5">
+            <div class="page-subtitle">
+                📗 Сборник всех моих рассказов
+            </div>
+            <div class="stories-container">
+                <a href="#" class="story" data-story="1" data-title="Мой первый рассказ">
+                    <span class="story-number">📖 1</span>
+                    <span class="story-title">Мой первый рассказ</span>
+                </a>
+                <a href="#" class="story" data-story="2" data-title="Особое пробуждение">
+                    <span class="story-number">📖 2</span>
+                    <span class="story-title">Особое пробуждение</span>
+                </a>
+                <a href="#" class="story" data-story="3" data-title="Лучшее пробуждение">
+                    <span class="story-number">📖 3</span>
+                    <span class="story-title">Лучшее пробуждение</span>
+                </a>
+                <a href="#" class="story" data-story="4" data-title="Случай в ванной">
+                    <span class="story-number">📖 4</span>
+                    <span class="story-title">Случай в ванной</span>
+                </a>
+                <a href="#" class="story" data-story="5" data-title="Кино-вечер">
+                    <span class="story-number">📖 5</span>
+                    <span class="story-title">Кино-вечер</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- ===== МОДАЛЬНОЕ ОКНО ДЛЯ РАССКАЗОВ ===== -->
+        <div class="story-modal" id="storyModal">
+            <div class="story-modal-overlay"></div>
+            <div class="story-modal-content">
+                <button class="story-modal-close" id="storyModalClose" aria-label="Закрыть">✕</button>
+                <div class="story-modal-header">
+                    <h2 id="storyModalTitle">Рассказ</h2>
+                </div>
+                <div class="story-modal-body" id="storyModalBody">
+                    <!-- Содержимое рассказа -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== СТРАНИЦА 6 ===== -->
+        <section class="page active" id="page6">
+            <div class="page-subtitle">
+                🔒 Закрыто
+            </div>
+            <div class="profile-description">
+                <p>Эта страница пока недоступна, но скоро здесь появится что-то особенное.</p>
+            </div>
+        </section>
+
+        <!-- ===== СТРАНИЦА 7 ===== -->
+        <section class="page" id="page7">
+            <div class="page-subtitle">
+                Эта страница пуста)
+            </div>
+            <div class="profile-description">
+                <p>🚧 Ведутся программисткие работы 🚧</p>
+                <p>Скоро тут будет, кое что очень интересное)))</p>
+            </div>
+        </section>
+
+        <div class="footer-note">✨ сделано с любовью и душой</div>
+    </div>
+
+    <script>
+
+        function getRandomItem(arr) {
+            const randomIndex = Math.floor(Math.random() * arr.length);
+            return arr[randomIndex];
+        }
+
+        function random_stickerbg() {
+            let body = document.getElementById('body')
+            const all_stickers = ['assets/awayM.webp', 'assets/awayT.webp',
+            'assets/headpet.webp',  'assets/MiraGo.webp',
+            'assets/MiraHappy.webp', 'assets/MiraKiss.webp', 
+            'assets/MiraQueen.webp', 'assets/MiraSleep.webp', 'assets/MiraWait.webp',
+            'assets/mystickers/blowkiss.webp', 'assets/mystickers/boycheer.webp',
+            'assets/mystickers/catboy.webp', 'assets/mystickers/flowers.webp',
+            'assets/mystickers/greybigheart.webp', 'assets/mystickers/greyblowkiss.webp',
+            'assets/mystickers/greyheart.webp', 'assets/mystickers/greykiss.webp',
+            'assets/mystickers/mehug.webp', 'assets/mystickers/melove.webp',
+            'assets/mystickers/rossi.webp', 'assets/mystickers/sealass.webp',
+            'assets/mystickers/sealblowkiss.webp', 'assets/mystickers/sealcheer.webp',
+            'assets/mystickers/sealheart.webp', 'assets/mystickers/seallove.webp',
+            'assets/mystickers/sealroll.webp', 'assets/mystickers/sealseak.webp',
+            'assets/mystickers/sealyes.webp', 'assets/mystickers/whitekissing.webp']
+
+            body.style.background = (` 
+                url(${getRandomItem(all_stickers)}) no-repeat top 0 right 0,
+                url(${getRandomItem(all_stickers)}) no-repeat top 0 left 0,
+                url(${getRandomItem(all_stickers)}) no-repeat bottom 0 right 0,
+                url(${getRandomItem(all_stickers)}) no-repeat bottom 0 left 0,
+                linear-gradient(145deg, #1a3a1a, #2d5a2d, #1a4a1a)`)
+            // Задаём размер для каждого фонового изображения (соответствует трём url, для градиента оставляем auto)
+            // Заменены проценты на vh для задания размеров фоновых изображений
+            body.style.backgroundSize = "15vh 15vh, 15vh 15vh, 15vh 15vh, 15vh 15vh, auto";
+        }
+
+        (function() {
+            'use strict';
+
+            // ============================================
+            // 1. ТАЙМЕР С 10 ЯНВАРЯ 2026
+            // ============================================
+            const startDate = new Date(2026, 0, 10);
+            const timerDisplay = document.getElementById('timerDisplay');
+
+            function updateTimer() {
+                const now = new Date();
+                const diff = now - startDate;
+                if (diff > 0) {
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    timerDisplay.innerHTML = `${days} <span>дней</span>`;
+                } else {
+                    timerDisplay.innerHTML = `0 <span>дней</span>`;
+                }
+            }
+            updateTimer();
+            setInterval(updateTimer, 60000);
+
+            // ============================================
+            // 2. ПАДАЮЩИЕ СЕРДЕЧКИ И ЛЕПЕСТКИ
+            // ============================================
+            const container = document.getElementById('fallingContainer');
+            const COUNT = 35;
+
+            function changeEmojis(pages) {
+                let newEmojis;
+                switch (pages) {
+                    case 'page1':
+                        newEmojis = ['❤️', '💚', '🌸', '🌿', '💕', '✨', '🌺', '🦋'];
+                        break;
+                    case 'page2':
+                        newEmojis = ['😎', '😱', '✨', '💌', '🌟', '🔥', '🤩', '😹'];
+                        break;
+                    case 'page3':
+                        newEmojis = ['😉', '😜', '😂', '🤣', '😎', '🤪', '😁', '🤗'];
+                        break;
+                    case 'page4':
+                        newEmojis = ['💚', '💖', '💞', '💓', '💗', '🧡', '💛', '💙', '💜', '🤎', '🖤', '🤍', '❣', '💕', '💘', '💝'];
+                        break;
+                    case 'page5':
+                        newEmojis = ['📕', '📖', '✍️', '📝', '💕', '🔞'];
+                        break;
+                    case 'page6':
+                        newEmojis = ['🎶', '🎵', '🎼', '🎧', '🎙', '🎤', '😘'];
+                        break;
+                    default:
+                        newEmojis = ['❤️', '💚', '🌸', '🌿'];
+                }
+                return newEmojis;
+            }
+
+            function renderFallingEmojis(pageId) {
+                const emojis = changeEmojis(pageId);
+                container.innerHTML = '';
+
+                for (let i = 0; i < COUNT; i++) {
+                    const el = document.createElement('div');
+                    el.className = 'falling-item';
+                    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    el.style.left = Math.random() * 100 + '%';
+                    el.style.fontSize = (14 + Math.random() * 22) + 'px';
+                    el.style.animationDuration = (12 + Math.random() * 18) + 's';
+                    el.style.animationDelay = (Math.random() * 20) + 's';
+                    el.style.opacity = 0.3 + Math.random() * 0.5;
+                    container.appendChild(el);
+                }
+            }
+
+            renderFallingEmojis(document.querySelector('.page.active')?.id || 'page1');
+
+            // ============================================
+            // 3. АВАТАРКИ (смена каждые 5 секунд)
+            // ============================================
+            const avatarImages = [
+                'assets/avatars/avatar0.jpg',
+                'assets/avatars/avatar1.png',
+                'assets/avatars/avatar2.png',
+                'assets/avatars/avatar3.png',
+                'assets/avatars/avatar4.png',
+                'assets/avatars/avatar5.png',
+                'assets/avatars/avatar6.png'
+            ];
+
+            const profilePhoto = document.getElementById('profilePhoto');
+            let avatarIndex = 0;
+
+            function changeAvatar() {
+                if (!profilePhoto || avatarImages.length === 0) return;
+
+                avatarIndex = (avatarIndex + 1) % avatarImages.length;
+                const nextSrc = avatarImages[avatarIndex];
+
+                profilePhoto.style.opacity = '0';
+                setTimeout(() => {
+                    profilePhoto.src = nextSrc;
+                    profilePhoto.style.opacity = '1';
+                }, 350);
+            }
+
+            setInterval(changeAvatar, 5000);
+
+            // ============================================
+            // 4. КОМПЛИМЕНТЫ
+            // ============================================
+            const compliments = [
+                'Ты невероятная', 'Твоя улыбка согревает', 'Ты мой солнечный свет',
+                'Ты очень умная', 'Твои слова — это магия', 'Ты самая добрая',
+                'Ты вдохновляешь меня', 'Ты очень стильная', 'С тобой уютно',
+                'Ты — моя радость', 'Ты очень сильная', 'Твоя энергия заряжает',
+                'Ты прекрасна', 'Ты — лучшее, что случилось', 'Ты очень чуткая',
+                'Ты — моя муза', 'Ты всегда права', 'Ты умеешь слушать',
+                'Ты очень щедрая', 'Ты — моя любовь', 'Ты нежная',
+                'Ты смешная', 'Ты очень талантливая', 'Твои идеи гениальны',
+                'Ты — самая лучшая', 'Ты особенная', 'Ты очень искренняя',
+                'Ты — моя опора', 'Ты очень красивая', 'Ты — мечта',
+                'Ты очень страстная', 'Ты умеешь радоваться', 'Ты очень легкая',
+                'Ты — мой покой', 'Ты заботишься', 'Ты очень обаятельная',
+                'Ты — моя вселенная', 'Ты чудесная', 'Ты очень светлая',
+                'Ты — мой лучший друг', 'Ты очень уверенная', 'Ты умеешь прощать',
+                'Ты — моя гордость', 'Ты очень яркая', 'Ты — мой воздух',
+                'Ты очень глубокая', 'Ты — моя сказка', 'Ты очень живая',
+                'Ты умеешь любить', 'Ты — моя бесконечность', 'Ты очень милая',
+                'Ты — мое вдохновение', 'Ты очень необычная', 'Ты — мой свет',
+                'Ты очень добрая душа', 'Ты — моя сила', 'Ты — моё солнышко', 
+                'Ты очень нежная', 'Ты — моя гармония', 'Ты моя зая',
+                'Ты моё сокровище', 'Ты очень красивая внутри', 'Ты — моя радость жизни',
+                'Ты очень теплая', 'Ты — мой смысл', 'Ты очень цельная',
+                'Ты — моя радуга', 'Ты очень изящная', 'Ты — мой уют',
+                'Ты очень прекрасная внутри', 'Ты — мое сердце', 'Ты очень смелая',
+                'Ты умеешь мечтать', 'Ты — моя принцесса', 'Ты очень женственная',
+                'Ты — мой комфорт', 'Ты лучезарная', 'Ты — мой огонь',
+                'Ты очень нежная', 'Ты — моя свобода', 'Ты очень мудрая',
+                'Ты — моя надежда', 'Ты очень грациозная', 'Ты — мой покой',
+                'Ты умеешь удивлять', 'Ты — моя звезда', 'Ты очень чувственная',
+                'Ты — моя милашка', 'Ты очень заботливая', 'Ты — моя любовь навсегда',
+                'Ты — самая лучшая девушка', 'Ты — мой ангел', 'Ты очень волшебная',
+                'Ты — мой талисман', 'Ты очень красивая душа', 'Ты — моя вера',
+                'Ты очень живая и настоящая', 'Ты — мое счастье', 'Ты моя звездочка',
+                'Ты — мой кумир', 'Ты очень уютная', 'Ты — мой отдых', 'Ты лучшая Мира во всем мире',
+                'Ты очень добрая к людям', 'Ты — мой свет в окне', 'Ты единственная', 
+                'Ты очень ласковая', 'Ты просто милашка', 'Ты приносишь мне много радости',
+                'Ты — моя муза и любовь', 'Ты просто прелесть', 'Ты — моя мелодия',
+                'Ты очень светлая личность', 'Ты — мой партнер', 'Ты просто чудо',
+                'Ты — воплощение изящества и очарования', 'Ты просто ослепительна', 'Ты — моя судьба',
+                'Ты просто блистаешь своим обаянием', 'Ты — моя привязанность', 'Ты уникальный человек',
+                'Ты это самое удачное что случалось в моей жизни', 'Ты неземная', 'Ты — моя принцесса',
+                'Ты моя сладкая', 'Ты моя зайка','Ты настоящий лидер', 'Ты звезда что освещает мой путь',
+                'Ты - стальная стена', 'Ты - ❤️‍🔥', 'Ты - )))', 'Ты - любимая', 'Ты лучшая Мира во всем мире'
+            ];
+
+            const complimentContainer = document.getElementById('complimentList');
+            if (complimentContainer) {
+                const shuffled = [...compliments].sort(() => Math.random() - 0.5);
+                let chipsHtml = '';
+                shuffled.forEach(word => {
+                    chipsHtml += `<span class="compliment-chip">💚 ${word}</span>`;
+                });
+                complimentContainer.innerHTML = chipsHtml;
+            }
+
+            // ============================================
+            // 4. МЕНЮ - ГЛАВНАЯ ЛОГИКА (display: none)
+            // ============================================
+            const burgerBtn = document.getElementById('burgerBtn');
+            const menuPanel = document.getElementById('menuPanel');
+            const menuOverlay = document.getElementById('menuOverlay');
+            const menuLinks = document.querySelectorAll('.menu-panel a');
+            
+            const pages = {
+                page1: document.getElementById('page1'),
+                page2: document.getElementById('page2'),
+                page3: document.getElementById('page3'),
+                page4: document.getElementById('page4'),
+                page5: document.getElementById('page5'),
+                page6: document.getElementById('page6')
+            };
+
+            let isMenuOpen = false;
+
+            // Функция открытия меню
+            function openMenu() {
+                // Показываем элементы
+                menuPanel.style.display = 'flex';
+                menuOverlay.style.display = 'block';
+                
+                // Активируем анимацию
+                requestAnimationFrame(() => {
+                    menuPanel.classList.add('open');
+                    menuOverlay.classList.add('open');
+                });
+                
+                burgerBtn.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                isMenuOpen = true;
+                console.log('✅ Меню открыто');
+            }
+
+            // Функция закрытия меню
+            function closeMenu() {
+                // Убираем классы анимации
+                menuPanel.classList.remove('open');
+                menuOverlay.classList.remove('open');
+                burgerBtn.classList.remove('active');
+                document.body.style.overflow = '';
+                
+                // Скрываем элементы после завершения анимации
+                setTimeout(() => {
+                    menuPanel.style.display = 'none';
+                    menuOverlay.style.display = 'none';
+                }, 400); // Время совпадает с transition
+                
+                isMenuOpen = false;
+                console.log('❌ Меню закрыто');
+            }
+
+            // Переключение меню
+            function toggleMenu() {
+                if (isMenuOpen) {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
+            }
+
+            // Переключение страниц
+            function switchPage(pageId) {
+                if (!pageId) return;
+
+                // Скрываем все страницы
+                for (let key in pages) {
+                    if (pages.hasOwnProperty(key) && pages[key]) {
+                        pages[key].classList.remove('active');
+                    }
+                }
+                
+                // Показываем нужную
+                const target = document.getElementById(pageId);
+                if (target) {
+                    target.classList.add('active');
+                    renderFallingEmojis(pageId);
+                    // Перезапускаем анимацию
+                    target.style.animation = 'none';
+                    requestAnimationFrame(() => {
+                        target.style.animation = 'pageSlide 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
+                    });
+                }
+
+                // Обновляем активную ссылку
+                menuLinks.forEach(link => {
+                    link.classList.remove('active-link');
+                    if (link.dataset.page === pageId) {
+                        link.classList.add('active-link');
+                    }
+                });
+
+                // Закрываем меню
+                if (isMenuOpen) {
+                    closeMenu();
+                }
+            }
+
+            // ===== ОБРАБОТЧИКИ СОБЫТИЙ =====
+
+            // 1. Клик по бургеру
+            burgerBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleMenu();
+            });
+
+            // 2. Клик по оверлею (затемнению)
+            menuOverlay.addEventListener('click', function(e) {
+                if (isMenuOpen) {
+                    closeMenu();
+                }
+            });
+
+            // 3. Клик по ссылкам в меню
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.dataset.page;
+                    if (pageId) {
+                        switchPage(pageId);
+                    }
+                });
+            });
+
+            // 4. Закрытие по клавише Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isMenuOpen) {
+                    closeMenu();
+                }
+            });
+
+            // 5. Свайп влево для закрытия
+            let touchStartX = 0;
+            let touchStartY = 0;
+
+            document.addEventListener('touchstart', function(e) {
+                touchStartX = e.changedTouches[0].screenX;
+                touchStartY = e.changedTouches[0].screenY;
+            });
+
+            document.addEventListener('touchmove', function(e) {
+                if (!isMenuOpen) return;
+                
+                const currentX = e.changedTouches[0].screenX;
+                const currentY = e.changedTouches[0].screenY;
+                const diffX = currentX - touchStartX;
+                const diffY = currentY - touchStartY;
+                
+                // Если свайп влево и горизонтальное перемещение больше вертикального
+                if (diffX < -40 && Math.abs(diffX) > Math.abs(diffY)) {
+                    closeMenu();
+                }
+            });
+
+            // ============================================
+            // 5. ИНТЕРАКТИВ (клики по карточкам)
+            // ============================================
+            document.querySelectorAll('.meme-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.92)';
+                    setTimeout(() => { this.style.transform = ''; }, 200);
+                });
+            });
+
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('compliment-chip')) {
+                    const el = e.target;
+                    el.style.background = 'rgba(165, 214, 167, 0.15)';
+                    el.style.transform = 'scale(0.92)';
+                    setTimeout(() => {
+                        el.style.background = '';
+                        el.style.transform = '';
+                    }, 200);
+                }
+            });
+
+            document.querySelectorAll('.joke-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.96)';
+                    setTimeout(() => { this.style.transform = ''; }, 200);
+                });
+            });
+
+            // ============================================
+            // 6. АКТИВНАЯ ССЫЛКА ПО УМОЛЧАНИЮ
+            // ============================================
+            document.querySelector('.menu-panel a[data-page="page1"]')?.classList.add('active-link');
+
+            console.log('✅ Сайт готов! Меню скрыто через display: none');
+            console.log('📍 Нажми на бургер (☰) в правом верхнем углу, чтобы открыть меню');
+            console.log('📌 Меню полностью скрыто из DOM-дерева при закрытии');
+
+            // ============================================
+            // 7. РАССКАЗЫ (МОДАЛЬНОЕ ОКНО)
+            // ============================================
+            const storyLinks = document.querySelectorAll('.story');
+            const storyModal = document.getElementById('storyModal');
+            const storyModalClose = document.getElementById('storyModalClose');
+            const storyModalTitle = document.getElementById('storyModalTitle');
+            const storyModalBody = document.getElementById('storyModalBody');
+            const storyModalOverlay = document.querySelector('.story-modal-overlay');
+
+            // Содержание рассказов
+            const storyContent = {
+                '1': {
+                    title: 'Мой первый рассказ',
+                    content: '<p>Тогда Мира вылезает из под одеяла, вся уже обнажённая. И ползет к моей голове. Голова Толи находится между ног Миры. А над ним нависает её киска.</p><p>Мира аккуратно садится на моё лицо, своей киской.</p><p>И Я, начинаю её активно лизать и целовать. Своими языком и губками...</p><p>Её стоны заполнили комнату... Из её киски начал выходить сок, что я активно слизывал...</p><p>А потом, я хватаю Миру за попу, и начинаю как голодный зверь, жадно сосать соки и быстро двигать своим языком</p><p>Продолжаю своими губами целовать твою киску, и слизывать все соки</p><p>Я хочу взять инициативу в свои руки и не только их)</p><p>Я немного отодвигаюсь, беру тебя за талию, и опускаю вниз ставя раком. После беру свой член, и вставляю его в твою киску до упора</p><p>И начинаю двигать своими бедрами</p><p>Также, я немного опустился и взял одной рукой твою грудь и начал её тискать играясь с сосками</p><p>Так я трахал Миру и игрался с её сиськами а потом...</p><p>Я убрал рук с груди, взял  тебя своими руками за попу, и начал быстро двигать своими бедрами и шлёпать тебя по попе</p><p>Мира сразу простонала просле шлепков</p><p>Я простонал когда Мира сжала мой член в её киске, и поняв знак, я ускорился до предела, что и было слышно только громкие звуки стонов и шлепков об наши бедра</p><p>Мира.. я уже скоро..</p><p>После я делаю последний толчок и заполняю твою киску свой спермой. Как её много... Что когда я вытащил член, она всё продолжала вытекать</p><p>Запыхавшийся Мира упала на кровать, но мне было мало))</p><p>Я разворачиваю её на спину, раздвинаю ножки и снова вставляю свой большой член в её киску.</p><p>И снова начинаю её трахать</p><p>После я опускаюсь к Мире, двигаюсь к её губам и целую её с засосом</p><p>Так мы долго не могли оторваться пока я продолжал её трахать</p><p>После того как я отцепился от твоих губ. Своим языком я медленно начал опускать ниже, и прильнул к твоим сладким сиськам. Я начал их жалко сосать и играться своим языком с твоими сосками. Попутно другой рукой тиская другую сиську.</p><p>Какая же сладкая у Миры грудь...</p><p>Также не забывал переключаться на другую грудь и сосать уже её. Как после я приподнялся, взял одну ножку, положил её к себе на плечё и продолжил трахать Миру с ножкой на плече</p><p>Также немного полизывал её ножку, ведь Мира такая сладкая у меня...</p><p>По усилившийся стонам Миры, я понял что она скоро кончит и тоже ускорился ведь сам был близок к концу</p><p>Иии снова кончил в неё, заполняя её свой спермой</p><p>После запыхавшийся, я опустился вниз, снова поцеловал Миру и спросил. Тебе понравилось зая?))</p><p>'
+                },
+                '2': {
+                    title: 'Особое пробуждение',
+                    content: '<p>Раннее утро. Мира всё ещё спит на своей кровати, в своей лёгкой ночнушке и в кружевных трусиках. Тем временем я уже давно проснулся. И сегодня я захотел по особому сказать доброе утро ей.</p><p>Я лег рядом, аккуратно приспустил трусики, и тихонько засунул свои пальчики в её киску.</p><p>Мира немного простонала во сне, но не проснулась, потому что крепко спала.</p><p>Я начал осторожно двигать своими пальчиками в её киске, делая ей приятно.</p><p>После другой рукой я осторожно спустил ночнушку и обнажил её грудь. Я начал тихонько мять её сиськи, чтобы не разбудить.</p><p>Были слышны тихие стоны, но Мира спала очень крепко и не просыпалась.</p><p>Когда я почувствовал, что её киска стала мокрой, я аккуратно встал, подвинулся к ней, тихонько раздвинул её ноги и обнажив свой большой член, медленно вставил его в её киску.</p><p>Мира тихонечко простонала.</p><p>Убедившись, что она спит, я начал медленно двигать бедрами, чтобы не разбудить раньше времени.</p><p>В комнате были слышны только нежные стоны Миры и тихие звуки шлепков.</p><p>Я продолжал её нежно трахать как вдруг, я заметил, что стоны стали громче, что значило, что Мира начинала просыпаться. Заметив это, я ускорил свой темп.</p><p>Как только Мира открыла свои глаза, я опустился к ней и поцеловал её в губы. Мы долго не могли оторваться, пока я её трахал.</p><p>И тут я почувствовал, что Мира скоро кончит и я начал двигаться так быстро, что комната наполнилась громкими звуками шлепков и стонов.</p><p>Мира обхватила меня своими ногами и я кончил в неё заполняя её киску своей спермой.</p><p>Я ещё раз поцеловал Миру, после она опустила ноги, я приподнялся, вытащил свой член из её киски из которой так и вытекала сперма, посмотрел на неё, улыбнулся и сказал - "С добрым утром тебя, Зая))"</p>'
+                },
+                '3': {
+                    title: 'Лучшее пробуждение',
+                    content: '<p>Снова раннее утро. Мира также сладко спит на своей кроватке, в своих красных кружевных трусиках иии... без лифа) потому что сегодня было жарко. И вспомнив, как Мире понравилось пробуждение несколько дней назад, я захотел сегодня сделать ей ещё приятнее.</p><p>Я подошёл кровати и залез под одеяло.... Я аккуратно снял с неё красные трусики и начал лизать её киску. После первого прикосновения Мира немножко дрогнула и простонала.</p><p>Я нежно лизал и сосал её киску, играясь языком и слизывая сок который из неё выходил.</p><p>Так я продолжал делать ей приятно как вдруг...</p><p>Мира во сне, схватила меня за голову и прижала меня к свой киске. Видимо ей снился очень хороший сон))</p><p>Я всё продолжал жадно слизывать все соки, целовать и быстро двигать языком. Тем временем Мира начала стонать всё сильнее и у неё начались пошатываться ножки.</p><p>И вот, Мира кончила... прижавши мою голову своими руками, сжала меня своим ножками, согнувшимися из за хорошего оргазма.</p><p>Я проглотил все соки. Какие же сладкие они у Миры))</p><p>Наконец расслабившись, Мира отпустила мою голову, я встал, посмотрел на неё и оказалось.... что она проснулась) Видимо хороший оргазм, это лучше средство для пробуждения)</p><p>Я опустился к ней, и поцеловал её. Потом я встал на колени, достал свой большой уже дергающийся член, и вставил его в мокрую киску Миры.</p><p>Мы вдвоем простонали от удовольствия, а Мира сразу сжала мой член внутри, что было очень приятно нам обоим.</p><p>Я взял ножки Миры в руки, раздвинул их и держа их на руках, начал медленно двигать своими бедрами.</p><p>Я старался трахаться её медленно, чтобы получить больше удовольствия.</p><p>Так я продолжал трахать Миру, как вдруг её киска сильно сжала мой член...</p><p>Я сразу это почувствовал и ускорился и ещё...</p><p>Я отпустил ножки Миры, и взял её за руки и тянул их к себе, чтобы мой член полностью вошёл в неё.</p><p>Так я трахал её, прижимая к себе, и наконец, притянув Миру до упора, я кончил заполняя её киску свой спермой.</p><p>После я отпустил Мирины руки и вытащил свой член.</p><p>Мира лежала и тяжело дышала, но этого было мало)</p><p>Я перевернул её спиной вверх, подтянул её попой к себе, взял свой член, и вставил его не в киску, а в попу...</p><p>Я начал анально трахать Миру, ей было немного больно, но прекрасные ощущения от этого перекрывали всю боль.</p><p>Мы вместе стонали, потому что нам было очень хорошо, пока я продолжал её трахать.</p><p>И тут... Я своей рукой, хватаю Миру за волосы и продолжаю трахать её уже так.</p><p>Другой рукой, я начинаю шлёпать её по попе, что после каждого шлепка, Мира сжимает мой член всё сильнее, что делает ощущения ещё приятнее.</p><p>И сделав последний толчок, мы одновременно кончили... Издав громкий стон...</p><p>Мире было так хорошо, что после оргазма она выгнулась и тяжело дыша, упала на кровать. Я вытащил свой член из её попы, из которого тоже вытекала сперма.</p><p>Я полностью опустил Миру на кровать, лег рядом с ней, обнял её, и прошептал на ушко "Доброе утро, сладкая моя))", попутно покусывая мочку уха.</p><p>После я поцеловал её в губы и так мы ещё некоторое время лежали, целуясь в обнимку)</p>'
+                },
+                '4': {
+                    title: 'Случай в ванной',
+                    content: '<p>Обычный день. Мы вместе с Мирой сидим за столом и чаёвничаем. И Мира встаёт из за стола, направляется в ванную и говорит, что скоро вернётся.</p><p>Проходит какое то время, а Миры всё нет и тут доносится крик с ванной, Мира позвала меня.</p><p>Я быстро встал, побежал в ванну комнату а там) Мира стоит раком в стиральной машине)) я сразу понял, чего Мира хочет))</p><p>Мира начала вилять своей попой в юбочке и розовых трусиках, что были видны, от чего я сразу возбудился.</p><p>Я опустился на колени перед попой Миры, стянул с неё юбочку, а затем и трусики... И передо мной предстал сладкий персик Миры))</p><p>Я схватил руками Миру за её попу и начал тереться своим членом, о её киску, чтобы подразнить её) Мира тоже подхватила темп и начала сама тоже двигать попой.</p><p>Киска Миры быстро стала мокрой, видимо она очень жаждала моего члена внутри.</p><p>Почувствовав влагу на своем члене, я остановился, взял свой член и вставил его до упора. Мира простонала от этого, в также было слышно эхо.</p><p>И я начал трахать Миру, двигая своими бедрами и немного тиская её попу.</p><p>Другой рукой я потянулся к её сочным сиськам и тоже начал тискать их, а также играться пальчиками с её отвердевшими сосками.</p><p>Так я трахал её до того времени, как не почувствовал, что скоро кончу. Чтобы дать Мире понять это, я ускорился.</p><p>И вот я кончил в Миру, заполняя её киску своей спермой)</p><p>Но Мире было этого мало))</p><p>Мира вылезла из стиральной машины, игриво провела своим пальчиком от моё члена до губ, и прильнула к ним сама и мы засосались в страстном поцелуе.</p><p>Пока мы целовались, Мира толкнула меня на унитаз, и начала тереться об мой член своей киской, дразня и меня и себя.</p><p>После того как Мира отстранилась от меня, она взяла мой член и вставила его в свою тугую киску.</p><p>И начала двигаться вверх и вниз, стонав при каждом движении.</p><p>Я не удержался, сильно обнял Миру и уткнулся лицом в её прекрасные сиськи. И начал их жадно лизать и сосать, пока Мира прыгала на моем члене.</p><p>После я отпустил свои руки на её попку, схватил её и начал поднимать и опускать Миру на свой член, трахая её всё быстрее.</p><p>И наконец, Мира выгнулась, мы кончили одновременно... снова заполняя киску полностью из которой уже вытекала сперма.</p><p>Мира тяжело дыша, упала своей головой на мою грудь и хотела меня поцеловать.</p><p>Но мне было мало, я был очень возбужден))</p><p>Я хватаю Миру за попу, встаю и не вынимая свой член из киски, начинаю трахать её на весу, поднимая и опуская.</p><p>Мой член очень жаждал Миры)))</p><p>Так я трахал её какое то время, но захотел попробовать кое что новое))</p><p>Я разворачиваю Миру спиной к себе, раздвигаю ножки вверх держа своими руками и начинаю трахать её уже так.</p><p>Мира от неожиданности начала стонать ещё громче. А я продолжал её трахать опуская на свой большой член.</p><p>И вот мы одновременно кончили.... сперма и соки так и лились из киски Миры....</p><p>Я опустил Миру на пол, она встала на колени, повернулась ко мне и увидела, что мой член всё ещё стоит как камень и решила доделать дело до конца)</p><p>Она взяла в рот мой член и начала сосать и лизать его своим язычком... Боже... Как же это приятно...</p><p>Я положил руку на голову Миры, давая понять, чтобы она не останавливалась.</p><p>Мира страстно сосала член, чуть ли не заглатывала его полностью, иногда высовывая его и лизала головку члена своим язычком, а также слегка покусывала её... но мне это нравится)</p><p>И тут, я схватил голову Миры своими руками, и начал двигать бедрами, трахая её ротик.</p><p>И наконец я кончил в ротик, Мира не проронила ни капли спермы, я успел вытащил свой член из её ротика, и также кончил на её милое личико и прекрасные сиськи.</p><p>Мира лукаво облизнулась. Я спустил всё до последней капли...</p><p>После мы немного отдышались и решили принять ванну вместе)</p><p>Так мы пролежали вместе какое то время в воде, обнимаясь и целуясь)</p>'
+                },
+                '5': {
+                    title: 'Кино-вечер',
+                    content: '<p>Ночь. Мы с Мирой решили устроить вечер кино и посмотреть фильм-ужастик и выбрали фильм как можно страшнее. Потому что зая любит ужастики)</p><p>Взяли всё необходимое, напитки еду и начали наш небольшой кино-вечер.</p><p>Начиналось всё спокойно, мы смотрели фильм, сидя рядом друг с другом, пили напитки и ели попкорн. Так продолжалось до того момента, как не началась, самая напряжённая и страшная часть фильма.</p><p>Из за этого, мы прижались друг к другу от страха и смотрели фильм дальше прикованными друг к другу.</p><p>И вот фильм наконец закончился, но он был на столько страшный, что напряжение ещё немного оставалось у Миры, а у меня тем временем было другое напряжение))</p><p>Мира посмотрела вниз, и увидела что у меня что то выперает из штанов. Она сразу поняла что это значит)</p><p>Я посмотрел на неё, а она на меня и мы улыбнулись друг другу и засосались в поцелуе.</p><p>Надо снять наше напряжение)) подумал я и повалил Миру на спину, и ещё некоторое время мы целовались с языками. Оторвавшись от губ, я начал медленно снимать с неё одежду.... Вот я снял её платьешко, вот я снял её лиф и обнажил её прекрасные сиськи. Вот я снимаю с её телесные цвета колготки и чёрные кружевные трусики.</p><p>После я также снимаю с себя всю одежду и медленно начинаю спускать всё ниже и ниже своим языком.... Медленно провожу им по шее, и губами присасываюсь к одной из груди, и начинаю жадно сосать.</p><p>Мира простонала от этого, а я тем временем игрался с уже отвердевшими сосками своим языком и сосал сладкую грудь моей заи)</p><p>Также пока я это делал, я опустил свою руку вниз к киске Миры, и просунул в неё два своих пальчика. Она издала тихий милый стон, и я начал двигать пальчиками в её киске.</p><p>Отстранившись от груди, я начинаю дальше спускаться вниз, водя своим языком.</p><p>И вот я опустился к её уже мокрой киске, достал свои пальцы из неё, слизал все соки, что оставались на пальцах, облизнулся) и жадно присосался к ней и начал активно работать языком.</p><p>Мира прикусила свой пальчик от удовольствия и положила свою руку, на мою голову, погладила и сказала "Хороший мальчик, продолжай вот так🫦)</p><p>Так я жадно слизывал все соки, какие же они сладкие как и сама Мира, пока она тихонечко постанывала с пальчиком во рту.</p><p>Но вдруг, Мира отстранила мою голову от неё, и ехидным взглядом, своими ручками раздвинула киску, показывая, что она готова принять мой член. Мира хотела кончить, от моего члена внутри)</p><p>Я взял свой большой член, который дергался от напряжения, раздвинул ножки и без промедления вставил его в киску Миры до упора. Мы оба простонали.</p><p>И я начал активно двигать бедрами, страстно трахая свою заю)</p><p>Я смотрел на Миру, как она мило стонет, на её прекрасные сиськи, на её прекрасное личико, от чего я всё больше возбуждался и двигался всё активнее.</p><p>Я поднял одну ножку вверх и начал её полизывать своим языком, продолжая трахать и медленно водя по ней... Ведь Мира у меня такая сладкая)</p><p>После я опустил ножку и сам опустился к зае и прикусил её мочку уха и сказал ей шепотом "Ты моя самая любимая зая на свете, как сильно я тебя люблю". А после начал целовать её в шею, не переставая активно двигать бедрами.</p><p>Приподнявшись, я беру Миру руками за талию, и ускоряюсь до предела. Звуки шлепков и громких стонов, разносились по всей комнате.</p><p>И вот, сделав последний рывок, я опускаюсь лицом в грудь Миры, а она хватает меня своими ногами, чтобы член вошёл до упора, и мы одновременно кончаем. Я был так возбужден, что заполнил своей спермой киску Миры полностью.</p><p>Я достал свой член из киски из которой начала вытекать моя сперма, и запыхавшись не заметил, как задел пульт, из за чего он упал.</p><p>Упав пульт, переключил фильм на любовный, на момент с интимной сценой)</p><p>Увидев это, в наших глазах зажглось пламя, мы снова возбудились, комната наполнилась любовью, жаром и стонами, что доносились из телевизора.</p><p>Повернувшись друг на друга, мы увидели огонь в глазах друг друга, и я как голодный зверь, набросился на Миру и мы снова засосались в поцелуе.</p><p>Некоторое время, мы кувыркались и целовались друг с другом, как вдруг, Мира отстранилась, поднялась надо мной, повернулась спиной ко мне, взяла мой стоячий член в руку и села на него своей киской.</p><p>И начала активно двигаться, прыгая на моём члене и стонав после каждого движения. А я схватил её за попу, и начал мять её, немножко пошлепывая)</p><p>Стоны что доносились с телевизора, всё больше возбуждали нас и сливались с нашими стонами.</p><p>Пока Мира оседлав меня, скакала на моем члене, я убрав руки от попы, потянулся к её сиськам и начал играться с ними. Взял обе сиськи двумя руками, и легонько потянул их за соски.</p><p>Мира сильно простонала от этого, а я продолжил с ними играть.</p><p>И вдруг... Я уже не мог теперь, я беру Миру, ставлю её раком, что она упирается руками об ручку дивана, и начинаю трахать её, как голодный зверь.</p><p>На экране, герои были в той же позе, что и мы, что предавало ещё больше страсти и я всё активнее и активнее продолжал трахать мою любимую Миру.</p><p>И вот, почти кончив, я хватаю Миру, прижимаю её к себе спиной и кончаю, что сперма начинает вытекать, киска Миры была полна.</p><p>Я заметил, что Миры сильно выгнулась, что значило что я доставил ей оргазм, мы снова кончили одновременно.</p><p>После мы упали на спину и Мира лежала на мне тяжело дыша.</p><p>Встав с меня, Мира заметила, что мой член всё ещё стоит и захотела слизать и опустошить всё до конца) ведь она у меня ненасытная))</p><p>Мира опустилась к моему члену, я почувствовал теплое дыхание кончиком члена, из за чего он немного дернулся.</p><p>Мира немножко хихикнула и начала лизать мои яички, чтобы получить всё. Делала она это так приятно....</p><p>После она взяла мой член в руки, и начала ею двигать, дроча его и играясь своим язычком с яичками. От такого, я не смог сдержаться и начал стонать.</p><p>После того, как Мира закончила, стимулировать меня) она взяла мой член в свой ротик и начала его страстно сосать и лизать.</p><p>Иногда покусывая его легонечко и водя язычком по головке, что ещё сильнее возбуждало меня</p><p>Я начал стонать всё больше и положил руку на её голову, показывая чтобы она брала мой член всё глубже.</p><p>Мира поняла это, и начала заглатывать мой член, что он полностью пропадал в её маленьком ротике.</p><p>И тут Мира начала очень быстро сосать его и быстро двигать своим языком.</p><p>Почувствовав, что скоро кончу, я не выдержал, взял голову Миры, немного надавил на неё и кончил.</p><p>Зая так хорошо постаралась, что я спустил всё, я был пуст. Спермы было так много, что я напоил ею Миру.</p><p>Вытащив мой член из зо рта, Мира игриво облизнулась и сказала "сладкий нектар, моего сладкого Толи)))"</p><p>Посмотрев на телевизор, мы заметили что любовная сцена в фильме тоже закончилась и мы выключили его.</p><p>После Мира легла рядом со мной и я сильно обнял её и сказал "Люблю тебя, зая))) тебе понравилось?))"</p><p>Сказала Мира и мы вместе провалились в сон. Вот так и прошел кино-вечер, влюбленной пары Толи и Миры)))</p>'
+                }
+            };
+
+            // Функция открытия модали
+            function openStoryModal(storyId) {
+                const story = storyContent[storyId];
+                if (!story) return;
+
+                storyModalTitle.textContent = story.title;
+                storyModalBody.innerHTML = story.content;
+                storyModal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            // Функция закрытия модали
+            function closeStoryModal() {
+                storyModal.classList.remove('open');
+                document.body.style.overflow = '';
+                setTimeout(() => {
+                    storyModalBody.innerHTML = '';
+                }, 400);
+            }
+
+            // События для ссылок на рассказы
+            storyLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const storyId = this.dataset.story;
+                    openStoryModal(storyId);
+                });
+            });
+
+            // Кнопка закрытия
+            storyModalClose.addEventListener('click', closeStoryModal);
+
+            // Закрытие при клике на оверлей
+            storyModalOverlay.addEventListener('click', closeStoryModal);
+
+            // Закрытие на Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && storyModal.classList.contains('open')) {
+                    closeStoryModal();
+                }
+            });
+
+        })();
+
+        (function() {
+            'use strict';
+
+            const canvas = document.getElementById('confettiCanvas');
+            const buttons = document.querySelectorAll('.meme-card');
+
+            // ---- НАСТРОЙКИ (можно легко менять) ----
+            const PARTICLES_COUNT = 28;        // сколько стикеров вылетает за один взрыв
+            const GRAVITY = 0.12;              // сила падения
+            const FRICTION = 0.98;             // замедление по горизонтали
+            const BOUNCE_DAMPING = 0.55;       // упругость отскока от низа
+            const SPREAD = 280;                // разлёт (пикселей)
+            // --------------------------------------
+
+            let particles = [];
+            let animationFrame = null;
+            let isBursting = false;
+
+            // ---- Вспомогательные функции ----
+            function getRandom(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            function getRandomInt(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            // Создаёт частицу
+            function createParticle(x, y, vx, vy, symbol, size, rotation) {
+                return {
+                    x, y, vx, vy,
+                    symbol,
+                    size,
+                    rotation,
+                    opacity: 1,
+                    life: 1,
+                    el: null
+                };
+            }
+
+            // Очищает все частицы
+            function clearParticles() {
+                if (animationFrame) {
+                    cancelAnimationFrame(animationFrame);
+                    animationFrame = null;
+                }
+                canvas.innerHTML = '';
+                particles = [];
+                isBursting = false;
+            }
+
+            // ---- Взрыв ----
+            function burstHearts(event) {
+                if (isBursting) return;
+                isBursting = true;
+
+                // Удаляем старые частицы
+                clearParticles();
+
+                // Получаем стикеры из data-атрибута
+                const stickerString = event.currentTarget.dataset.stickers || '❤️🧡💛💚💙💜';
+                // Разбиваем строку на массив символов (эмодзи могут быть длиной > 1, поэтому используем match)
+                const stickers = stickerString.match(/\p{Emoji}/gu) || stickerString.split('');
+                if (stickers.length === 0) stickers.push('❤️');
+
+                // Координаты кнопки относительно окна (для фиксированного canvas)
+                const rect = event.currentTarget.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+
+                // Создаём частицы
+                const count = PARTICLES_COUNT;
+                for (let i = 0; i < count; i++) {
+                    const angle = getRandom(0, Math.PI * 2);
+                    const speed = getRandom(1.5, 5.5);
+                    const vx = Math.cos(angle) * speed * getRandom(0.7, 1.3);
+                    const vy = Math.sin(angle) * speed * getRandom(0.7, 1.3) - 0.5;
+
+                    const symbol = stickers[Math.floor(Math.random() * stickers.length)];
+                    const size = getRandom(0.9, 2.0);
+                    const rotation = getRandom(-80, 80);
+
+                    const p = createParticle(
+                        centerX + getRandom(-8, 8),
+                        centerY + getRandom(-8, 8),
+                        vx, vy,
+                        symbol,
+                        size,
+                        rotation
+                    );
+
+                    // DOM-элемент
+                    const el = document.createElement('span');
+                    el.className = 'heart-particle';
+                    el.textContent = p.symbol;
+                    el.style.fontSize = p.size + 'rem';
+                    el.style.transform = `rotate(${p.rotation}deg)`;
+                    el.style.left = p.x + 'px';
+                    el.style.top = p.y + 'px';
+                    el.style.opacity = '1';
+                    canvas.appendChild(el);
+                    p.el = el;
+
+                    particles.push(p);
+                }
+
+                // Запускаем анимацию физики
+                if (!animationFrame) {
+                    animateParticles();
+                }
+                isBursting = false;
+            }
+
+            // ---- Физика и анимация ----
+            function animateParticles() {
+                if (particles.length === 0) {
+                    animationFrame = null;
+                    return;
+                }
+
+                const windowHeight = window.innerHeight;
+                const windowWidth = window.innerWidth;
+                const bottomLimit = windowHeight - 20;
+                const rightLimit = windowWidth - 10;
+                const leftLimit = 10;
+
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const p = particles[i];
+                    if (!p.el) continue;
+
+                    // Гравитация
+                    p.vy += GRAVITY;
+
+                    // Движение
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    // Трение по горизонтали
+                    p.vx *= FRICTION;
+
+                    // Отскок от низа
+                    if (p.y + 10 > bottomLimit) {
+                        p.y = bottomLimit - 10;
+                        p.vy = -p.vy * BOUNCE_DAMPING;
+                        p.vx *= 0.96;
+                        if (Math.abs(p.vy) < 0.15) p.vy = 0;
+                    }
+
+                    // Границы по горизонтали
+                    if (p.x < leftLimit) {
+                        p.x = leftLimit;
+                        p.vx = -p.vx * 0.4;
+                    } else if (p.x > rightLimit) {
+                        p.x = rightLimit;
+                        p.vx = -p.vx * 0.4;
+                    }
+
+                    // Верхняя граница
+                    if (p.y < -30) {
+                        p.y = -30;
+                        p.vy = 0;
+                    }
+
+                    // Затухание
+                    p.life -= 0.004;
+                    if (p.life < 0) p.life = 0;
+                    p.opacity = Math.min(1, p.life * 1.3);
+
+                    // Применяем
+                    p.el.style.left = p.x + 'px';
+                    p.el.style.top = p.y + 'px';
+                    p.el.style.opacity = p.opacity;
+
+                    p.rotation += p.vx * 0.25;
+                    p.el.style.transform = `rotate(${p.rotation}deg)`;
+
+                    // Удаляем если исчезли или упали
+                    if (p.opacity < 0.03 || p.y > bottomLimit + 60) {
+                        if (p.el && p.el.parentNode) {
+                            p.el.remove();
+                        }
+                        particles.splice(i, 1);
+                    }
+                }
+
+                if (particles.length > 0) {
+                    animationFrame = requestAnimationFrame(animateParticles);
+                } else {
+                    animationFrame = null;
+                    canvas.innerHTML = '';
+                }
+            }
+
+            // ---- Привязываем события к кнопкам ----
+            buttons.forEach(btn => {
+                btn.addEventListener('click', burstHearts);
+            });
+
+            // ---- Очистка при ресайзе (опционально) ----
+            window.addEventListener('resize', () => {
+                // Можно оставить как есть — частицы адаптируются
+            });
+
+            // ---- Демо-взрыв при загрузке (показываем возможности) ----
+            window.addEventListener('load', function() {
+                setTimeout(() => {
+                    // Имитируем клик по первой кнопке
+                    if (buttons.length > 0) {
+                        buttons[0].click();
+                    }
+                }, 500);
+            });
+
+            // ---- Чистка при уходе ----
+            window.addEventListener('beforeunload', function() {
+                if (animationFrame) {
+                    cancelAnimationFrame(animationFrame);
+                }
+            });
+
+        })();
+    </script>
+
+</body>
+</html>
