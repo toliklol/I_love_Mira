@@ -1,0 +1,891 @@
+/* ---------- ПОДКЛЮЧЕНИЕ ШРИФТОВ ---------- */
+@font-face {
+    font-family: "Cera Stencil";
+    src: url("fonts/type me! fonts - Cera Stencil PRO Trial Thin.otf") format("opentype");
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Cera Stencil";
+    src: url("fonts/type me! fonts - Cera Stencil PRO Trial Light.otf") format("opentype");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Cera Stencil";
+    src: url("fonts/type me! fonts - Cera Stencil PRO Trial.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Cera Stencil";
+    src: url("fonts/type me! fonts - Cera Stencil PRO Trial Medium.otf") format("opentype");
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Cera Stencil";
+    src: url("fonts/type me! fonts - Cera Stencil PRO Trial Bold.otf") format("opentype");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Cera Stencil";
+    src: url("fonts/type me! fonts - Cera Stencil PRO Trial Black.otf") format("opentype");
+    font-weight: 900;
+    font-style: normal;
+}
+
+/* ---------- БАЗОВЫЕ СТИЛИ ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Cera Stencil", system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: 
+        linear-gradient(145deg, #1a3a1a, #2d5a2d, #1a4a1a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    overflow-x: hidden;
+    position: relative;
+    font-family: "Cera Stencil", 'sans-serif';
+}
+
+/* ---------- ФОН С ПАДАЮЩИМИ ЛЕПЕСТКАМИ/СЕРДЕЧКАМИ ---------- */
+.falling-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.falling-item {
+    position: absolute;
+    top: -45px;
+    font-size: 24px;
+    animation: fall linear infinite;
+    opacity: 0.7;
+    user-select: none;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-20px) rotate(0deg) scale(0.8);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(110vh) rotate(720deg) scale(1.2);
+        opacity: 0.2;
+    }
+}
+
+/* ---------- ГЛАВНАЯ КАРТОЧКА (glassmorphism) ---------- */
+.app-wrapper {
+    max-width: 440px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    padding: 24px 20px 30px;
+    position: relative;
+    z-index: 1;
+    min-height: 70vh;
+    margin: 15vh 0vh 15vh 0vh;
+}
+
+/* ---------- ШАПКА С ТАЙМЕРОМ И БУРГЕРОМ ---------- */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    padding: 0 4px;
+}
+
+.timer-block {
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 8px 16px;
+    border-radius: 60px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(4px);
+}
+
+.timer-label {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 600;
+}
+
+.timer-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #b8e6b8;
+    line-height: 1.2;
+}
+
+.timer-value span {
+    color: #8fde8f;
+    font-weight: 300;
+}
+
+/* ---------- БУРГЕР (всегда видимый) ---------- */
+.burger-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 60;
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.burger-btn span {
+    display: block;
+    width: 100%;
+    height: 2.5px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 6px;
+    transition: all 0.35s ease;
+    transform-origin: center;
+}
+
+.burger-btn.active span:nth-child(1) {
+    transform: translateY(8.5px) rotate(45deg);
+    background: #a5d6a7;
+}
+.burger-btn.active span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+.burger-btn.active span:nth-child(3) {
+    transform: translateY(-8.5px) rotate(-45deg);
+    background: #a5d6a7;
+}
+
+/* ---------- ОВЕРЛЕЙ (затемнение) ---------- */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 45;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    display: none; /* Скрыт по умолчанию */
+}
+
+.menu-overlay.open {
+    display: block; /* Показываем */
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* ---------- БОКОВОЕ МЕНЮ (скрыто через display: none) ---------- */
+.menu-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 280px;
+    max-width: 80%;
+    height: 100%;
+    background: rgba(20, 50, 20, 0.92);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: -20px 0 60px rgba(0, 0, 0, 0.6);
+    z-index: 50;
+    padding: 80px 20px 30px;
+    display: none; /* Скрыто по умолчанию */
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+    transform: translateX(100%); /* Начальное положение - за экраном */
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    border-radius: 40px;
+}
+
+.menu-panel.open {
+    display: flex; /* Показываем */
+    transform: translateX(0); /* Выезжаем */
+}
+
+.menu-panel a {
+    display: block;
+    padding: 16px 20px;
+    border-radius: 20px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+    font-size: 1.05rem;
+    text-decoration: none;
+    transition: all 0.25s;
+    border: 1px solid transparent;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.menu-panel a:hover,
+.menu-panel a:active {
+    background: rgba(165, 214, 167, 0.15);
+    border-color: rgba(165, 214, 167, 0.2);
+    color: #ffffff;
+    transform: translateX(4px);
+}
+
+.menu-panel a.active-link {
+    background: rgba(165, 214, 167, 0.18);
+    border-color: rgba(165, 214, 167, 0.3);
+    color: #b8e6b8;
+    font-weight: 600;
+}
+
+/* ---------- СТРАНИЦЫ (анимация перелистывания) ---------- */
+.page {
+    display: none;
+    animation: pageSlide 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes pageSlide {
+    0% {
+        opacity: 0;
+        transform: translateX(40px) scale(0.96);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+/* ---------- СТРАНИЦА 1: ПРОФИЛЬ ---------- */
+.profile-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.avatar-frame {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    filter: drop-shadow(0 0 16px rgba(255, 220, 120, 0.22));
+}
+
+.sun-rays {
+    position: absolute;
+    inset: -50px;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at center, rgba(255, 221, 93, 0.95) 0%, rgba(255, 221, 93, 0.8) 20%, rgba(255, 221, 93, 0.35) 30%, rgba(255, 221, 93, 0) 58%),
+        repeating-conic-gradient(
+            from -90deg,
+            rgba(255, 212, 72, 0.95) 0deg 4deg,
+            rgba(255, 212, 72, 0.1) 4deg 8deg,
+            rgba(255, 255, 255, 0) 8deg 18deg
+        );
+    opacity: 0.98;
+    animation: sunSwing 7s ease-in-out infinite alternate;
+    transform-origin: center;
+    filter: saturate(1.15);
+    mask: radial-gradient(circle at center, #000 0 38%, transparent 70%, transparent 100%);
+    -webkit-mask: radial-gradient(circle at center, #000 0 38%, transparent 70%, transparent 100%);
+}
+
+.sun-rays::before {
+    content: none;
+}
+
+@keyframes sunSwing {
+    0% {
+        transform: rotate(-18deg) scale(0.96);
+    }
+    50% {
+        transform: rotate(0deg) scale(1.06);
+    }
+    100% {
+        transform: rotate(18deg) scale(1.12);
+    }
+}
+
+.avatar-frame::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 240, 170, 0.5), rgba(255, 190, 90, 0.12) 45%, transparent 70%);
+    z-index: 0;
+}
+
+.profile-photo {
+    position: absolute;
+    z-index: 1;
+    width: 122px;
+    height: 122px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(165, 214, 167, 0.4);
+    box-shadow:
+        0 0 0 6px rgba(255, 215, 120, 0.12),
+        0 0 20px rgba(255, 214, 92, 0.32),
+        0 10px 28px rgba(0, 0, 0, 0.25);
+    background: rgba(165, 214, 167, 0.1);
+    flex-shrink: 0;
+    transition: opacity 0.9s ease-in-out, transform 0.3s ease;
+    opacity: 1;
+}
+
+.profile-photo:hover {
+    transform: scale(1.02);
+}
+
+.profile-description {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 22px 20px;
+    border-radius: 28px;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.profile-description h1 {
+    font-size: 1.8rem;
+    color: #e8f5e9;
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+    font-weight: 700;
+}
+
+.profile-description .sub {
+    color: #a5d6a7;
+    font-weight: 400;
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+    display: block;
+    opacity: 0.8;
+}
+
+.profile-description p {
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.7;
+    font-size: 0.95rem;
+}
+
+.profile-description a {
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.7;
+    font-size: 0.95rem;
+}
+
+.profile-description .tag {
+    display: inline-block;
+    background: rgba(165, 214, 167, 0.12);
+    padding: 4px 16px;
+    border-radius: 40px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #b8e6b8;
+    border: 1px solid rgba(165, 214, 167, 0.1);
+    margin-right: 6px;
+    margin-top: 10px;
+    backdrop-filter: blur(4px);
+}
+
+.profile-description_flex {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-quote {
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(165, 214, 167, 0.06);
+    border-radius: 20px;
+    border-left: 3px solid rgba(165, 214, 167, 0.3);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+/* ---------- СТРАНИЦА 2: МЕМЫ ---------- */
+.page-subtitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #e8f5e9;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.page-subtitle span {
+    background: rgba(165, 214, 167, 0.12);
+    padding: 2px 14px;
+    border-radius: 40px;
+    font-size: 0.7rem;
+    color: #a5d6a7;
+}
+
+.meme-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 4px;
+}
+
+.meme-card {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: all 0.3s;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.meme-card:active {
+    transform: scale(0.94);
+}
+
+.meme-card img,
+.meme-card .video-placeholder {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    background: rgba(165, 214, 167, 0.05);
+    display: block;
+}
+
+.meme-card .video-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(165, 214, 167, 0.08);
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 2.4rem;
+    font-weight: 300;
+}
+
+.meme-card .caption {
+    padding: 10px 10px 12px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.85rem;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.15);
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.meme-card_video {
+    grid-column: span 2;
+}
+
+/* ---------- СТРАНИЦА 3: ПРИКОЛЫ ---------- */
+.jokes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.joke-item {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 16px 20px;
+    border-radius: 60px;
+    border-left: 3px solid rgba(165, 214, 167, 0.25);
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 450;
+    transition: all 0.2s;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    font-size: 0.95rem;
+}
+
+.joke-item:active {
+    background: rgba(165, 214, 167, 0.08);
+    transform: scale(0.97);
+}
+
+/* ---------- СТРАНИЦА 4: КОМПЛИМЕНТЫ ---------- */
+.compliments-container {
+    max-height: 460px;
+    overflow-y: auto;
+    padding-right: 4px;
+    margin-top: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(165, 214, 167, 0.2) transparent;
+}
+
+.compliments-container::-webkit-scrollbar {
+    width: 4px;
+}
+.compliments-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+.compliments-container::-webkit-scrollbar-thumb {
+    background: rgba(165, 214, 167, 0.2);
+    border-radius: 12px;
+}
+
+.compliment-chip {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(165, 214, 167, 0.08);
+    padding: 10px 18px;
+    border-radius: 60px;
+    margin: 0 6px 12px 0;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 450;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.compliment-chip:active {
+    background: rgba(165, 214, 167, 0.12);
+    transform: scale(0.94);
+}
+
+/* ---------- СТРАНИЦА 5: РАССКАЗЫ ---------- */
+.stories-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.story {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.story::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(165, 214, 167, 0.1);
+    transition: left 0.4s ease;
+    z-index: 0;
+}
+
+.story:hover::before,
+.story:active::before {
+    left: 100%;
+}
+
+.story:hover,
+.story:active {
+    background: rgba(165, 214, 167, 0.12);
+    border-color: rgba(165, 214, 167, 0.25);
+    transform: translateX(6px);
+    box-shadow: 0 8px 20px rgba(165, 214, 167, 0.15);
+}
+
+.story-number {
+    font-size: 1.4rem;
+    min-width: 40px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.story-title {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #b8e6b8;
+    position: relative;
+    z-index: 1;
+}
+
+/* ---------- МОДАЛЬНОЕ ОКНО РАССКАЗОВ ---------- */
+.story-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    padding: 16px;
+}
+
+.story-modal.open {
+    display: flex;
+    opacity: 1;
+}
+
+.story-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 1;
+}
+
+.story-modal-content {
+    position: relative;
+    z-index: 2;
+    background: rgba(20, 50, 20, 0.95);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(165, 214, 167, 0.2);
+    border-radius: 32px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    animation: modalSlide 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes modalSlide {
+    0% {
+        transform: translateY(30px) scale(0.96);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.story-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    z-index: 3;
+}
+
+.story-modal-close:hover,
+.story-modal-close:active {
+    background: rgba(255, 255, 255, 0.15);
+    color: #b8e6b8;
+    transform: scale(1.1);
+}
+
+.story-modal-header {
+    padding: 30px 30px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.story-modal-header h2 {
+    color: #b8e6b8;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.story-modal-body {
+    padding: 30px;
+    overflow-y: auto;
+    flex: 1;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.8;
+    font-size: 1rem;
+}
+
+.story-modal-body p {
+    margin-bottom: 16px;
+}
+
+.story-modal-body p:last-child {
+    margin-bottom: 0;
+}
+
+/* Скролл для мобильных */
+.story-modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.story-modal-body::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+}
+
+.story-modal-body::-webkit-scrollbar-thumb {
+    background: rgba(165, 214, 167, 0.3);
+    border-radius: 10px;
+}
+
+.story-modal-body::-webkit-scrollbar-thumb:hover {
+    background: rgba(165, 214, 167, 0.5);
+}
+
+/* ---------- АДАПТИВ ---------- */
+@media (max-width: 420px) {
+    .app-wrapper {
+        padding: 18px 14px 24px;
+        border-radius: 28px;
+    }
+    .profile-photo {
+        width: 110px;
+        height: 110px;
+    }
+    .profile-description h1 {
+        font-size: 1.5rem;
+    }
+    .meme-grid {
+        gap: 10px;
+    }
+    .timer-value {
+        font-size: 0.95rem;
+    }
+    .menu-panel {
+        width: 260px;
+        padding: 70px 16px 30px;
+    }
+}
+
+@media (max-width: 360px) {
+    .meme-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    .compliment-chip {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+    .profile-photo {
+        width: 90px;
+        height: 90px;
+    }
+}
+
+/* ---------- ДЕКОРАТИВНЫЙ ГЛОСС ---------- */
+.app-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(165, 214, 167, 0.08), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.app-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: -30px;
+    width: 160px;
+    height: 160px;
+    background: radial-gradient(circle, rgba(165, 214, 167, 0.05), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.footer-note {
+    margin-top: 18px;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.2);
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+/* полотно для конфетти */
+.confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+/* частица-сердечко */
+.heart-particle {
+    position: absolute;
+    pointer-events: none;
+    font-size: 1.4rem;
+    opacity: 1;
+    will-change: transform, opacity;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    transition: none;
+    font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+}
