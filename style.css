@@ -51,8 +51,7 @@
 
 body {
     min-height: 100vh;
-    background: 
-        linear-gradient(145deg, #1a3a1a, #2d5a2d, #1a4a1a);
+    background: linear-gradient(135deg, #123d26 0%, #28734a 48%, #0d3b2e 100%);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -237,6 +236,51 @@ body {
 .menu-panel.open {
     display: flex; /* Показываем */
     transform: translateX(0); /* Выезжаем */
+}
+
+.menu-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: absolute;
+    top: 20px;
+}
+
+.music-control {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid rgba(165, 214, 167, 0.2);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.85);
+    font: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.25s, color 0.25s, transform 0.2s;
+}
+
+.music-control:hover,
+.music-control:active {
+    background: rgba(165, 214, 167, 0.18);
+    color: #ffffff;
+}
+
+.music-control:active {
+    transform: scale(0.92);
+}
+
+.music-toggle.is-playing {
+    background: rgba(165, 214, 167, 0.2);
+    color: #a5d6a7;
+}
+
+.menu-close {
+    margin-left: auto;
 }
 
 .menu-panel a {
