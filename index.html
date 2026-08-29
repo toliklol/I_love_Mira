@@ -272,21 +272,96 @@
 
         <!-- ===== СТРАНИЦА 6 ===== -->
         <section class="page" id="page6">
-            <div id="music">
+            <div>
                 <div class="page-subtitle">
                     🤗 Все стикеры, что мы создали
                 </div>
                 <div class="sticker-pack-accordion" id="stickerPackAccordion"></div>
-                <div class="music-unlock" id="musicUnlock"></div>
             </div>
         </section>
 
          <!-- ===== МОДАЛЬНОЕ ОКНО ДЛЯ СТИКЕРОВ ===== -->
         <div class="sticker-modal" id="stickerModal" aria-hidden="true">
             <div class="sticker-modal-content">
-                <button class="sticker-modal-close" id="stickerModalClose" aria-label="Закрыть">✕</button>
-                <img class="sticker-modal-image" id="stickerModalImage" src="" alt="">
-                <div class="sticker-modal-caption" id="stickerModalCaption"></div>
+
+                <button
+                    class="sticker-modal-close"
+                    id="stickerModalClose"
+                    aria-label="Закрыть"
+                >
+                    ✕
+                </button>
+
+                <div class="sticker-zoom-controls">
+
+                    <button
+                        type="button"
+                        id="stickerZoomOut"
+                        aria-label="Уменьшить стикер"
+                        title="Уменьшить"
+                    >
+                        −
+                    </button>
+
+                    <button
+                        type="button"
+                        id="stickerZoomReset"
+                        aria-label="Сбросить масштаб"
+                        title="Сбросить масштаб"
+                    >
+                        100%
+                    </button>
+
+                    <button
+                        type="button"
+                        id="stickerZoomIn"
+                        aria-label="Увеличить стикер"
+                        title="Увеличить"
+                    >
+                        +
+                    </button>
+
+                    <button
+                        type="button"
+                        id="stickerDownload"
+                        class="sticker-download-btn"
+                        aria-label="Скачать стикер"
+                        title="Скачать стикер"
+                    >
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="24"
+                            height="24"
+                            aria-hidden="true"
+                        >
+                            <path
+                                d="M12 3v11m0 0 4-4m-4 4-4-4M5 19h14"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </button>
+
+                </div>
+
+                <div class="sticker-image-viewport" id="stickerImageViewport">
+                    <img
+                        class="sticker-modal-image"
+                        id="stickerModalImage"
+                        src=""
+                        alt=""
+                        draggable="false"
+                    >
+                </div>
+
+                <div
+                    class="sticker-modal-caption"
+                    id="stickerModalCaption"
+                ></div>
+
             </div>
         </div>
 
@@ -315,6 +390,7 @@
             <div class="profile-description">
                 <p style="text-align: center;">🚧 Ведутся программисткие работы 🚧</p>
                 <p>Скоро тут будет, кое что очень интересное)))</p>
+                <p>Сайт будет обновляться!</p>
             </div>
             <div class="profile-description profile-description_flex">
                 <p>Мои другие работы:</p>
@@ -546,7 +622,7 @@
 
             // Генерируем три стикер-пака. Первый открыт по умолчанию, остальные скрыты.
             const stickerPackConfigs = [
-                { id: 'pack1', label: 'Наш 1 стикер пак☺', folder: 'assets/stickerpack/pack1', count: 50, defaultOpen: true },
+                { id: 'pack1', label: 'Наш 1 стикер пак😀', folder: 'assets/stickerpack/pack1', count: 50, defaultOpen: false },
                 { id: 'pack2', label: 'Наш 2 стикер пак😘', folder: 'assets/stickerpack/pack2', count: 6, defaultOpen: false },
                 { id: 'pack3', label: 'Наш 3 стикер пак🤩', folder: 'assets/stickerpack/pack3', count: 18, defaultOpen: false }
             ];
@@ -559,16 +635,16 @@
             const musicUnlock = document.getElementById('musicUnlock');
 
             const secretHeartPositions = [
-                { id: 1, page: 'page1', left: '10%', top: '18%' },
-                { id: 2, page: 'page1', left: '74%', top: '52%' },
-                { id: 3, page: 'page2', left: '18%', top: '58%' },
-                { id: 4, page: 'page2', left: '70%', top: '20%' },
+                { id: 1, page: 'page1', left: '80%', top: '83%' },
+                { id: 2, page: 'page2', left: '73%', top: '-65px' },
+                { id: 3, page: 'page2', left: '7%', bottom: '-20px' },
+                { id: 4, page: 'page3', left: '1%', bottom: '-40px' },
                 { id: 5, page: 'page3', left: '80%', top: '42%' },
-                { id: 6, page: 'page4', left: '28%', top: '36%' },
-                { id: 7, page: 'page5', left: '52%', top: '28%' },
-                { id: 8, page: 'page6', left: '76%', top: '24%' },
-                { id: 9, page: 'page8', left: '32%', top: '62%' },
-                { id: 10, page: 'page7', left: '58%', top: '42%' }
+                { id: 6, page: 'page5', left: '45%', bottom: '-250px' },
+                { id: 7, page: 'page6', left: '80%', top: '25%' },
+                { id: 8, page: 'page7', left: '60%', top: '2px' },
+                { id: 9, page: 'page8', left: '5%', bottom: '-80px' },
+                { id: 10, page: 'page8', left: '58%', top: '62%' }
             ];
 
             function getSavedSecretHearts() {
@@ -701,7 +777,7 @@
                 }
 
                 if (page7Title) {
-                    page7Title.textContent = unlocked ? '💖 Тайная страница открыта' : '🔒 Закрыто';
+                    page7Title.textContent = unlocked ? '💖 Музыка про тебя)' : '🔒 Закрыто';
                 }
 
                 if (secretPageState) {
@@ -738,6 +814,7 @@
                 if (config) {
                     button.style.left = config.left;
                     button.style.top = config.top;
+                    button.style.bottom = config.bottom;
                 }
 
                 if (foundHearts.has(heartId)) {
@@ -753,7 +830,7 @@
                     button.classList.add('found');
                     button.disabled = true;
 
-                    const sound = new Audio('assets/sounds/emoji_salut.mp3');
+                    const sound = new Audio('assets/sounds/winning-sound-effect.mp3');
                     sound.volume = 0.35;
                     sound.play().catch(() => {});
 
@@ -840,6 +917,7 @@
                             if (!modal || !modalImage || !modalCaption) return;
 
                             modalImage.src = image.src;
+                            modalImage.style.transform = 'translate(0px, 0px) scale(1)';
                             modalImage.alt = image.alt;
                             modalCaption.textContent = caption.textContent;
                             modal.classList.add('open');
@@ -870,22 +948,495 @@
             const stickerModal = document.getElementById('stickerModal');
             const stickerModalClose = document.getElementById('stickerModalClose');
 
-            if (stickerModal) {
+            const stickerModalImage = document.getElementById('stickerModalImage');
+            const stickerImageViewport = document.getElementById('stickerImageViewport');
+
+            const stickerZoomIn = document.getElementById('stickerZoomIn');
+            const stickerZoomOut = document.getElementById('stickerZoomOut');
+            const stickerZoomReset = document.getElementById('stickerZoomReset');
+            const stickerDownload = document.getElementById('stickerDownload');
+
+
+            if (stickerModal && stickerModalImage && stickerImageViewport) {
+
+                let scale = 1;
+
+                let translateX = 0;
+                let translateY = 0;
+
+                const MIN_SCALE = 0.5;
+                const MAX_SCALE = 5;
+                const ZOOM_STEP = 0.25;
+
+
+                // ============================================
+                // ОБНОВЛЕНИЕ ПОЗИЦИИ И МАСШТАБА
+                // ============================================
+
+                function updateStickerTransform() {
+
+                    stickerModalImage.style.transform =
+                        `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+
+                    if (stickerZoomReset) {
+                        stickerZoomReset.textContent =
+                            `${Math.round(scale * 100)}%`;
+                    }
+
+                }
+
+
+                // ============================================
+                // СБРОС ЗУМА
+                // ============================================
+
+                function resetStickerZoom() {
+
+                    scale = 1;
+
+                    translateX = 0;
+                    translateY = 0;
+
+                    updateStickerTransform();
+
+                }
+
+
+                // ============================================
+                // УВЕЛИЧЕНИЕ
+                // ============================================
+
+                stickerZoomIn?.addEventListener('click', () => {
+
+                    scale = Math.min(
+                        MAX_SCALE,
+                        scale + ZOOM_STEP
+                    );
+
+                    updateStickerTransform();
+
+                });
+
+
+                // ============================================
+                // УМЕНЬШЕНИЕ
+                // ============================================
+
+                stickerZoomOut?.addEventListener('click', () => {
+
+                    scale = Math.max(
+                        MIN_SCALE,
+                        scale - ZOOM_STEP
+                    );
+
+                    updateStickerTransform();
+
+                });
+
+
+                // ============================================
+                // СБРОС ПО КНОПКЕ
+                // ============================================
+
+                stickerZoomReset?.addEventListener('click', () => {
+
+                    resetStickerZoom();
+
+                });
+
+                // ============================================
+                // СКАЧИВАНИЕ СТИКЕРА
+                // ============================================
+
+                stickerDownload?.addEventListener('click', async () => {
+
+                    const imageUrl = stickerModalImage.src;
+
+                    if (!imageUrl) return;
+
+                    try {
+
+                        const response = await fetch(imageUrl);
+
+                        if (!response.ok) {
+                            throw new Error('Не удалось загрузить стикер');
+                        }
+
+                        const blob = await response.blob();
+
+                        const blobUrl = URL.createObjectURL(blob);
+
+                        const link = document.createElement('a');
+
+                        link.href = blobUrl;
+
+                        // Получаем имя файла из URL
+                        const fileName =
+                            imageUrl.split('/').pop().split('?')[0] ||
+                            'sticker.png';
+
+                        link.download = fileName;
+
+                        document.body.appendChild(link);
+
+                        link.click();
+
+                        link.remove();
+
+                        URL.revokeObjectURL(blobUrl);
+
+                    } catch (error) {
+
+                        console.error(
+                            'Ошибка при скачивании стикера:',
+                            error
+                        );
+
+                        // Запасной вариант
+                        const link = document.createElement('a');
+
+                        link.href = imageUrl;
+
+                        link.download = 'sticker.png';
+
+                        document.body.appendChild(link);
+
+                        link.click();
+
+                        link.remove();
+
+                    }
+
+                });
+
+
+                // ============================================
+                // ЗУМ КОЛЁСИКОМ МЫШИ
+                // ============================================
+
+                stickerImageViewport.addEventListener(
+                    'wheel',
+                    (event) => {
+
+                        event.preventDefault();
+
+                        if (event.deltaY < 0) {
+
+                            scale = Math.min(
+                                MAX_SCALE,
+                                scale + 0.1
+                            );
+
+                        } else {
+
+                            scale = Math.max(
+                                MIN_SCALE,
+                                scale - 0.1
+                            );
+
+                        }
+
+                        updateStickerTransform();
+
+                    },
+                    {
+                        passive: false
+                    }
+                );
+
+
+                // ============================================
+                // ПЕРЕТАСКИВАНИЕ МЫШЬЮ
+                // ============================================
+
+                let isDragging = false;
+
+                let startX = 0;
+                let startY = 0;
+
+                let startTranslateX = 0;
+                let startTranslateY = 0;
+
+
+                stickerImageViewport.addEventListener(
+                    'pointerdown',
+                    (event) => {
+
+                        if (scale <= 1) return;
+
+                        isDragging = true;
+
+                        startX = event.clientX;
+                        startY = event.clientY;
+
+                        startTranslateX = translateX;
+                        startTranslateY = translateY;
+
+                        stickerImageViewport.setPointerCapture(
+                            event.pointerId
+                        );
+
+                    }
+                );
+
+
+                stickerImageViewport.addEventListener(
+                    'pointermove',
+                    (event) => {
+
+                        if (!isDragging) return;
+
+                        const deltaX =
+                            event.clientX - startX;
+
+                        const deltaY =
+                            event.clientY - startY;
+
+
+                        translateX =
+                            startTranslateX + deltaX;
+
+                        translateY =
+                            startTranslateY + deltaY;
+
+
+                        updateStickerTransform();
+
+                    }
+                );
+
+
+                function stopStickerDragging() {
+
+                    isDragging = false;
+
+                }
+
+
+                stickerImageViewport.addEventListener(
+                    'pointerup',
+                    stopStickerDragging
+                );
+
+                stickerImageViewport.addEventListener(
+                    'pointercancel',
+                    stopStickerDragging
+                );
+
+
+                // ============================================
+                // DOUBLE CLICK = УВЕЛИЧЕНИЕ / СБРОС
+                // ============================================
+
+                stickerImageViewport.addEventListener(
+                    'dblclick',
+                    () => {
+
+                        if (scale === 1) {
+
+                            scale = 2;
+
+                        } else {
+
+                            resetStickerZoom();
+
+                            return;
+
+                        }
+
+                        updateStickerTransform();
+
+                    }
+                );
+
+
+                // ============================================
+                // TOUCH PINCH ZOOM
+                // ============================================
+
+                let initialPinchDistance = null;
+
+                let initialPinchScale = 1;
+
+
+                function getTouchDistance(touch1, touch2) {
+
+                    const x =
+                        touch2.clientX - touch1.clientX;
+
+                    const y =
+                        touch2.clientY - touch1.clientY;
+
+                    return Math.sqrt(
+                        x * x + y * y
+                    );
+
+                }
+
+
+                stickerImageViewport.addEventListener(
+                    'touchstart',
+                    (event) => {
+
+                        if (event.touches.length === 2) {
+
+                            initialPinchDistance =
+                                getTouchDistance(
+                                    event.touches[0],
+                                    event.touches[1]
+                                );
+
+                            initialPinchScale = scale;
+
+                        }
+
+                    },
+                    {
+                        passive: false
+                    }
+                );
+
+
+                stickerImageViewport.addEventListener(
+                    'touchmove',
+                    (event) => {
+
+                        if (
+                            event.touches.length === 2 &&
+                            initialPinchDistance
+                        ) {
+
+                            event.preventDefault();
+
+
+                            const currentDistance =
+                                getTouchDistance(
+                                    event.touches[0],
+                                    event.touches[1]
+                                );
+
+
+                            const ratio =
+                                currentDistance /
+                                initialPinchDistance;
+
+
+                            scale = Math.min(
+                                MAX_SCALE,
+                                Math.max(
+                                    MIN_SCALE,
+                                    initialPinchScale * ratio
+                                )
+                            );
+
+
+                            updateStickerTransform();
+
+                        }
+
+                    },
+                    {
+                        passive: false
+                    }
+                );
+
+
+                stickerImageViewport.addEventListener(
+                    'touchend',
+                    () => {
+
+                        initialPinchDistance = null;
+
+                    }
+                );
+
+
+                // ============================================
+                // ЗАКРЫТИЕ МОДАЛЬНОГО ОКНА
+                // ============================================
+
                 const closeStickerModal = () => {
+
                     stickerModal.classList.remove('open');
-                    stickerModal.setAttribute('aria-hidden', 'true');
+
+                    stickerModal.setAttribute(
+                        'aria-hidden',
+                        'true'
+                    );
+
+                    resetStickerZoom();
+
                 };
 
-                stickerModalClose?.addEventListener('click', closeStickerModal);
-                stickerModal.addEventListener('click', (event) => {
-                    if (event.target === stickerModal) closeStickerModal();
-                });
 
-                document.addEventListener('keydown', (event) => {
-                    if (event.key === 'Escape' && stickerModal.classList.contains('open')) {
-                        closeStickerModal();
+                stickerModalClose?.addEventListener(
+                    'click',
+                    closeStickerModal
+                );
+
+
+                stickerModal.addEventListener(
+                    'click',
+                    (event) => {
+
+                        if (event.target === stickerModal) {
+
+                            closeStickerModal();
+
+                        }
+
                     }
-                });
+                );
+
+
+                document.addEventListener(
+                    'keydown',
+                    (event) => {
+
+                        if (
+                            event.key === 'Escape' &&
+                            stickerModal.classList.contains('open')
+                        ) {
+
+                            closeStickerModal();
+
+                        }
+
+
+                        // + увеличивает
+                        if (
+                            event.key === '+' &&
+                            stickerModal.classList.contains('open')
+                        ) {
+
+                            scale = Math.min(
+                                MAX_SCALE,
+                                scale + ZOOM_STEP
+                            );
+
+                            updateStickerTransform();
+
+                        }
+
+
+                        // - уменьшает
+                        if (
+                            event.key === '-' &&
+                            stickerModal.classList.contains('open')
+                        ) {
+
+                            scale = Math.max(
+                                MIN_SCALE,
+                                scale - ZOOM_STEP
+                            );
+
+                            updateStickerTransform();
+
+                        }
+
+                    }
+                );
+
             }
 
             // ============================================
@@ -1189,6 +1740,7 @@
                 const story = storyContent[storyId];
                 if (!story) return;
 
+                pauseBackgroundMusic();
                 storyModalTitle.textContent = story.title;
                 storyModalBody.innerHTML = story.content;
                 storyModal.classList.add('open');

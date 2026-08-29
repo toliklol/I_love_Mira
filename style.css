@@ -886,6 +886,167 @@ body {
     cursor: pointer;
 }
 
+/* ===== ЗУМ СТИКЕРА В МОДАЛЬНОМ ОКНЕ ===== */
+
+.sticker-image-viewport {
+    width: 100%;
+    max-width: min(80vw, 700px);
+    height: min(65vh, 700px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    position: relative;
+
+    touch-action: none;
+
+    cursor: grab;
+
+    user-select: none;
+}
+
+.sticker-image-viewport:active {
+    cursor: grabbing;
+}
+
+.sticker-modal-image {
+    max-width: 90%;
+    max-height: 90%;
+
+    object-fit: contain;
+
+    transform-origin: center center;
+
+    will-change: transform;
+
+    transition: transform 0.15s ease;
+
+    user-select: none;
+
+    -webkit-user-drag: none;
+
+    cursor: inherit;
+}
+
+
+/* ===== КНОПКИ ЗУМА ===== */
+
+.sticker-zoom-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-bottom: 12px;
+}
+
+.sticker-zoom-controls button {
+    min-width: 44px;
+    height: 38px;
+
+    border: none;
+    border-radius: 10px;
+
+    padding: 0 12px;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    color: white;
+
+    background: rgba(255, 255, 255, 0.12);
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.sticker-zoom-controls button:hover {
+    background: rgba(255, 255, 255, 0.22);
+
+    transform: scale(1.08);
+}
+
+.sticker-zoom-controls button:active {
+    transform: scale(0.94);
+}
+
+.sticker-zoom-controls button:focus-visible {
+    outline: 3px solid white;
+
+    outline-offset: 3px;
+}
+
+/* ===== КНОПКА СКАЧИВАНИЯ СТИКЕРА ===== */
+
+.sticker-modal-content {
+    position: relative;
+}
+
+.sticker-download-btn {
+    position: absolute;
+
+    right: 18px;
+    bottom: 18px;
+
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    color: #ffffff;
+
+    background: rgba(255, 255, 255, 0.14);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 4px 18px rgba(0, 0, 0, 0.25);
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+
+    z-index: 10;
+}
+
+.sticker-download-btn svg {
+    width: 24px;
+    height: 24px;
+
+    pointer-events: none;
+}
+
+.sticker-download-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+
+    transform: scale(1.1);
+}
+
+.sticker-download-btn:active {
+    transform: scale(0.92);
+}
+
+.sticker-download-btn:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 3px;
+}
+
 /* ---------- СТРАНИЦА 3: ПРИКОЛЫ ---------- */
 .jokes-list {
     display: flex;
