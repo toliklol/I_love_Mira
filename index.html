@@ -35,17 +35,18 @@
                 <button class="music-control music-toggle" id="musicToggle" type="button" aria-label="Включить музыку" title="Включить музыку">▶</button>
                 <button class="music-control" id="musicNext" type="button" aria-label="Следующая песня" title="Следующая песня">⏭</button>
             </div>
-            <a href="#" data-page="page1" onclick="random_stickerbg()">👤 Главная</a>
+            <a href="#" data-page="page1" onclick="random_stickerbg()" class="active-link">👤 Главная</a>
             <a href="#" data-page="page2" onclick="random_stickerbg()">🖼️ Любимые мемы и стикеры</a>
             <a href="#" data-page="page3" onclick="random_stickerbg()">😉 Наши повадки и приколы</a>
             <a href="#" data-page="page4" onclick="random_stickerbg()">💚 Комплименты</a>
-            <a href="#" data-page="page5" onclick="random_stickerbg()" >📕 Мои рассказы</a>
-            <a href="#" data-page="page6" onclick="random_stickerbg()" class="active-link">🎶 Музыка</a>
-            <a href="#" data-page="page7" onclick="random_stickerbg()" >😏 Продолжение следует...</a>
+            <a href="#" data-page="page5" onclick="random_stickerbg()">📕 Мои рассказы</a>
+            <a href="#" data-page="page6" onclick="random_stickerbg()">🤗 Наши стикеры</a>
+            <a href="#" data-page="page7" onclick="random_stickerbg()">🎶 Музыка</a>
+            <a href="#" data-page="page8" onclick="random_stickerbg()">😏 Продолжение следует...</a>
         </nav>
 
         <!-- ===== СТРАНИЦА 1 ===== -->
-        <section class="page " id="page1">
+        <section class="page active" id="page1">
             <div class="profile-wrap">
                 <div class="avatar-frame">
                     <div class="sun-rays" aria-hidden="true"></div>
@@ -77,6 +78,7 @@
                         <span class="tag">💌 Поэт</span>
                         <span class="tag">✒️ Писатель</span>
                         <span class="tag">🧠 Гений</span>
+                        
                     </div>
                     <div class="profile-quote">
                         💬 «Ты — мой самый любимый человек»
@@ -183,10 +185,6 @@
                     <img src="assets/MiraWait.webp" alt="мем">
                     <div class="caption">🧃 Ожидающая Мира 😐</div>
                 </div>
-                <div class="profile-description meme-card_video" style="text-align: center;">
-                    <p>🔻 А дальше у нас идет, твой стикерпак))) 🔻</p>
-                </div>
-                <div id="stickerPack"></div>
                 <div class="confetti-canvas" id="confettiCanvas"></div>
             </div>
             <p style="margin-top: 16px; color: rgba(255,255,255,0.2); font-size: 0.8rem; text-align: center;">
@@ -273,20 +271,44 @@
         </div>
 
         <!-- ===== СТРАНИЦА 6 ===== -->
-        <section class="page active" id="page6">
+        <section class="page" id="page6">
             <div id="music">
                 <div class="page-subtitle">
+                    🤗 Все стикеры, что мы создали
+                </div>
+                <div class="sticker-pack-accordion" id="stickerPackAccordion"></div>
+                <div class="music-unlock" id="musicUnlock"></div>
+            </div>
+        </section>
+
+         <!-- ===== МОДАЛЬНОЕ ОКНО ДЛЯ СТИКЕРОВ ===== -->
+        <div class="sticker-modal" id="stickerModal" aria-hidden="true">
+            <div class="sticker-modal-content">
+                <button class="sticker-modal-close" id="stickerModalClose" aria-label="Закрыть">✕</button>
+                <img class="sticker-modal-image" id="stickerModalImage" src="" alt="">
+                <div class="sticker-modal-caption" id="stickerModalCaption"></div>
+            </div>
+        </div>
+
+        <!-- ===== СТРАНИЦА 7 ===== -->
+        <section class="page" id="page7">
+            <div id="music">
+                <div class="page-subtitle" id="page7Title">
                     🔒 Закрыто
                 </div>
-                <div class="profile-description">
-                    <p>Эта страница пока недоступна, но скоро здесь появится что-то особенное.</p>
-                </div> 
+                <div class="profile-description secret-heart-collector">
+                    <p id="secretHeartIntro">Найди все сердчечки на сайте))</p>
+                    <p id="secretHeartProgress">Найдено 0/10</p>
+                    <div class="secret-page-state" id="secretPageState">
+                        <p>Сердечек пока не хватает...</p>
+                    </div>
+                </div>
             </div>
 
         </section>
 
-        <!-- ===== СТРАНИЦА 7 ===== -->
-        <section class="page" id="page7">
+        <!-- ===== СТРАНИЦА 8 ===== -->
+        <section class="page" id="page8">
             <div class="page-subtitle">
                 Эта страница пуста)
             </div>
@@ -388,9 +410,12 @@
                         newEmojis = ['📕', '📖', '✍️', '📝', '💕', '🔞'];
                         break;
                     case 'page6':
-                        newEmojis = ['🎶', '🎵', '🎼', '🎧', '🎙', '🎤', '😘'];
+                        newEmojis = ['💞','💌','📈','📩','❤','🤗','☺','😚'];
                         break;
                     case 'page7':
+                        newEmojis = ['🎶', '🎵', '🎼', '🎧', '🎙', '🎤', '😘'];
+                        break;
+                    case 'page8':
                         newEmojis = ['🕳', '🥽', '🔑', '🧱', '🛠', '⛑', '⏳'];
                         break;    
                     default:
@@ -519,35 +544,348 @@
                 complimentContainer.innerHTML = chipsHtml;
             }
 
-            // Генерируем карточки стикерпака из списка файлов.
-            const stickerPack = document.getElementById('stickerPack');
-            if (stickerPack) {
-                stickerPack.style.display = 'contents';
-                const stickerCards = document.createDocumentFragment();
-                const stickerEmojis = [
-                    '💚✨🌸', '🥰😘💖', '😎🔥⭐', '😂🤣😜', '😴💤🌙', '😡💢👊',
-                    '😭😥💔', '🤗💕💞', '😱🙈🫣', '🤔😐🧠', '😍💋💘', '🙏💚✨',
-                    '😏😉💅', '🤩🎉🎶', '😇🌸🦋', '💪✊⚡', '🐰🐾🌿', '👑💝🌟'
-                ];
+            // Генерируем три стикер-пака. Первый открыт по умолчанию, остальные скрыты.
+            const stickerPackConfigs = [
+                { id: 'pack1', label: 'Наш 1 стикер пак☺', folder: 'assets/stickerpack/pack1', count: 50, defaultOpen: true },
+                { id: 'pack2', label: 'Наш 2 стикер пак😘', folder: 'assets/stickerpack/pack2', count: 6, defaultOpen: false },
+                { id: 'pack3', label: 'Наш 3 стикер пак🤩', folder: 'assets/stickerpack/pack3', count: 18, defaultOpen: false }
+            ];
 
-                for (let stickerNumber = 1; stickerNumber <= 18; stickerNumber++) {
-                    const card = document.createElement('div');
-                    card.className = 'meme-card';
-                    card.dataset.stickers = stickerEmojis[stickerNumber - 1];
+            const SECRET_HEART_KEY = 'miraSecretHearts';
+            const SECRET_HEART_TOTAL = 10;
+            const secretHeartProgress = document.getElementById('secretHeartProgress');
+            const secretPageState = document.getElementById('secretPageState');
+            const page7Title = document.getElementById('page7Title');
+            const musicUnlock = document.getElementById('musicUnlock');
 
-                    const image = document.createElement('img');
-                    image.src = `assets/stickerpack/sticker${stickerNumber}.png`;
-                    image.alt = `Стикер ${stickerNumber}`;
+            const secretHeartPositions = [
+                { id: 1, page: 'page1', left: '10%', top: '18%' },
+                { id: 2, page: 'page1', left: '74%', top: '52%' },
+                { id: 3, page: 'page2', left: '18%', top: '58%' },
+                { id: 4, page: 'page2', left: '70%', top: '20%' },
+                { id: 5, page: 'page3', left: '80%', top: '42%' },
+                { id: 6, page: 'page4', left: '28%', top: '36%' },
+                { id: 7, page: 'page5', left: '52%', top: '28%' },
+                { id: 8, page: 'page6', left: '76%', top: '24%' },
+                { id: 9, page: 'page8', left: '32%', top: '62%' },
+                { id: 10, page: 'page7', left: '58%', top: '42%' }
+            ];
 
-                    const caption = document.createElement('div');
-                    caption.className = 'caption';
-                    caption.textContent = `✨ Стикер ${stickerNumber}`;
+            function getSavedSecretHearts() {
+                try {
+                    const raw = localStorage.getItem(SECRET_HEART_KEY);
+                    if (!raw) return new Set();
+                    const parsed = JSON.parse(raw);
+                    return new Set(Array.isArray(parsed) ? parsed : []);
+                } catch (error) {
+                    return new Set();
+                }
+            }
 
-                    card.append(image, caption);
-                    stickerCards.appendChild(card);
+            function saveSecretHearts(set) {
+                try {
+                    localStorage.setItem(SECRET_HEART_KEY, JSON.stringify([...set]));
+                } catch (error) {
+                    console.warn('Не удалось сохранить сердечки в localStorage:', error);
+                }
+            }
+
+            const foundHearts = getSavedSecretHearts();
+
+            function getSecretPlayerMarkup() {
+                return `
+                    <div class="secret-player">
+                        <div class="secret-player-row">
+                            <button class="secret-player-toggle" type="button" aria-label="Включить музыку">▶</button>
+                            <input class="secret-player-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Перемотка трека" />
+                        </div>
+                        <div class="secret-player-row secret-player-row_secondary">
+                            <span class="secret-player-volume-label">🔊</span>
+                            <input class="secret-player-volume" type="range" min="0" max="1" step="0.01" value="0.45" aria-label="Громкость" />
+                            <span class="secret-player-time">0:00</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function pauseBackgroundMusic() {
+                if (typeof backgroundMusic !== 'undefined' && backgroundMusic && !backgroundMusic.paused) {
+                    backgroundMusic.pause();
+                    if (typeof updateMusicToggle === 'function') {
+                        updateMusicToggle();
+                    }
+                }
+            }
+
+            function createSecretAudioPlayer(container, isPage7 = false) {
+                if (!container) return null;
+
+                const audio = new Audio('assets/sounds/Мира в огне.mp3');
+                audio.preload = 'auto';
+                audio.volume = 0.45;
+                audio.loop = false;
+
+                container.innerHTML = getSecretPlayerMarkup();
+
+                const playToggle = container.querySelector('.secret-player-toggle');
+                const progress = container.querySelector('.secret-player-progress');
+                const volume = container.querySelector('.secret-player-volume');
+                const timeLabel = container.querySelector('.secret-player-time');
+
+                if (!playToggle || !progress || !volume || !timeLabel) return audio;
+
+                const formatTime = (seconds) => {
+                    if (!Number.isFinite(seconds) || seconds < 0) return '0:00';
+                    const mins = Math.floor(seconds / 60);
+                    const secs = Math.floor(seconds % 60);
+                    return `${mins}:${String(secs).padStart(2, '0')}`;
+                };
+
+                const updatePlayerState = () => {
+                    playToggle.textContent = audio.paused ? '▶' : '⏸';
+                    playToggle.setAttribute('aria-label', audio.paused ? 'Включить музыку' : 'Остановить музыку');
+
+                    if (!Number.isFinite(audio.duration) || audio.duration === 0) {
+                        progress.value = 0;
+                    } else {
+                        progress.value = (audio.currentTime / audio.duration) * 100;
+                    }
+
+                    timeLabel.textContent = formatTime(audio.currentTime);
+                };
+
+                playToggle.addEventListener('click', () => {
+                    if (audio.paused) {
+                        pauseBackgroundMusic();
+                        audio.play().catch(() => {});
+                    } else {
+                        audio.pause();
+                    }
+                    updatePlayerState();
+                });
+
+                progress.addEventListener('input', (event) => {
+                    if (!Number.isFinite(audio.duration) || audio.duration === 0) return;
+                    audio.currentTime = (Number(event.target.value) / 100) * audio.duration;
+                    updatePlayerState();
+                });
+
+                volume.addEventListener('input', (event) => {
+                    audio.volume = Number(event.target.value);
+                });
+
+                audio.addEventListener('timeupdate', updatePlayerState);
+                audio.addEventListener('play', updatePlayerState);
+                audio.addEventListener('pause', updatePlayerState);
+                audio.addEventListener('loadedmetadata', updatePlayerState);
+                audio.addEventListener('ended', () => {
+                    audio.currentTime = 0;
+                    updatePlayerState();
+                });
+
+                if (isPage7) {
+                    const isUnlocked = foundHearts.size >= SECRET_HEART_TOTAL;
+                    if (!isUnlocked) {
+                        container.innerHTML = '<p>Сердечек пока не хватает...</p>';
+                    }
                 }
 
-                stickerPack.replaceChildren(stickerCards);
+                return audio;
+            }
+
+            function updatePage7Status() {
+                const unlocked = foundHearts.size >= SECRET_HEART_TOTAL;
+
+                if (secretHeartProgress) {
+                    secretHeartProgress.textContent = `Найдено ${foundHearts.size}/${SECRET_HEART_TOTAL}`;
+                }
+
+                if (page7Title) {
+                    page7Title.textContent = unlocked ? '💖 Тайная страница открыта' : '🔒 Закрыто';
+                }
+
+                if (secretPageState) {
+                    if (unlocked) {
+                        secretPageState.innerHTML = `
+                            <p>Ты нашла все сердечки! Теперь 7 страница открыта.</p>
+                        `;
+                        createSecretAudioPlayer(secretPageState, true);
+                    } else {
+                        secretPageState.innerHTML = '<p>Сердечек пока не хватает...</p>';
+                    }
+                }
+            }
+
+            function unlockSecretSong() {
+                if (!musicUnlock) return;
+
+                if (foundHearts.size >= SECRET_HEART_TOTAL) {
+                    createSecretAudioPlayer(musicUnlock, false);
+                } else {
+                    musicUnlock.innerHTML = '';
+                }
+            }
+
+            function createSecretHeart(heartId, pageId) {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'secret-heart';
+                button.textContent = '❤';
+                button.setAttribute('aria-label', `Сердечко ${heartId}`);
+                button.title = `Сердечко ${heartId}`;
+
+                const config = secretHeartPositions.find(item => item.id === heartId && item.page === pageId);
+                if (config) {
+                    button.style.left = config.left;
+                    button.style.top = config.top;
+                }
+
+                if (foundHearts.has(heartId)) {
+                    button.classList.add('found');
+                    button.disabled = true;
+                }
+
+                button.addEventListener('click', () => {
+                    if (foundHearts.has(heartId)) return;
+
+                    foundHearts.add(heartId);
+                    saveSecretHearts(foundHearts);
+                    button.classList.add('found');
+                    button.disabled = true;
+
+                    const sound = new Audio('assets/sounds/emoji_salut.mp3');
+                    sound.volume = 0.35;
+                    sound.play().catch(() => {});
+
+                    updatePage7Status();
+                    unlockSecretSong();
+                });
+
+                return button;
+            }
+
+            function renderSecretHearts() {
+                document.querySelectorAll('.page').forEach((page) => {
+                    let layer = page.querySelector('.page-secret-layer');
+                    if (!layer) {
+                        layer = document.createElement('div');
+                        layer.className = 'page-secret-layer';
+                        page.appendChild(layer);
+                    }
+
+                    layer.innerHTML = '';
+                    secretHeartPositions
+                        .filter(item => item.page === page.id)
+                        .forEach((item) => {
+                            layer.appendChild(createSecretHeart(item.id, page.id));
+                        });
+                });
+
+                updatePage7Status();
+                unlockSecretSong();
+            }
+
+            renderSecretHearts();
+
+            const stickerPackAccordion = document.getElementById('stickerPackAccordion');
+            if (stickerPackAccordion) {
+                stickerPackAccordion.innerHTML = '';
+
+                stickerPackConfigs.forEach((pack) => {
+                    const item = document.createElement('div');
+                    item.className = `sticker-pack-item ${pack.defaultOpen ? 'open' : ''}`;
+                    item.dataset.pack = pack.id;
+
+                    const toggle = document.createElement('button');
+                    toggle.type = 'button';
+                    toggle.className = 'sticker-pack-toggle';
+                    toggle.setAttribute('aria-expanded', String(pack.defaultOpen));
+
+                    const icon = document.createElement('span');
+                    icon.className = 'sticker-pack-toggle-icon';
+                    icon.textContent = pack.defaultOpen ? '▼' : '▶';
+
+                    const label = document.createElement('span');
+                    label.textContent = pack.label;
+
+                    toggle.append(icon, label);
+
+                    const content = document.createElement('div');
+                    content.className = 'sticker-pack-content';
+
+                    const grid = document.createElement('div');
+                    grid.className = 'stickers-grid';
+
+                    for (let stickerNumber = 1; stickerNumber <= pack.count; stickerNumber++) {
+                        const card = document.createElement('div');
+                        card.className = 'sticker';
+
+                        const image = document.createElement('img');
+                        image.src = `${pack.folder}/sticker${stickerNumber}.png`;
+                        image.alt = `${pack.label} ${stickerNumber}`;
+
+                        const caption = document.createElement('div');
+                        caption.className = 'caption';
+                        caption.textContent = `✨ Стикер ${stickerNumber}`;
+
+                        card.dataset.image = image.src;
+                        card.dataset.caption = caption.textContent;
+                        card.append(image, caption);
+                        grid.appendChild(card);
+
+                        card.addEventListener('click', () => {
+                            const modal = document.getElementById('stickerModal');
+                            const modalImage = document.getElementById('stickerModalImage');
+                            const modalCaption = document.getElementById('stickerModalCaption');
+                            if (!modal || !modalImage || !modalCaption) return;
+
+                            modalImage.src = image.src;
+                            modalImage.alt = image.alt;
+                            modalCaption.textContent = caption.textContent;
+                            modal.classList.add('open');
+                            modal.setAttribute('aria-hidden', 'false');
+                        });
+                    }
+
+                    content.appendChild(grid);
+                    item.append(toggle, content);
+                    stickerPackAccordion.appendChild(item);
+
+                    const updatePackState = () => {
+                        const isOpen = item.classList.contains('open');
+                        icon.textContent = isOpen ? '▼' : '▶';
+                        toggle.setAttribute('aria-expanded', String(isOpen));
+                        content.style.maxHeight = isOpen ? `${content.scrollHeight}px` : '0px';
+                    };
+
+                    toggle.addEventListener('click', () => {
+                        item.classList.toggle('open');
+                        updatePackState();
+                    });
+
+                    updatePackState();
+                });
+            }
+
+            const stickerModal = document.getElementById('stickerModal');
+            const stickerModalClose = document.getElementById('stickerModalClose');
+
+            if (stickerModal) {
+                const closeStickerModal = () => {
+                    stickerModal.classList.remove('open');
+                    stickerModal.setAttribute('aria-hidden', 'true');
+                };
+
+                stickerModalClose?.addEventListener('click', closeStickerModal);
+                stickerModal.addEventListener('click', (event) => {
+                    if (event.target === stickerModal) closeStickerModal();
+                });
+
+                document.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape' && stickerModal.classList.contains('open')) {
+                        closeStickerModal();
+                    }
+                });
             }
 
             // ============================================
@@ -602,7 +940,8 @@
                 page4: document.getElementById('page4'),
                 page5: document.getElementById('page5'),
                 page6: document.getElementById('page6'),
-                page7: document.getElementById('page7')
+                page7: document.getElementById('page7'),
+                page8: document.getElementById('page8'),
             };
 
             let isMenuOpen = false;

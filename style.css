@@ -314,6 +314,7 @@ body {
 
 /* ---------- СТРАНИЦЫ (анимация перелистывания) ---------- */
 .page {
+    position: relative;
     display: none;
     animation: pageSlide 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -477,6 +478,158 @@ body {
     flex-direction: column;
 }
 
+.secret-heart-collector {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.secret-page-state {
+    margin-top: 8px;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.6;
+}
+
+.page-secret-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 15;
+}
+
+.secret-heart {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: transform 0.2s ease, color 0.2s ease, filter 0.2s ease;
+    animation: secretHeartPulse 1.8s ease-in-out infinite;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.secret-heart:hover,
+.secret-heart:active {
+    transform: scale(1.2) rotate(-8deg);
+}
+
+.secret-heart.found {
+    color: #ff7bb2;
+    filter: drop-shadow(0 0 12px rgba(255, 123, 178, 0.7));
+    animation: secretHeartFound 0.5s ease;
+}
+
+@keyframes secretHeartPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.12);
+        opacity: 1;
+    }
+}
+
+@keyframes secretHeartFound {
+    0% {
+        transform: scale(0.7);
+        opacity: 0.4;
+    }
+    45% {
+        transform: scale(1.38);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.music-unlock {
+    margin-top: 16px;
+}
+
+.secret-player {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(165, 214, 167, 0.15);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.secret-player-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.secret-player-row_secondary {
+    gap: 8px;
+}
+
+.secret-player-toggle {
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(165, 214, 167, 0.2);
+    border-radius: 12px;
+    background: rgba(165, 214, 167, 0.08);
+    color: #e8f5e9;
+    font-size: 1.1rem;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.secret-player-progress,
+.secret-player-volume {
+    width: 100%;
+    accent-color: #ff8bb8;
+    cursor: pointer;
+}
+
+.secret-player-volume-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.secret-player-time {
+    min-width: 42px;
+    text-align: right;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.unlock-song-button {
+    width: 100%;
+    border: 1px solid rgba(165, 214, 167, 0.2);
+    background: rgba(165, 214, 167, 0.08);
+    color: #e8f5e9;
+    border-radius: 16px;
+    padding: 14px 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.unlock-song-button:hover,
+.unlock-song-button:active {
+    transform: translateY(-1px);
+    background: rgba(165, 214, 167, 0.12);
+}
+
 .profile-quote {
     margin-top: 14px;
     padding: 12px 16px;
@@ -563,6 +716,174 @@ body {
 
 .meme-card_video {
     grid-column: span 2;
+}
+
+.sticker-pack-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.sticker-pack-item {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 18px;
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.sticker-pack-toggle {
+    width: 100%;
+    border: none;
+    background: rgba(255, 255, 255, 0.02);
+    color: #e8f5e9;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 0.98rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.sticker-pack-toggle:hover,
+.sticker-pack-toggle:active {
+    background: rgba(165, 214, 167, 0.08);
+}
+
+.sticker-pack-toggle-icon {
+    width: 20px;
+    display: inline-block;
+    color: #b8e6b8;
+    font-size: 0.9rem;
+}
+
+.sticker-pack-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+}
+
+.sticker-pack-item.open .sticker-pack-content {
+    max-height: 2200px;
+}
+
+.stickers-grid,
+.sticker-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 10px 12px 14px;
+}
+
+.sticker {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    cursor: pointer;
+}
+
+.sticker:active {
+    transform: scale(0.97);
+}
+
+.sticker img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    background: rgba(165, 214, 167, 0.04);
+}
+
+.sticker .caption {
+    padding: 10px 8px 12px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.78rem;
+    font-weight: 500;
+    background: rgba(0, 0, 0, 0.13);
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.sticker-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(6, 18, 12, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.sticker-modal.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.sticker-modal-content {
+    position: relative;
+    max-width: min(92vw, 560px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(17, 35, 26, 0.92);
+    border: 1px solid rgba(165, 214, 167, 0.16);
+    border-radius: 24px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+    padding: 24px 20px 18px;
+}
+
+.sticker-modal-image {
+    display: block;
+    max-width: 100%;
+    max-height: 80vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 16px;
+}
+
+.sticker-modal-caption {
+    margin-top: 12px;
+    color: rgba(255, 255, 255, 0.76);
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.sticker-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 1.4rem;
+    cursor: pointer;
 }
 
 /* ---------- СТРАНИЦА 3: ПРИКОЛЫ ---------- */
