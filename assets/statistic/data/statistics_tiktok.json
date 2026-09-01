@@ -1,0 +1,114 @@
+{
+    "source": "TikTok",
+    "total_messages": 113320,
+    "participants": {
+        "toliklol777": {
+            "messages": 59430,
+            "percentage": 52.44
+        },
+        "zaika_mira24": {
+            "messages": 53890,
+            "percentage": 47.56
+        }
+    },
+    "top_5_days": [
+        {
+            "date": "2026-08-29",
+            "messages": 1931,
+            "percentage": 1.7
+        },
+        {
+            "date": "2026-08-17",
+            "messages": 1511,
+            "percentage": 1.33
+        },
+        {
+            "date": "2026-06-04",
+            "messages": 1450,
+            "percentage": 1.28
+        },
+        {
+            "date": "2026-08-28",
+            "messages": 1427,
+            "percentage": 1.26
+        },
+        {
+            "date": "2026-07-02",
+            "messages": 1362,
+            "percentage": 1.2
+        }
+    ],
+    "top_5_months": [
+        {
+            "month": "2026-08",
+            "messages": 28748,
+            "percentage": 25.37
+        },
+        {
+            "month": "2026-06",
+            "messages": 26961,
+            "percentage": 23.79
+        },
+        {
+            "month": "2026-07",
+            "messages": 25371,
+            "percentage": 22.39
+        },
+        {
+            "month": "2026-05",
+            "messages": 20309,
+            "percentage": 17.92
+        },
+        {
+            "month": "2026-04",
+            "messages": 11931,
+            "percentage": 10.53
+        }
+    ],
+    "top_5_words_by_participant": {
+        "zaika_mira24": [
+            {
+                "word": "xd",
+                "count": 8085
+            },
+            {
+                "word": "ток",
+                "count": 2068
+            },
+            {
+                "word": "тебе",
+                "count": 1334
+            },
+            {
+                "word": "надо",
+                "count": 1296
+            },
+            {
+                "word": "ибо",
+                "count": 1184
+            }
+        ],
+        "toliklol777": [
+            {
+                "word": "xd",
+                "count": 8550
+            },
+            {
+                "word": "надо",
+                "count": 1757
+            },
+            {
+                "word": "шеф",
+                "count": 1511
+            },
+            {
+                "word": "будет",
+                "count": 1461
+            },
+            {
+                "word": "знаю",
+                "count": 1435
+            }
+        ]
+    }
+}

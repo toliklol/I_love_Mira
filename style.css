@@ -886,6 +886,41 @@ body {
     cursor: pointer;
 }
 
+.sticker-nav-buttons {
+    position: absolute;
+    bottom: 65px;
+    left: 16px;
+    right: 16px;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.sticker-nav-btn {
+    pointer-events: auto;
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+}
+
+.sticker-nav-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.22);
+    transform: scale(1.06);
+}
+
+.sticker-nav-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
 /* ===== ЗУМ СТИКЕРА В МОДАЛЬНОМ ОКНЕ ===== */
 
 .sticker-image-viewport {
@@ -1317,6 +1352,261 @@ body {
     background: rgba(165, 214, 167, 0.5);
 }
 
+/* ---------- СТРАНИЦА 8: СТАТИСТИКА ПЕРЕПИСКИ ---------- */
+.stats-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+}
+
+.stats-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.stats-tab {
+    flex: 0 0 auto;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    color: rgba(255, 255, 255, 0.65);
+    padding: 8px 18px;
+    border-radius: 40px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.25s;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.stats-tab.active-tab {
+    background: rgba(165, 214, 167, 0.18);
+    color: #e8f5e9;
+    border-color: rgba(165, 214, 167, 0.4);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+.stats-status {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.9rem;
+    padding: 30px 10px;
+}
+
+.stats-status_error {
+    color: #ffb3b3;
+}
+
+.stats-wrapper {
+    display: block;
+}
+
+.stats-panel {
+    display: none;
+    flex-direction: column;
+    gap: 14px;
+    animation: statsFadeIn 0.35s ease;
+}
+
+.stats-panel.active-panel {
+    display: flex;
+}
+
+@keyframes statsFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.stats-overview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.stats-overview-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
+    padding: 14px 8px;
+    text-align: center;
+}
+
+.stats-overview-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #e8f5e9;
+    line-height: 1.2;
+}
+
+.stats-overview-label {
+    margin-top: 4px;
+    font-size: 0.65rem;
+    color: #a5d6a7;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    opacity: 0.85;
+}
+
+.stats-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 24px;
+    padding: 18px;
+}
+
+.stats-section-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #e8f5e9;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.stats-bar {
+    display: flex;
+    height: 16px;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.06);
+    margin-bottom: 14px;
+}
+
+.stats-bar-seg {
+    height: 100%;
+    transition: width 0.4s ease;
+}
+
+.stats-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.stats-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.stats-legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex: 0 0 auto;
+}
+
+.stats-legend-name {
+    flex: 1;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.stats-legend-value {
+    color: #a5d6a7;
+    font-weight: 600;
+    font-size: 0.78rem;
+    white-space: nowrap;
+}
+
+.stats-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.stats-row {
+    display: grid;
+    grid-template-columns: 84px 1fr auto;
+    align-items: center;
+    gap: 10px;
+}
+
+.stats-row-label {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.stats-row-bar {
+    height: 8px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+}
+
+.stats-row-bar-fill {
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #a5d6a7, #66bb6a);
+    transition: width 0.4s ease;
+}
+
+.stats-row-value {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #e8f5e9;
+    white-space: nowrap;
+}
+
+.stats-words-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.stats-words-name {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #a5d6a7;
+    margin-bottom: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.stats-word-chip {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 40px;
+    padding: 6px 12px;
+    margin-bottom: 6px;
+    font-size: 0.78rem;
+}
+
+.stats-word-text {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.stats-word-count {
+    color: #ffd76a;
+    font-weight: 700;
+    margin-left: 8px;
+    flex: 0 0 auto;
+}
+
 /* ---------- АДАПТИВ ---------- */
 @media (max-width: 420px) {
     .app-wrapper {
@@ -1340,6 +1630,12 @@ body {
         width: 260px;
         padding: 70px 16px 30px;
     }
+    .stats-overview-value {
+        font-size: 1.05rem;
+    }
+    .stats-row {
+        grid-template-columns: 68px 1fr auto;
+    }
 }
 
 @media (max-width: 360px) {
@@ -1354,6 +1650,12 @@ body {
     .profile-photo {
         width: 90px;
         height: 90px;
+    }
+    .stats-words-grid {
+        grid-template-columns: 1fr;
+    }
+    .stats-overview {
+        gap: 6px;
     }
 }
 

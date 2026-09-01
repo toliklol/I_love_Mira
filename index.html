@@ -42,7 +42,8 @@
             <a href="#" data-page="page5" onclick="random_stickerbg()">📕 Мои рассказы</a>
             <a href="#" data-page="page6" onclick="random_stickerbg()">🤗 Наши стикеры</a>
             <a href="#" data-page="page7" onclick="random_stickerbg()">🎶 Музыка</a>
-            <a href="#" data-page="page8" onclick="random_stickerbg()">😏 Продолжение следует...</a>
+            <a href="#" data-page="page8" onclick="random_stickerbg()">📊 Статистика переписки</a>
+            <a href="#" data-page="page9" onclick="random_stickerbg()">😏 Продолжение следует...</a>
         </nav>
 
         <!-- ===== СТРАНИЦА 1 ===== -->
@@ -292,6 +293,28 @@
                     ✕
                 </button>
 
+                <div class="sticker-nav-buttons" aria-label="Навигация по стикерам">
+                    <button
+                        type="button"
+                        class="sticker-nav-btn"
+                        id="stickerNavPrev"
+                        aria-label="Предыдущий стикер"
+                        title="Предыдущий стикер"
+                    >
+                        ‹
+                    </button>
+
+                    <button
+                        type="button"
+                        class="sticker-nav-btn"
+                        id="stickerNavNext"
+                        aria-label="Следующий стикер"
+                        title="Следующий стикер"
+                    >
+                        ›
+                    </button>
+                </div>
+
                 <div class="sticker-zoom-controls">
 
                     <button
@@ -382,8 +405,29 @@
 
         </section>
 
-        <!-- ===== СТРАНИЦА 8 ===== -->
+        <!-- ===== СТРАНИЦА 8: СТАТИСТИКА ПЕРЕПИСКИ ===== -->
         <section class="page" id="page8">
+            <div class="page-subtitle">
+                📊 Статистика переписки <span>Цифры</span>
+            </div>
+
+            <div class="stats-tabs" id="statsTabs" role="tablist">
+                <button class="stats-tab active-tab" type="button" data-stat-source="total">💚 Итого</button>
+                <button class="stats-tab" type="button" data-stat-source="telegram">✈️ Telegram</button>
+                <button class="stats-tab" type="button" data-stat-source="tiktok">🎵 TikTok</button>
+            </div>
+
+            <div class="stats-status" id="statsStatus">⏳ Считаем сообщения...</div>
+
+            <div class="stats-wrapper" id="statsWrapper">
+                <div class="stats-panel active-panel" data-stat-panel="total"></div>
+                <div class="stats-panel" data-stat-panel="telegram"></div>
+                <div class="stats-panel" data-stat-panel="tiktok"></div>
+            </div>
+        </section>
+
+        <!-- ===== СТРАНИЦА 9 ===== -->
+        <section class="page" id="page9">
             <div class="page-subtitle">
                 Эта страница пуста)
             </div>
@@ -492,6 +536,9 @@
                         newEmojis = ['🎶', '🎵', '🎼', '🎧', '🎙', '🎤', '😘'];
                         break;
                     case 'page8':
+                        newEmojis = ['📊', '📈', '🔢', '💚', '✨', '📌'];
+                        break;
+                    case 'page9':
                         newEmojis = ['🕳', '🥽', '🔑', '🧱', '🛠', '⛑', '⏳'];
                         break;    
                     default:
@@ -622,9 +669,12 @@
 
             // Генерируем три стикер-пака. Первый открыт по умолчанию, остальные скрыты.
             const stickerPackConfigs = [
-                { id: 'pack1', label: 'Наш 1 стикер пак😀', folder: 'assets/stickerpack/pack1', count: 53, defaultOpen: false },
-                { id: 'pack2', label: 'Наш 2 стикер пак😘', folder: 'assets/stickerpack/pack2', count: 18, defaultOpen: false },
-                { id: 'pack3', label: 'Наш 3 стикер пак🤩', folder: 'assets/stickerpack/pack3', count: 30, defaultOpen: false }
+                { id: 'pack1', label: 'Наш 1 стикер пак😀', folder: 'assets/stickerpack/pack1', count: 55, defaultOpen: false },
+                { id: 'pack2', label: 'Наш 2 стикер пак😘', folder: 'assets/stickerpack/pack2', count: 35, defaultOpen: false },
+                { id: 'pack3', label: 'Наш 3 стикер пак🤩', folder: 'assets/stickerpack/pack3', count: 51, defaultOpen: false },
+                { id: 'pack4', label: 'Наш 4 стикер пак😻', folder: 'assets/stickerpack/pack4', count: 43, defaultOpen: false },
+                { id: 'pack5', label: 'Наш 5 стикер пак👨‍🦱', folder: 'assets/stickerpack/pack5', count: 38, defaultOpen: false },
+                { id: 'pack6', label: 'Наш 6 общий стикер пак❤', folder: 'assets/stickerpack/pack6', count: 9, defaultOpen: false },
             ];
 
             const SECRET_HEART_KEY = 'miraSecretHearts';
@@ -643,8 +693,8 @@
                 { id: 6, page: 'page5', left: '45%', bottom: '-250px' },
                 { id: 7, page: 'page6', left: '80%', top: '25%' },
                 { id: 8, page: 'page7', left: '60%', top: '2px' },
-                { id: 9, page: 'page8', left: '5%', bottom: '-80px' },
-                { id: 10, page: 'page8', left: '58%', top: '62%' }
+                { id: 9, page: 'page9', left: '5%', bottom: '-80px' },
+                { id: 10, page: 'page9', left: '58%', top: '62%' }
             ];
 
             function getSavedSecretHearts() {
@@ -914,7 +964,14 @@
                             const modal = document.getElementById('stickerModal');
                             const modalImage = document.getElementById('stickerModalImage');
                             const modalCaption = document.getElementById('stickerModalCaption');
+
                             if (!modal || !modalImage || !modalCaption) return;
+
+                            const stickerCards = Array.from(item.querySelectorAll('.sticker'));
+                            const currentIndex = stickerCards.indexOf(card);
+
+                            stickerNavigationCards = stickerCards;
+                            currentStickerIndex = currentIndex >= 0 ? currentIndex : 0;
 
                             modalImage.src = image.src;
                             modalImage.style.transform = 'translate(0px, 0px) scale(1)';
@@ -922,6 +979,8 @@
                             modalCaption.textContent = caption.textContent;
                             modal.classList.add('open');
                             modal.setAttribute('aria-hidden', 'false');
+
+                            updateStickerNavigationState();
                         });
                     }
 
@@ -947,6 +1006,8 @@
 
             const stickerModal = document.getElementById('stickerModal');
             const stickerModalClose = document.getElementById('stickerModalClose');
+            const stickerNavPrev = document.getElementById('stickerNavPrev');
+            const stickerNavNext = document.getElementById('stickerNavNext');
 
             const stickerModalImage = document.getElementById('stickerModalImage');
             const stickerImageViewport = document.getElementById('stickerImageViewport');
@@ -956,50 +1017,73 @@
             const stickerZoomReset = document.getElementById('stickerZoomReset');
             const stickerDownload = document.getElementById('stickerDownload');
 
+            let stickerNavigationCards = [];
+            let currentStickerIndex = -1;
+            let scale = 1;
+            let translateX = 0;
+            let translateY = 0;
+
+            const MIN_SCALE = 0.5;
+            const MAX_SCALE = 5;
+            const ZOOM_STEP = 0.25;
+
+            function updateStickerTransform() {
+                if (!stickerModalImage) return;
+
+                stickerModalImage.style.transform =
+                    `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+
+                if (stickerZoomReset) {
+                    stickerZoomReset.textContent =
+                        `${Math.round(scale * 100)}%`;
+                }
+            }
+
+            function resetStickerZoom() {
+                scale = 1;
+                translateX = 0;
+                translateY = 0;
+                updateStickerTransform();
+            }
+
+            function updateStickerNavigationState() {
+                if (!stickerNavPrev || !stickerNavNext) return;
+
+                const hasMultiple = stickerNavigationCards.length > 1;
+                stickerNavPrev.disabled = !hasMultiple || currentStickerIndex <= 0;
+                stickerNavNext.disabled = !hasMultiple || currentStickerIndex >= stickerNavigationCards.length - 1;
+            }
+
+            function openStickerFromNavigation(step) {
+                if (!stickerNavigationCards.length) return;
+
+                const nextIndex = currentStickerIndex + step;
+                if (nextIndex < 0 || nextIndex >= stickerNavigationCards.length) return;
+
+                const nextCard = stickerNavigationCards[nextIndex];
+                const nextImage = nextCard.querySelector('img');
+                const nextCaption = nextCard.querySelector('.caption');
+
+                if (!nextImage || !stickerModalImage) return;
+
+                currentStickerIndex = nextIndex;
+                stickerModalImage.src = nextImage.src;
+                stickerModalImage.alt = nextImage.alt;
+
+                scale = 1;
+                translateX = 0;
+                translateY = 0;
+                updateStickerTransform();
+
+                const captionNode = document.getElementById('stickerModalCaption');
+                if (captionNode) {
+                    captionNode.textContent = nextCaption ? nextCaption.textContent : nextCard.dataset.caption || 'Стикер';
+                }
+
+                updateStickerNavigationState();
+            }
 
             if (stickerModal && stickerModalImage && stickerImageViewport) {
-
-                let scale = 1;
-
-                let translateX = 0;
-                let translateY = 0;
-
-                const MIN_SCALE = 0.5;
-                const MAX_SCALE = 5;
-                const ZOOM_STEP = 0.25;
-
-
-                // ============================================
-                // ОБНОВЛЕНИЕ ПОЗИЦИИ И МАСШТАБА
-                // ============================================
-
-                function updateStickerTransform() {
-
-                    stickerModalImage.style.transform =
-                        `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-
-                    if (stickerZoomReset) {
-                        stickerZoomReset.textContent =
-                            `${Math.round(scale * 100)}%`;
-                    }
-
-                }
-
-
-                // ============================================
-                // СБРОС ЗУМА
-                // ============================================
-
-                function resetStickerZoom() {
-
-                    scale = 1;
-
-                    translateX = 0;
-                    translateY = 0;
-
-                    updateStickerTransform();
-
-                }
 
 
                 // ============================================
@@ -1364,10 +1448,20 @@
                         'true'
                     );
 
+                    stickerNavigationCards = [];
+                    currentStickerIndex = -1;
+                    updateStickerNavigationState();
                     resetStickerZoom();
 
                 };
 
+                stickerNavPrev?.addEventListener('click', () => {
+                    openStickerFromNavigation(-1);
+                });
+
+                stickerNavNext?.addEventListener('click', () => {
+                    openStickerFromNavigation(1);
+                });
 
                 stickerModalClose?.addEventListener(
                     'click',
@@ -1402,6 +1496,19 @@
 
                         }
 
+                        if (
+                            event.key === 'ArrowLeft' &&
+                            stickerModal.classList.contains('open')
+                        ) {
+                            openStickerFromNavigation(-1);
+                        }
+
+                        if (
+                            event.key === 'ArrowRight' &&
+                            stickerModal.classList.contains('open')
+                        ) {
+                            openStickerFromNavigation(1);
+                        }
 
                         // + увеличивает
                         if (
@@ -1493,6 +1600,7 @@
                 page6: document.getElementById('page6'),
                 page7: document.getElementById('page7'),
                 page8: document.getElementById('page8'),
+                page9: document.getElementById('page9'),
             };
 
             let isMenuOpen = false;
@@ -1696,6 +1804,196 @@
             console.log('✅ Сайт готов! Меню скрыто через display: none');
             console.log('📍 Нажми на бургер (☰) в правом верхнем углу, чтобы открыть меню');
             console.log('📌 Меню полностью скрыто из DOM-дерева при закрытии');
+
+            // ============================================
+            // 6.1 СТАТИСТИКА ПЕРЕПИСКИ (page8)
+            // ============================================
+            (function initStats() {
+                const STATS_FILES = {
+                    telegram: 'assets/statistic/data/statistics_telegram.json',
+                    tiktok: 'assets/statistic/data/statistics_tiktok.json',
+                    total: 'assets/statistic/data/statistics_total.json'
+                };
+
+                const PARTICIPANT_COLORS = ['#a5d6a7', '#ffd76a', '#ff8bb8', '#90caf9'];
+
+                const MONTHS_FULL = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                    'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+                const MONTHS_SHORT = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн',
+                    'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+
+                const statsTabs = document.getElementById('statsTabs');
+                const statsStatus = document.getElementById('statsStatus');
+                const statsWrapper = document.getElementById('statsWrapper');
+
+                if (!statsWrapper) return;
+
+                function escapeHtml(str) {
+                    return String(str)
+                        .replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;');
+                }
+
+                function formatNumber(num) {
+                    return Number(num).toLocaleString('ru-RU');
+                }
+
+                function formatDay(dateStr) {
+                    const parts = dateStr.split('-');
+                    if (parts.length !== 3) return dateStr;
+                    const [y, m, d] = parts;
+                    const monthIndex = parseInt(m, 10) - 1;
+                    const monthName = MONTHS_SHORT[monthIndex] || m;
+                    return `${parseInt(d, 10)} ${monthName} ${y}`;
+                }
+
+                function formatMonth(monthStr) {
+                    const parts = monthStr.split('-');
+                    if (parts.length !== 2) return monthStr;
+                    const [y, m] = parts;
+                    const monthIndex = parseInt(m, 10) - 1;
+                    const monthName = MONTHS_FULL[monthIndex] || m;
+                    return `${monthName} ${y}`;
+                }
+
+                function renderParticipants(participants) {
+                    const entries = Object.entries(participants);
+                    const segments = entries.map(([name, info], idx) => {
+                        const color = PARTICIPANT_COLORS[idx % PARTICIPANT_COLORS.length];
+                        return `<div class="stats-bar-seg" style="width:${info.percentage}%;background:${color};"></div>`;
+                    }).join('');
+
+                    const legend = entries.map(([name, info], idx) => {
+                        const color = PARTICIPANT_COLORS[idx % PARTICIPANT_COLORS.length];
+                        return `
+                            <div class="stats-legend-item">
+                                <span class="stats-legend-dot" style="background:${color};"></span>
+                                <span class="stats-legend-name">${escapeHtml(name)}</span>
+                                <span class="stats-legend-value">${formatNumber(info.messages)} · ${info.percentage}%</span>
+                            </div>`;
+                    }).join('');
+
+                    return `
+                        <div class="stats-card stats-participants">
+                            <div class="stats-section-title">👥 Участники</div>
+                            <div class="stats-bar">${segments}</div>
+                            <div class="stats-legend">${legend}</div>
+                        </div>`;
+                }
+
+                function renderTopRows(title, icon, items, labelFn) {
+                    const maxPercentage = Math.max(...items.map(i => i.percentage), 0.0001);
+                    const rows = items.map(item => {
+                        const width = Math.max(6, (item.percentage / maxPercentage) * 100);
+                        return `
+                            <div class="stats-row">
+                                <span class="stats-row-label">${escapeHtml(labelFn(item))}</span>
+                                <div class="stats-row-bar"><div class="stats-row-bar-fill" style="width:${width}%;"></div></div>
+                                <span class="stats-row-value">${formatNumber(item.messages)}</span>
+                            </div>`;
+                    }).join('');
+
+                    return `
+                        <div class="stats-card">
+                            <div class="stats-section-title">${icon} ${title}</div>
+                            <div class="stats-rows">${rows}</div>
+                        </div>`;
+                }
+
+                function renderWords(wordsByParticipant) {
+                    const cols = Object.entries(wordsByParticipant).map(([name, words]) => {
+                        const chips = words.map(w => `
+                            <div class="stats-word-chip">
+                                <span class="stats-word-text">${escapeHtml(w.word)}</span>
+                                <span class="stats-word-count">${formatNumber(w.count)}</span>
+                            </div>`).join('');
+
+                        return `
+                            <div class="stats-words-col">
+                                <div class="stats-words-name">${escapeHtml(name)}</div>
+                                ${chips}
+                            </div>`;
+                    }).join('');
+
+                    return `
+                        <div class="stats-card">
+                            <div class="stats-section-title">💬 Топ-5 слов</div>
+                            <div class="stats-words-grid">${cols}</div>
+                        </div>`;
+                }
+
+                function renderStatsPanel(data) {
+                    const topDay = data.top_5_days && data.top_5_days[0];
+                    const topMonth = data.top_5_months && data.top_5_months[0];
+
+                    const overview = `
+                        <div class="stats-overview">
+                            <div class="stats-overview-card">
+                                <div class="stats-overview-value">${formatNumber(data.total_messages)}</div>
+                                <div class="stats-overview-label">Сообщений всего</div>
+                            </div>
+                            <div class="stats-overview-card">
+                                <div class="stats-overview-value">${topDay ? formatNumber(topDay.messages) : '—'}</div>
+                                <div class="stats-overview-label">Рекорд за день</div>
+                            </div>
+                            <div class="stats-overview-card">
+                                <div class="stats-overview-value">${topMonth ? formatNumber(topMonth.messages) : '—'}</div>
+                                <div class="stats-overview-label">Рекорд за месяц</div>
+                            </div>
+                        </div>`;
+
+                    const participants = renderParticipants(data.participants || {});
+                    const days = renderTopRows('Топ-5 дней по активности', '🔥', data.top_5_days || [], item => formatDay(item.date));
+                    const months = renderTopRows('Топ-5 месяцев по активности', '📅', data.top_5_months || [], item => formatMonth(item.month));
+                    const words = renderWords(data.top_5_words_by_participant || {});
+
+                    return overview + participants + days + months + words;
+                }
+
+                function switchStatsTab(source) {
+                    document.querySelectorAll('.stats-tab').forEach(tab => {
+                        tab.classList.toggle('active-tab', tab.dataset.statSource === source);
+                    });
+                    document.querySelectorAll('.stats-panel').forEach(panel => {
+                        panel.classList.toggle('active-panel', panel.dataset.statPanel === source);
+                    });
+                }
+
+                if (statsTabs) {
+                    statsTabs.querySelectorAll('.stats-tab').forEach(tab => {
+                        tab.addEventListener('click', () => switchStatsTab(tab.dataset.statSource));
+                    });
+                }
+
+                async function loadStats() {
+                    try {
+                        const keys = Object.keys(STATS_FILES);
+                        const responses = await Promise.all(
+                            keys.map(key => fetch(STATS_FILES[key]).then(res => {
+                                if (!res.ok) throw new Error('Не удалось загрузить ' + STATS_FILES[key]);
+                                return res.json();
+                            }))
+                        );
+
+                        keys.forEach((key, idx) => {
+                            const panel = statsWrapper.querySelector(`.stats-panel[data-stat-panel="${key}"]`);
+                            if (panel) panel.innerHTML = renderStatsPanel(responses[idx]);
+                        });
+
+                        if (statsStatus) statsStatus.style.display = 'none';
+                        statsWrapper.classList.add('loaded');
+                    } catch (error) {
+                        console.error('Ошибка загрузки статистики:', error);
+                        if (statsStatus) {
+                            statsStatus.textContent = '😔 Не удалось загрузить статистику. Проверь файлы в assets/statistic/data/';
+                            statsStatus.classList.add('stats-status_error');
+                        }
+                    }
+                }
+
+                loadStats();
+            })();
 
             // ============================================
             // 7. РАССКАЗЫ (МОДАЛЬНОЕ ОКНО)
