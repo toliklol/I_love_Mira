@@ -450,6 +450,81 @@
 
     <script>
 
+        // ============================================
+        // 0. КЕШИРОВАНИЕ КАРТИНОК (Service Worker)
+        // ============================================
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').catch((err) => {
+                    console.warn('Не удалось зарегистрировать service worker:', err);
+                });
+            });
+        }
+
+        // ============================================
+        // 0.1 УВЕДОМЛЕНИЕ ОБ ОБНОВЛЕНИИ (patch-note)
+        // ============================================
+        (function() {
+            // Меняйте PATCH_VERSION и PATCH_NOTE_TEXT при каждом обновлении сайта —
+            // тогда уведомление покажется заново при первом заходе после обновления.
+            const PATCH_VERSION = '2026-09-04-1';
+            const PATCH_NOTE_TEXT = `
+                <p>Что изменилось:</p>
+                <ul>
+                    <li>Картинки теперь кешируются — сайт грузится быстрее</li>
+                    <li>Добавлены все новые стикеры и картинки</li>
+                    <li>Рассортированы картинки и стикеры по отдельности</li>
+                    <li>Добавлено это самое уведомление об обновлениях 🙂</li>
+                </ul>
+            `;
+            const STORAGE_KEY = 'lastSeenPatchVersion';
+
+            function showPatchNote() {
+                const overlay = document.createElement('div');
+                overlay.className = 'patch-note-overlay';
+                overlay.id = 'patchNoteOverlay';
+
+                const modal = document.createElement('div');
+                modal.className = 'patch-note-modal';
+                modal.innerHTML =
+                    '<div class="patch-note-header">✨ Сайт обновился!</div>' +
+                    '<div class="patch-note-body">' + PATCH_NOTE_TEXT + '</div>' +
+                    '<button class="patch-note-close" id="patchNoteClose">Понятно 💚</button>';
+
+                overlay.appendChild(modal);
+                document.body.appendChild(overlay);
+
+                requestAnimationFrame(() => overlay.classList.add('visible'));
+
+                function closeModal() {
+                    overlay.classList.remove('visible');
+                    setTimeout(() => overlay.remove(), 300);
+                    try {
+                        localStorage.setItem(STORAGE_KEY, PATCH_VERSION);
+                    } catch (err) {
+                        console.warn('Не удалось сохранить версию уведомления:', err);
+                    }
+                }
+
+                document.getElementById('patchNoteClose').addEventListener('click', closeModal);
+                overlay.addEventListener('click', (e) => {
+                    if (e.target === overlay) closeModal();
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                let lastSeen;
+                try {
+                    lastSeen = localStorage.getItem(STORAGE_KEY);
+                } catch (err) {
+                    lastSeen = PATCH_VERSION; // localStorage недоступен — не показываем
+                }
+                if (lastSeen !== PATCH_VERSION) {
+                    showPatchNote();
+                }
+            });
+        })();
+
         function getRandomItem(arr) {
             const randomIndex = Math.floor(Math.random() * arr.length);
             return arr[randomIndex];
@@ -669,12 +744,13 @@
 
             // Генерируем три стикер-пака. Первый открыт по умолчанию, остальные скрыты.
             const stickerPackConfigs = [
-                { id: 'pack1', label: 'Наш 1 стикер пак😀', folder: 'assets/stickerpack/pack1', count: 55, defaultOpen: false },
-                { id: 'pack2', label: 'Наш 2 стикер пак😘', folder: 'assets/stickerpack/pack2', count: 35, defaultOpen: false },
-                { id: 'pack3', label: 'Наш 3 стикер пак🤩', folder: 'assets/stickerpack/pack3', count: 51, defaultOpen: false },
-                { id: 'pack4', label: 'Наш 4 стикер пак😻', folder: 'assets/stickerpack/pack4', count: 43, defaultOpen: false },
+                { id: 'pack1', label: 'Наш 1 стикер пак😀', folder: 'assets/stickerpack/pack1', count: 56, defaultOpen: false },
+                { id: 'pack2', label: 'Наш 2 стикер пак😘', folder: 'assets/stickerpack/pack2', count: 26, defaultOpen: false },
+                { id: 'pack3', label: 'Наш 3 стикер пак🤩', folder: 'assets/stickerpack/pack3', count: 45, defaultOpen: false },
+                { id: 'pack4', label: 'Наш 4 стикер пак😻', folder: 'assets/stickerpack/pack4', count: 44, defaultOpen: false },
                 { id: 'pack5', label: 'Наш 5 стикер пак👨‍🦱', folder: 'assets/stickerpack/pack5', count: 38, defaultOpen: false },
-                { id: 'pack6', label: 'Наш 6 общий стикер пак❤', folder: 'assets/stickerpack/pack6', count: 9, defaultOpen: false },
+                { id: 'pack6', label: 'Наш 6 общий стикер пак❤', folder: 'assets/stickerpack/pack6', count: 31, defaultOpen: false },
+                { id: 'pack7', label: 'Наш 7 красивые фото❤🔥', folder: 'assets/stickerpack/pack7', count: 47, defaultOpen: false },
             ];
 
             const SECRET_HEART_KEY = 'miraSecretHearts';
