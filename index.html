@@ -14,6 +14,9 @@
     <!-- ===== ГЛАВНАЯ КАРТОЧКА ===== -->
     <div class="app-wrapper" id="app">
 
+        <!-- ===== СЛУЧАЙНЫЕ СТИКЕРЫ ПО КРАЯМ КАРТОЧКИ ===== -->
+        <div class="bg-stickers-container" id="bgStickersContainer"></div>
+
         <!-- ШАПКА -->
         <div class="header">
             <div class="timer-block">
@@ -95,7 +98,7 @@
             </div>
             <div class="meme-grid">
                 <div class="meme-card meme-card_video" data-stickers="😎😱🙈🐰🐇👮‍♂️🪓🔫">
-                    <video class="video-placeholder" src="assets/video/banbu.mp4" alt="мем" autoplay loop></video>
+                    <video class="video-placeholder" src="assets/video/banbu.mp4" alt="мем" autoplay loop muted></video>
                     <div class="caption">🐰 Банбу облава 🐰</div>
                 </div>
                 <div class="meme-card meme-card_video" data-stickers="🤗🤑💃🙏💰💵💸💳🦉🌟">
@@ -223,7 +226,7 @@
             <div class="compliments-container" id="complimentList">
                 <!-- Заполняется JS -->
             </div>
-            <p style="margin-top: 12px; font-size: 0.7rem; color: rgba(255,255,255,0.15); text-align: center;">
+            <p style="margin-top: 12px; font-size: 0.7rem; color: rgba(165,214,167,0.5); text-align: center;">
                 листай вниз ❤️
             </p>
         </section>
@@ -467,14 +470,13 @@
         (function() {
             // Меняйте PATCH_VERSION и PATCH_NOTE_TEXT при каждом обновлении сайта —
             // тогда уведомление покажется заново при первом заходе после обновления.
-            const PATCH_VERSION = '2026-09-04-1';
+            const PATCH_VERSION = '2026-09-06-2';
             const PATCH_NOTE_TEXT = `
                 <p>Что изменилось:</p>
                 <ul>
-                    <li>Картинки теперь кешируются — сайт грузится быстрее</li>
-                    <li>Добавлены все новые стикеры и картинки</li>
-                    <li>Рассортированы картинки и стикеры по отдельности</li>
-                    <li>Добавлено это самое уведомление об обновлениях 🙂</li>
+                    <li>Рассортированы картинки и стикеры по парам</li>
+                    <li>Были убраны не нужные стикеры</li>
+                    <li>Добавленно 5 летающих стикеров вокруг окна</li>
                 </ul>
             `;
             const STORAGE_KEY = 'lastSeenPatchVersion';
@@ -556,6 +558,120 @@
             // Задаём размер для каждого фонового изображения (соответствует трём url, для градиента оставляем auto)
             // Заменены проценты на vh для задания размеров фоновых изображений
             body.style.backgroundSize = "15vh 15vh, 15vh 15vh, 15vh 15vh, 15vh 15vh, cover";
+
+            renderRandomBgStickers();
+        }
+
+        // ============================================
+        // СТИКЕРЫ ПО КРАЯМ КАРТОЧКИ (из stickerPackConfigs)
+        // ============================================
+        // Берём стикеры из тех же папок, что описаны в stickerPackConfigs,
+        // но показываем не все сразу, а случайную выборку.
+        const bgStickerPackSources = [
+            { folder: 'assets/stickerpack/pack1', count: 46 },
+            { folder: 'assets/stickerpack/pack2', count: 12 },
+            { folder: 'assets/stickerpack/pack3', count: 49 },
+            { folder: 'assets/stickerpack/pack6', count: 3 },
+        ];
+
+        // Стикеры, которые НЕ должны попадать на фон.
+        // Можно указать двумя способами:
+        //   1) короткая запись 'packN:номер', например 'pack1:7' — исключит
+        //      assets/stickerpack/pack1/sticker7.png
+        //   2) полный путь к файлу, например 'assets/stickerpack/pack3/sticker12.png'
+        const BG_STICKER_EXCLUDED = [
+            'pack2:3',
+            'pack2:4',
+            'pack2:6',
+            'pack3:3',
+            'pack3:5',
+            'pack3:20'
+        ];
+
+        function buildBgStickerPool() {
+            const excluded = new Set(BG_STICKER_EXCLUDED);
+            const pool = [];
+
+            bgStickerPackSources.forEach(pack => {
+                const match = pack.folder.match(/pack(\d+)/);
+                const packId = match ? `pack${match[1]}` : pack.folder;
+
+                for (let n = 1; n <= pack.count; n++) {
+                    const path = `${pack.folder}/sticker${n}.png`;
+                    const shortId = `${packId}:${n}`;
+
+                    if (excluded.has(path) || excluded.has(shortId)) continue;
+                    pool.push(path);
+                }
+            });
+            return pool;
+        }
+        const bgStickerPool = buildBgStickerPool();
+
+        // Точки-«якоря» по периметру карточки.
+        // "left" задаётся в процентах (ширина карточки всегда примерно одна и та же),
+        // а вертикаль — фиксированными пикселями от верхнего ("top") или нижнего
+        // ("bottom") края карточки. Это важно: на длинных страницах (например,
+        // с большой лентой мемов) высота карточки может быть в разы больше экрана,
+        // и если считать вертикаль в процентах, стикер с "top: 40%" уезжает
+        // куда-то в середину контента. Пиксельный отступ от края всегда держит
+        // стикер именно у угла/края карточки, независимо от её высоты.
+        const BG_STICKER_ANCHORS = [
+            { left: -6, edge: 'top',    offset: 50   },  // верхний левый угол
+            { left: 90, edge: 'top',    offset: 6   },  // верхний правый угол
+            { left: 45, edge: 'top',    offset: -45 },  // верхний край, по центру
+            { left: -6, edge: 'bottom', offset: 10  },  // нижний левый угол
+            { left: 92, edge: 'bottom', offset: 14  },  // нижний правый угол
+            { left: 45, edge: 'bottom', offset: -40 },  // нижний край, по центру
+        ];
+
+        const BG_STICKER_JITTER = 3;       // случайный сдвиг по горизонтали вокруг якоря, %
+        const BG_STICKER_JITTER_PX = 6;    // случайный сдвиг по вертикали вокруг якоря, px
+        const BG_STICKER_MIN_SIZE = 50;    // px
+        const BG_STICKER_MAX_SIZE = 75;    // px
+        const BG_STICKER_MAX_ROTATE = 24;  // максимальный угол случайного поворота, градусы
+
+        function renderRandomBgStickers() {
+            const container = document.getElementById('bgStickersContainer');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            const shuffledPool = [...bgStickerPool].sort(() => Math.random() - 0.5);
+            const shuffledAnchors = [...BG_STICKER_ANCHORS].sort(() => Math.random() - 0.5);
+
+            shuffledAnchors.forEach((anchor, i) => {
+                if (shuffledPool.length === 0) return;
+
+                const jitterLeft = (Math.random() * 2 - 1) * BG_STICKER_JITTER;
+                const jitterOffset = (Math.random() * 2 - 1) * BG_STICKER_JITTER_PX;
+
+                const size = BG_STICKER_MIN_SIZE + Math.random() * (BG_STICKER_MAX_SIZE - BG_STICKER_MIN_SIZE);
+                const rotate = (Math.random() * 2 - 1) * BG_STICKER_MAX_ROTATE;
+                const opacity = 0.85 + Math.random() * 0.15;
+                const floatDuration = 5 + Math.random() * 4;
+
+                const src = shuffledPool[i % shuffledPool.length];
+                const img = document.createElement('img');
+                img.src = src;
+                img.className = 'bg-sticker-item';
+                img.alt = '';
+                img.style.left = (anchor.left + jitterLeft) + '%';
+                if (anchor.edge === 'bottom') {
+                    img.style.bottom = (anchor.offset + jitterOffset) + 'px';
+                } else {
+                    img.style.top = (anchor.offset + jitterOffset) + 'px';
+                }
+                img.style.width = size + 'px';
+                img.style.position ='absolute';
+                img.style.opacity = opacity;
+                img.style.setProperty('--rot', rotate + 'deg');
+                img.style.setProperty('--float-duration', floatDuration + 's');
+                img.style.animationDelay = (Math.random() * 3) + 's';
+                img.style.transform = `rotate(${rotate}deg)`;
+
+                container.appendChild(img);
+            });
         }
 
         (function() {
@@ -742,15 +858,15 @@
                 complimentContainer.innerHTML = chipsHtml;
             }
 
-            // Генерируем три стикер-пака. Первый открыт по умолчанию, остальные скрыты.
+            // Генерируем стикер-паки. Первый открыт по умолчанию, остальные скрыты.
             const stickerPackConfigs = [
-                { id: 'pack1', label: 'Наш 1 стикер пак😀', folder: 'assets/stickerpack/pack1', count: 56, defaultOpen: false },
-                { id: 'pack2', label: 'Наш 2 стикер пак😘', folder: 'assets/stickerpack/pack2', count: 26, defaultOpen: false },
-                { id: 'pack3', label: 'Наш 3 стикер пак🤩', folder: 'assets/stickerpack/pack3', count: 49, defaultOpen: false },
+                { id: 'pack1', label: 'Наш 1 стикер пак😀', folder: 'assets/stickerpack/pack1', count: 46, defaultOpen: false },
+                { id: 'pack2', label: 'Наш 2 стикер пак😘', folder: 'assets/stickerpack/pack2', count: 25, defaultOpen: false },
+                { id: 'pack3', label: 'Наш 3 стикер пак🤩', folder: 'assets/stickerpack/pack3', count: 48, defaultOpen: false },
                 { id: 'pack4', label: 'Наш 4 стикер пак😻', folder: 'assets/stickerpack/pack4', count: 45, defaultOpen: false },
                 { id: 'pack5', label: 'Наш 5 стикер пак👨‍🦱', folder: 'assets/stickerpack/pack5', count: 40, defaultOpen: false },
-                { id: 'pack6', label: 'Наш 6 общий стикер пак❤', folder: 'assets/stickerpack/pack6', count: 42, defaultOpen: false },
-                { id: 'pack7', label: 'Наш 7 красивые фото❤🔥', folder: 'assets/stickerpack/pack7', count: 48, defaultOpen: false },
+                { id: 'pack6', label: 'Наш 6 общий стикер пак❤️', folder: 'assets/stickerpack/pack6', count: 39, defaultOpen: false },
+                { id: 'pack7', label: 'Наш 7 красивые фото❤️‍🔥', folder: 'assets/stickerpack/pack7', count: 42, defaultOpen: false },
             ];
 
             const SECRET_HEART_KEY = 'miraSecretHearts';
@@ -959,6 +1075,15 @@
                     const sound = new Audio('assets/sounds/winning-sound-effect.mp3');
                     sound.volume = 0.35;
                     sound.play().catch(() => {});
+
+                    if (typeof window.spawnHeartBurst === 'function') {
+                        const rect = button.getBoundingClientRect();
+                        window.spawnHeartBurst(
+                            rect.left + rect.width / 2,
+                            rect.top + rect.height / 2,
+                            '❤️💚✨🎉💫'
+                        );
+                    }
 
                     updatePage7Status();
                     unlockSecretSong();
@@ -2210,19 +2335,27 @@
                 if (isBursting) return;
                 isBursting = true;
 
-                // Удаляем старые частицы
-                clearParticles();
-
                 // Получаем стикеры из data-атрибута
                 const stickerString = event.currentTarget.dataset.stickers || '❤️🧡💛💚💙💜';
-                // Разбиваем строку на массив символов (эмодзи могут быть длиной > 1, поэтому используем match)
-                const stickers = stickerString.match(/\p{Emoji}/gu) || stickerString.split('');
-                if (stickers.length === 0) stickers.push('❤️');
 
                 // Координаты кнопки относительно окна (для фиксированного canvas)
                 const rect = event.currentTarget.getBoundingClientRect();
                 const centerX = rect.left + rect.width / 2;
                 const centerY = rect.top + rect.height / 2;
+
+                spawnBurstAt(centerX, centerY, stickerString);
+                isBursting = false;
+            }
+
+            // Универсальный запуск взрыва частиц в заданной точке экрана.
+            // Можно вызывать откуда угодно, не только по клику на мем:
+            // window.spawnHeartBurst(x, y, '❤️✨🎉')
+            function spawnBurstAt(centerX, centerY, stickerString) {
+                clearParticles();
+
+                // Разбиваем строку на массив символов (эмодзи могут быть длиной > 1, поэтому используем match)
+                const stickers = (stickerString || '❤️🧡💛💚💙💜').match(/\p{Emoji}/gu) || ['❤️'];
+                if (stickers.length === 0) stickers.push('❤️');
 
                 // Создаём частицы
                 const count = PARTICLES_COUNT;
@@ -2264,8 +2397,12 @@
                 if (!animationFrame) {
                     animateParticles();
                 }
-                isBursting = false;
             }
+
+            // Делаем доступным для других скриптов на странице (например, для
+            // секретных сердечек), не заставляя их знать про внутреннее
+            // устройство canvas/частиц.
+            window.spawnHeartBurst = spawnBurstAt;
 
             // ---- Физика и анимация ----
             function animateParticles() {
