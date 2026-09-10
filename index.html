@@ -470,14 +470,11 @@
         (function() {
             // Меняйте PATCH_VERSION и PATCH_NOTE_TEXT при каждом обновлении сайта —
             // тогда уведомление покажется заново при первом заходе после обновления.
-            const PATCH_VERSION = '2026-09-06-3 ';
+            const PATCH_VERSION = '2026-09-10-4';
             const PATCH_NOTE_TEXT = `
                 <p>Что изменилось:</p>
                 <ul>
                     <li>Добавлены новые стикеры а также улучшены старые</li>
-                    <li>Рассортированы картинки и стикеры по парам</li>
-                    <li>Были убраны не нужные стикеры</li>
-                    <li>Добавленно 5 летающих стикеров вокруг окна</li>
                 </ul>
             `;
             const STORAGE_KEY = 'lastSeenPatchVersion';
@@ -862,12 +859,12 @@
             // Генерируем стикер-паки. Первый открыт по умолчанию, остальные скрыты.
             const stickerPackConfigs = [
                 { id: 'pack1', label: 'Наш 1 стикер пак😀', folder: 'assets/stickerpack/pack1', count: 49, defaultOpen: false },
-                { id: 'pack2', label: 'Наш 2 стикер пак😘', folder: 'assets/stickerpack/pack2', count: 25, defaultOpen: false },
-                { id: 'pack3', label: 'Наш 3 стикер пак🤩', folder: 'assets/stickerpack/pack3', count: 49, defaultOpen: false },
+                { id: 'pack2', label: 'Наш 2 стикер пак😘', folder: 'assets/stickerpack/pack2', count: 27, defaultOpen: false },
+                { id: 'pack3', label: 'Наш 3 стикер пак🤩', folder: 'assets/stickerpack/pack3', count: 51, defaultOpen: false },
                 { id: 'pack4', label: 'Наш 4 стикер пак😻', folder: 'assets/stickerpack/pack4', count: 45, defaultOpen: false },
-                { id: 'pack5', label: 'Наш 5 стикер пак👨‍🦱', folder: 'assets/stickerpack/pack5', count: 41, defaultOpen: false },
-                { id: 'pack6', label: 'Наш 6 общий стикер пак❤️', folder: 'assets/stickerpack/pack6', count: 42, defaultOpen: false },
-                { id: 'pack7', label: 'Наш 7 красивые фото❤️‍🔥', folder: 'assets/stickerpack/pack7', count: 50, defaultOpen: false },
+                { id: 'pack5', label: 'Наш 5 стикер пак👨‍🦱', folder: 'assets/stickerpack/pack5', count: 45, defaultOpen: false },
+                { id: 'pack6', label: 'Наш 6 общий стикер пак❤️', folder: 'assets/stickerpack/pack6', count: 75, defaultOpen: false },
+                { id: 'pack7', label: 'Наш 7 красивые фото❤️‍🔥', folder: 'assets/stickerpack/pack7', count: 68, defaultOpen: false },
             ];
 
             const SECRET_HEART_KEY = 'miraSecretHearts';
