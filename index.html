@@ -52,7 +52,7 @@
         <!-- ===== СТРАНИЦА 1 ===== -->
         <section class="page active" id="page1">
             <div class="profile-wrap">
-                <div class="avatar-frame">
+                <div class="avatar-frame" id="avatarContainer">
                     <div class="sun-rays" aria-hidden="true"></div>
                     <img class="profile-photo" id="profilePhoto0" src="assets/avatars/avatar0.jpg" alt="Фото">
                     <img class="profile-photo" id="profilePhoto1" src="assets/avatars/avatar1.png" alt="Фото" style="opacity: 0; filter: alpha(opacity=0);">
@@ -470,11 +470,11 @@
         (function() {
             // Меняйте PATCH_VERSION и PATCH_NOTE_TEXT при каждом обновлении сайта —
             // тогда уведомление покажется заново при первом заходе после обновления.
-            const PATCH_VERSION = '2026-09-10-4';
+            const PATCH_VERSION = '2026-09-13-5';
             const PATCH_NOTE_TEXT = `
                 <p>Что изменилось:</p>
                 <ul>
-                    <li>Добавлены новые стикеры а также улучшены старые</li>
+                    <li>Новые аватарки</li>
                 </ul>
             `;
             const STORAGE_KEY = 'lastSeenPatchVersion';
@@ -758,15 +758,18 @@
             // ============================================
             // 3. АВАТАРКИ (смена каждые 5 секунд)
             // ============================================
-            const avatarImages = [
-                'assets/avatars/avatar0.jpg',
-                'assets/avatars/avatar1.png',
-                'assets/avatars/avatar2.png',
-                'assets/avatars/avatar3.png',
-                'assets/avatars/avatar4.png',
-                'assets/avatars/avatar5.png',
-                'assets/avatars/avatar6.png'
-            ];
+            const avatarImages = {
+                folder: 'assets/avatars', count: 15};
+
+            for (let n = 0; n <= avatarImages.count; n++) {
+                const img = document.createElement('img');
+                img.src = `${avatarImages.folder}/avatar${n}.png`;
+                img.id = `profilePhoto${n}`;
+                img.className = 'profile-photo';
+                img.style.opacity = (n === 0) ? '1' : '0';
+                img.style.filter = (n === 0) ? 'alpha(opacity=100)' : 'alpha(opacity=0)';
+                document.getElementById('avatarContainer').appendChild(img);
+            }
 
             var total_pics_num = 7; // количество изображений
             var interval = 3000;    // задержка между изображениями
