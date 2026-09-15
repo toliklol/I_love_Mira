@@ -1,0 +1,55 @@
+import { useEffect, useState } from 'react';
+import { menuItems } from '../data/config.js';
+
+export default function MenuPanel({ open, currentPage, onNavigate, onClose }) {
+  // Держим элементы в DOM ещё 400мс после закрытия, чтобы доиграла CSS-анимация
+  // (как setTimeout(..., 400) в оригинале).
+  const [mounted, setMounted] = useState(open);
+  const [animate, setAnimate] = useState(open);
+
+  useEffect(() => {
+    if (open) {
+      setMounted(true);
+      const raf = requestAnimationFrame(() => setAnimate(true));
+      return () => cancelAnimationFrame(raf);
+    }
+    setAnimate(false);
+    const t = setTimeout(() => setMounted(false), 400);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  if (!mounted) return null;
+
+  return (
+    <>
+      <div
+        className={`menu-overlay${animate ? ' open' : ''}`}
+        id="menuOverlay"
+        // display управляется отдельно от класса .open (как в оригинале):
+        // сначала элемент становится видимым (display), и только на следующий
+        // кадр добавляется класс .open, который анимирует opacity/transform.
+        // Если делать это одним махом, CSS-переходу не от чего стартовать —
+        // элемент был display:none и анимация просто "телепортирует" в конец.
+        style={{ display: 'block' }}
+        onClick={onClose}
+      />
+      <nav
+        className={`menu-panel${animate ? ' open' : ''}`}
+        id="menuPanel"
+        style={{ display: 'flex' }}
+      >
+        {menuItems.map((item) => (
+          <a
+            key={item.page}
+            href="#"
+            className={currentPage === item.page ? 'active-link' : ''}
+            onClick={(e) => { e.preventDefault(); onNavigate(item.page); }}
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+    </>
+  );
+}

@@ -1,7 +1,7 @@
 /* ---------- ПОДКЛЮЧЕНИЕ ШРИФТОВ ---------- */
 @font-face {
     font-family: "Cera Stencil";
-    src: url("fonts/type me! fonts - Cera Stencil PRO Trial Thin.otf") format("opentype");
+    src: url("/fonts/type me! fonts - Cera Stencil PRO Trial Thin.otf") format("opentype");
     font-weight: 100;
     font-style: normal;
     font-display: swap;
@@ -9,7 +9,7 @@
 
 @font-face {
     font-family: "Cera Stencil";
-    src: url("fonts/type me! fonts - Cera Stencil PRO Trial Light.otf") format("opentype");
+    src: url("/fonts/type me! fonts - Cera Stencil PRO Trial Light.otf") format("opentype");
     font-weight: 300;
     font-style: normal;
     font-display: swap;
@@ -17,7 +17,7 @@
 
 @font-face {
     font-family: "Cera Stencil";
-    src: url("fonts/type me! fonts - Cera Stencil PRO Trial.otf") format("opentype");
+    src: url("/fonts/type me! fonts - Cera Stencil PRO Trial.otf") format("opentype");
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -25,7 +25,7 @@
 
 @font-face {
     font-family: "Cera Stencil";
-    src: url("fonts/type me! fonts - Cera Stencil PRO Trial Medium.otf") format("opentype");
+    src: url("/fonts/type me! fonts - Cera Stencil PRO Trial Medium.otf") format("opentype");
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -33,7 +33,7 @@
 
 @font-face {
     font-family: "Cera Stencil";
-    src: url("fonts/type me! fonts - Cera Stencil PRO Trial Bold.otf") format("opentype");
+    src: url("/fonts/type me! fonts - Cera Stencil PRO Trial Bold.otf") format("opentype");
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -41,7 +41,7 @@
 
 @font-face {
     font-family: "Cera Stencil";
-    src: url("fonts/type me! fonts - Cera Stencil PRO Trial Black.otf") format("opentype");
+    src: url("/fonts/type me! fonts - Cera Stencil PRO Trial Black.otf") format("opentype");
     font-weight: 900;
     font-style: normal;
     font-display: swap;
@@ -55,6 +55,12 @@
     font-family: "Cera Stencil", system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
 }
 
+html {
+    width: 100%;
+    overflow-x: hidden;
+    overflow-x: clip;
+}
+
 body {
     min-height: 100vh;
     background: linear-gradient(135deg, #123d26 0%, #28734a 48%, #0d3b2e 100%);
@@ -63,9 +69,10 @@ body {
     align-items: center;
     padding: 16px;
     overflow-x: hidden;
+    overflow-x: clip;
     position: relative;
     font-family: "Cera Stencil", 'sans-serif';
-    overflow-x: hidden;
+    width: 100%;
 }
 
 /* ---------- ФОН С ПАДАЮЩИМИ ЛЕПЕСТКАМИ/СЕРДЕЧКАМИ ---------- */
@@ -116,6 +123,8 @@ body {
     animation: bgStickerFloat ease-in-out infinite;
     animation-duration: var(--float-duration, 6s);
     will-change: transform;
+    pointer-events: auto;
+    cursor: pointer;
 }
 
 @keyframes bgStickerFloat {
@@ -124,6 +133,21 @@ body {
     }
     50% {
         transform: rotate(var(--rot, 0deg)) translateY(-8px);
+    }
+}
+
+/* Плавное вращение летающего стикера по клику (не прерывает плаванье насовсем —
+   после оборота анимация парения продолжается как обычно). */
+.bg-sticker-item.spin-once {
+    animation: bgStickerSpin 0.7s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+@keyframes bgStickerSpin {
+    0% {
+        transform: rotate(var(--rot, 0deg)) translateY(0);
+    }
+    100% {
+        transform: rotate(calc(var(--rot, 0deg) + 360deg)) translateY(0);
     }
 }
 
@@ -250,7 +274,9 @@ body {
     right: 0;
     width: 280px;
     max-width: 80%;
-    height: 100%;
+    height: auto;
+    max-height: calc(100dvh - 32px);
+    box-sizing: border-box;
     background: rgba(20, 50, 20, 0.92);
     backdrop-filter: blur(30px) saturate(180%);
     -webkit-backdrop-filter: blur(30px) saturate(180%);
@@ -262,6 +288,7 @@ body {
     flex-direction: column;
     gap: 8px;
     overflow-y: auto;
+    overscroll-behavior: contain;
     transform: translateX(100%); /* Начальное положение - за экраном */
     transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     border-radius: 40px;
@@ -516,6 +543,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 14px;
+    width: 100%; /* подстраховка: гарантирует ту же ширину, что у карточек на других страницах */
 }
 
 .secret-page-state {
@@ -762,7 +790,8 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-.meme-card_video {
+.meme-card_video,
+.meme-card_wide {
     grid-column: span 2;
 }
 
@@ -817,7 +846,7 @@ body {
 }
 
 .sticker-pack-item.open .sticker-pack-content {
-    max-height: 2200px;
+    max-height: 222000px;
 }
 
 .stickers-grid,
@@ -1831,4 +1860,215 @@ body {
 .patch-note-close:hover {
     transform: translateY(-1px);
     opacity: 0.9;
+}
+
+
+/* ---------- НАСТРАИВАЕМЫЙ ФОН САЙТА (вместо старых 4 угловых стикеров) ---------- */
+.site-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.site-bg_solid {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* В отличие от "Сплошного фона" (который остаётся прибитым к экрану),
+   "Семейный альбом" должен прокручиваться вместе со страницей — поэтому
+   position:absolute (а не fixed) на всю высоту body, а не только на
+   высоту видимой области экрана. body уже position:relative и растянут
+   по высоте всего контента, так что height:100% как раз даёт нужный охват. */
+.site-bg_album {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+.album-frame {
+    position: absolute;
+    width: 78px;
+    height: 78px;
+    padding: 6px 6px 14px;
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 6px;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.45);
+    opacity: 0.8;
+}
+
+.album-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 2px;
+}
+
+/* ---------- ПАРНЫЕ СТИКЕРЫ (режим фона "Парные стикеры") ---------- */
+/* Крупные картинки по 4 углам экрана — замена старому механизму с 4
+   случайными стикерами по бокам, только теперь это 2 пары: одна "живёт"
+   слева (сверху и снизу), другая справа. */
+.paired-stickers {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.paired-sticker {
+    position: absolute;
+    width: 15vh;
+    height: 15vh;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.45));
+    opacity: 0.92;
+}
+
+.paired-sticker_top-left {
+    top: 0;
+    left: 0;
+}
+
+.paired-sticker_bottom-left {
+    bottom: 0;
+    left: 0;
+}
+
+.paired-sticker_top-right {
+    top: 0;
+    right: 0;
+}
+
+.paired-sticker_bottom-right {
+    bottom: 0;
+    right: 0;
+}
+
+/* ---------- СТРАНИЦА НАСТРОЕК ---------- */
+.settings-block {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 24px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.settings-block-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #b8e6b8;
+}
+
+.settings-block-subtitle {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.settings-music-controls {
+    position: static;
+    justify-content: center;
+}
+
+.settings-bg-modes {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.settings-bg-mode-btn {
+    text-align: left;
+    padding: 12px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.settings-bg-mode-btn:hover,
+.settings-bg-mode-btn:active {
+    background: rgba(165, 214, 167, 0.1);
+}
+
+.settings-bg-mode-btn.active {
+    background: rgba(165, 214, 167, 0.18);
+    border-color: rgba(165, 214, 167, 0.3);
+    color: #b8e6b8;
+    font-weight: 600;
+}
+
+.settings-hint {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.5;
+}
+
+.settings-hint code {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.78rem;
+}
+
+.settings-photo-picker {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.settings-photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    max-height: 340px;
+    overflow-y: auto;
+    padding-right: 2px;
+}
+
+.settings-photo-thumb,
+.settings-photo-random {
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    padding: 0;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.settings-photo-random {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    text-align: center;
+}
+
+.settings-photo-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.settings-photo-thumb.active,
+.settings-photo-random.active {
+    border-color: rgba(165, 214, 167, 0.7);
 }
