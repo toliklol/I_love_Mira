@@ -25,6 +25,9 @@ function pickSymbol(pageId) {
 // пересоздаются — при смене страницы обновляется только сам эмодзи-символ,
 // то есть они "на лету" заменяются на актуальные из data/config.js, продолжая
 // падать как ни в чём не бывало.
+//
+// Сезонные эффекты (снег/листья/лепестки/солнце) — отдельный слой,
+// см. components/SeasonalEffects.jsx, здесь их больше нет.
 export function useFallingEmojis(pageId) {
   const itemsRef = useRef(null);
   const lastPageRef = useRef(null);

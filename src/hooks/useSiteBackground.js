@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { buildPhotoPool, RANDOM_SOLID } from '../data/backgroundConfig.js';
 
 const photoPool = buildPhotoPool();
@@ -10,16 +10,22 @@ function pickRandom(arr, count) {
 }
 
 // Сколько фото показывать в режиме "Семейный альбом" — чем выше страница,
-// тем больше фото помещается. Увеличено по сравнению с прошлой версией.
+// тем больше фото помещается. Плотность увеличена, чтобы между рядами не
+// было заметных пустых промежутков.
 function albumPhotoCount(pageHeight) {
   const height = Math.max(pageHeight, window.innerHeight);
-  return Math.max(10, Math.min(40, Math.round(height / 150)));
+  return Math.max(10, Math.min(40, Math.round(height / 140)));
 }
 
 // Раскладка сеткой с небольшим случайным сдвигом внутри своей ячейки —
 // вместо чистого random(0,100%), который давал сильные наложения и фото,
 // вылезающие за край. Сетка сама по себе не даёт фото сильно перекрываться,
-// а ограничение (clamp) не даёт им уходить к самому краю экрана.
+// а ограничение (clamp) не даёт им уходить к самому краю экрана. Теперь эта
+// раскладка считается в процентах от контейнера, который сам по себе всегда
+// точно совпадает по высоте с реальной страницей (см. AlbumBackground.jsx —
+// он вложен внутрь .app-wrapper и растянут через inset:0, а не через
+// вычисленную в JS высоту), так что "недоезд" до низа страницы больше
+// невозможен структурно.
 function buildAlbumPhotos(pageHeight) {
   const count = albumPhotoCount(pageHeight);
   const chosen = pickRandom(photoPool, count);
@@ -35,10 +41,10 @@ function buildAlbumPhotos(pageHeight) {
   return chosen.map((src, i) => {
     const col = i % cols;
     const row = Math.floor(i / cols);
-    const jitterX = (Math.random() * 0.4 - 0.2) * cellW;
-    const jitterY = (Math.random() * 0.4 - 0.2) * cellH;
-    const left = Math.min(94, Math.max(6, col * cellW + cellW / 2 + jitterX));
-    const top = Math.min(97, Math.max(3, row * cellH + cellH / 2 + jitterY));
+    const jitterX = (Math.random() * 0.6 - 0.3) * cellW;
+    const jitterY = (Math.random() * 0.5 - 0.25) * cellH;
+    const left = Math.min(95, Math.max(5, col * cellW + cellW / 2 + jitterX));
+    const top = Math.min(98, Math.max(2, row * cellH + cellH / 2 + jitterY));
 
     return {
       key: `album-${i}`,
@@ -60,29 +66,13 @@ function buildSolidPhoto(solidChoice) {
 }
 
 // Контент для фоновых режимов "Сплошной фон" и "Семейный альбом".
-// randomize() пересчитывает выбор — вызывается вместе с остальной
-// рандомизацией при переходе по страницам (для "Сплошного фона" только
-// когда выбран случайный вариант — если выбрана конкретная картинка, она
-// остаётся неизменной).
-export function useSiteBackground(mode, solidChoice) {
+// pageHeight (из usePageHeight(appWrapperRef)) здесь используется только
+// для того, чтобы прикинуть, сколько фото поместится — на саму раскладку
+// (высоту контейнера) он больше не влияет, это отдельная, более надёжная
+// чисто CSS-механика.
+export function useSiteBackground(mode, solidChoice, pageHeight) {
   const [solidPhoto, setSolidPhoto] = useState(() => buildSolidPhoto(solidChoice));
-  const [pageHeight, setPageHeight] = useState(() => (
-    typeof document !== 'undefined' ? document.documentElement.scrollHeight : 0
-  ));
   const [albumPhotos, setAlbumPhotos] = useState(() => buildAlbumPhotos(pageHeight));
-
-  // Высота страницы у каждой вкладки разная (и может меняться после загрузки
-  // картинок) — трекаем её через ResizeObserver на body, а не однократно,
-  // чтобы "Семейный альбом" всегда точно покрывал всю прокручиваемую высоту
-  // и мог растягиваться/сжиматься вместе со страницей.
-  useEffect(() => {
-    if (typeof ResizeObserver === 'undefined') return undefined;
-    const observer = new ResizeObserver(() => {
-      setPageHeight(document.documentElement.scrollHeight);
-    });
-    observer.observe(document.body);
-    return () => observer.disconnect();
-  }, []);
 
   // Если выбрали конкретную картинку в настройках — применяем сразу.
   useEffect(() => {
@@ -91,16 +81,20 @@ export function useSiteBackground(mode, solidChoice) {
     }
   }, [solidChoice]);
 
+  // Высота реального контента изменилась (сменили страницу и т.п.) —
+  // пересобираем набор фото под новое количество.
   useEffect(() => {
-    if (mode === 'album') setAlbumPhotos(buildAlbumPhotos(pageHeight));
+    if (mode === 'album' && pageHeight > 0) {
+      setAlbumPhotos(buildAlbumPhotos(pageHeight));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageHeight, mode]);
 
   const randomize = useCallback(() => {
     setSolidPhoto((prev) => (solidChoice && solidChoice !== RANDOM_SOLID ? prev : buildSolidPhoto(RANDOM_SOLID)));
-    setAlbumPhotos(buildAlbumPhotos(document.documentElement.scrollHeight));
+    setAlbumPhotos((prev) => (prev.length > 0 ? buildAlbumPhotos(pageHeight) : prev));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [solidChoice]);
+  }, [solidChoice, pageHeight]);
 
-  return { solidPhoto, albumPhotos, randomize, photoPool, pageHeight };
+  return { solidPhoto, albumPhotos, randomize, photoPool };
 }

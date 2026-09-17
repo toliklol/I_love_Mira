@@ -3,8 +3,10 @@ import { useEffect, useRef, useState } from 'react';
 import Header from './components/Header.jsx';
 import MenuPanel from './components/MenuPanel.jsx';
 import FallingBackground from './components/FallingBackground.jsx';
+import SeasonalEffects from './components/SeasonalEffects.jsx';
 import BgStickers from './components/BgStickers.jsx';
 import SiteBackground from './components/SiteBackground.jsx';
+import AlbumBackground from './components/AlbumBackground.jsx';
 import PairedStickers from './components/PairedStickers.jsx';
 import HeartBurstCanvas from './components/HeartBurstCanvas.jsx';
 import PatchNote from './components/PatchNote.jsx';
@@ -26,6 +28,8 @@ import Page10Settings from './pages/Page10Settings.jsx';
 import { useRandomBackground } from './hooks/useRandomBackground.js';
 import { useBackgroundMode } from './hooks/useBackgroundMode.js';
 import { useSiteBackground } from './hooks/useSiteBackground.js';
+import { usePageHeight } from './hooks/usePageHeight.js';
+import { useSeason } from './hooks/useSeason.js';
 import { useMusicPlayer } from './hooks/useMusicPlayer.js';
 import { useSecretHearts } from './hooks/useSecretHearts.js';
 import { useHeartBurst } from './hooks/useHeartBurst.js';
@@ -47,6 +51,7 @@ export default function App() {
 
   const burstCanvasRef = useRef(null);
   const burst = useHeartBurst(burstCanvasRef);
+  const pageHeight = usePageHeight();
 
   const { cardStickers, randomize } = useRandomBackground();
   const {
@@ -54,10 +59,18 @@ export default function App() {
     solidChoice, setSolidChoice,
   } = useBackgroundMode();
   const {
-    solidPhoto, albumPhotos, randomize: randomizeBackground, photoPool, pageHeight,
-  } = useSiteBackground(backgroundMode, solidChoice);
+    solidPhoto, albumPhotos, randomize: randomizeBackground, photoPool,
+  } = useSiteBackground(backgroundMode, solidChoice, pageHeight);
+  const { seasonSetting, setSeasonSetting, activeSeason } = useSeason();
   const music = useMusicPlayer();
   const { foundHearts, collect, unlocked } = useSecretHearts((x, y) => burst(x, y, '❤️💚✨🎉💫'));
+
+  // Сезонная тема — вешаем атрибут на body, чтобы CSS мог подкрашивать
+  // акцентные цвета под текущий сезон (см. body[data-season="..."] в index.css).
+  useEffect(() => {
+    document.body.dataset.season = activeSeason;
+    return () => { delete document.body.dataset.season; };
+  }, [activeSeason]);
 
   // Регистрируем service worker для кеширования картинок (см. public/sw.js).
   useEffect(() => {
@@ -152,8 +165,11 @@ export default function App() {
 
   return (
     <>
-      <SiteBackground mode={backgroundMode} solidPhoto={solidPhoto} albumPhotos={albumPhotos} pageHeight={pageHeight} />
+      <SiteBackground mode={backgroundMode} solidPhoto={solidPhoto} />
+      {backgroundMode === 'album' && <AlbumBackground photos={albumPhotos} pageHeight={pageHeight} />}
       {backgroundMode === 'pairs' && <PairedStickers refreshKey={transitionKey} />}
+      <div className={`season-overlay season-overlay_${activeSeason}`} aria-hidden="true" />
+      <SeasonalEffects season={activeSeason} />
 
       <FallingBackground pageId={currentPage} />
 
@@ -194,6 +210,9 @@ export default function App() {
                   solidChoice={solidChoice}
                   onSetSolidChoice={setSolidChoice}
                   photoPool={photoPool}
+                  seasonSetting={seasonSetting}
+                  onSetSeasonSetting={setSeasonSetting}
+                  activeSeason={activeSeason}
                 />
               )}
 

@@ -1,8 +1,10 @@
 import { BACKGROUND_MODES, RANDOM_SOLID } from '../data/backgroundConfig.js';
+import { SEASONS } from '../data/seasonConfig.js';
 
 export default function Page10Settings({
   music, backgroundMode, onSetBackgroundMode,
   solidChoice, onSetSolidChoice, photoPool,
+  seasonSetting, onSetSeasonSetting, activeSeason,
 }) {
   return (
     <section className="page active" id="page10">
@@ -35,6 +37,35 @@ export default function Page10Settings({
             onClick={() => music.next()}
           >⏭</button>
         </div>
+      </div>
+
+      <div className="settings-block">
+        <div className="settings-block-title">Оформление (время года)</div>
+        <div className="settings-bg-modes">
+          <button
+            type="button"
+            className={`settings-bg-mode-btn${seasonSetting === 'auto' ? ' active' : ''}`}
+            onClick={() => onSetSeasonSetting('auto')}
+          >
+            🔄 Автоматически (по дате){seasonSetting === 'auto' ? ` — сейчас ${
+              SEASONS.find((s) => s.id === activeSeason)?.label || ''
+            }` : ''}
+          </button>
+          {SEASONS.map((s) => (
+            <button
+              key={s.id}
+              type="button"
+              className={`settings-bg-mode-btn${seasonSetting === s.id ? ' active' : ''}`}
+              onClick={() => onSetSeasonSetting(s.id)}
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
+        <p className="settings-hint">
+          Сезон слегка подкрашивает фон сайта и добавляет тематические
+          символы в падающий фон (например, зимой — снег).
+        </p>
       </div>
 
       <div className="settings-block">

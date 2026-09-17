@@ -1,27 +1,13 @@
-export default function SiteBackground({ mode, solidPhoto, albumPhotos, pageHeight }) {
-  if (mode === 'solid') {
-    return (
-      <div
-        className="site-bg site-bg_solid"
-        style={{ backgroundImage: `linear-gradient(rgba(8, 36, 22, 0.78), rgba(8, 36, 22, 0.78)), url(${solidPhoto})` }}
-      />
-    );
-  }
+// "Сплошной фон" остаётся фиксированным (position:fixed) слоем на весь
+// экран — в отличие от "Семейного альбома", которому нужно прокручиваться
+// вместе со страницей, этот вариант должен просто стоять на месте.
+export default function SiteBackground({ mode, solidPhoto }) {
+  if (mode !== 'solid') return null;
 
-  if (mode === 'album') {
-    return (
-      // Высота выставляется явно в пикселях (а не 100%), потому что у body
-      // нет собственной заданной высоты — она сама определяется контентом,
-      // и проценты от неё в такой ситуации не сработают.
-      <div className="site-bg site-bg_album" style={{ height: (pageHeight || 0) + 'px' }}>
-        {albumPhotos.map((photo) => (
-          <div key={photo.key} className="album-frame" style={photo.style}>
-            <img src={photo.src} alt="" />
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  return null;
+  return (
+    <div
+      className="site-bg site-bg_solid"
+      style={{ backgroundImage: `linear-gradient(rgba(8, 36, 22, 0.42), rgba(8, 36, 22, 0.42)), url(${solidPhoto})` }}
+    />
+  );
 }
