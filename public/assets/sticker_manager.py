@@ -16,8 +16,13 @@ except ImportError:
 try:
     from watchdog.observers import Observer
     from watchdog.events import FileSystemEventHandler
+    WATCHDOG_AVAILABLE = True
 except ImportError:
-    raise SystemExit("Установите watchdog: pip install watchdog")
+    WATCHDOG_AVAILABLE = False
+    Observer = None
+
+    class FileSystemEventHandler:
+        pass
 
 
 # ============================================================
@@ -279,13 +284,19 @@ class StickerManager(tk.Tk):
         self.create_ui()
         self.load_pack()
 
-        self.observer = Observer()
-        self.observer.schedule(
-            IncomingHandler(self),
-            str(INCOMING_DIR),
-            recursive=False
-        )
-        self.observer.start()
+        self.observer = None
+        self.incoming_seen = set()
+
+        if WATCHDOG_AVAILABLE:
+            self.observer = Observer()
+            self.observer.schedule(
+                IncomingHandler(self),
+                str(INCOMING_DIR),
+                recursive=False
+            )
+            self.observer.start()
+        else:
+            self.poll_incoming()
 
         self.protocol("WM_DELETE_WINDOW", self.on_close)
 
@@ -633,6 +644,27 @@ class StickerManager(tk.Tk):
     # INCOMING
     # --------------------------------------------------------
 
+    def poll_incoming(self):
+        """Обнаруживает PNG без установленного watchdog."""
+        current = {
+            path for path in INCOMING_DIR.iterdir()
+            if path.is_file() and path.suffix.lower() == ".png"
+        }
+
+        for path in current - self.incoming_seen:
+            threading.Thread(
+                target=self._process_polled_file,
+                args=(path,),
+                daemon=True
+            ).start()
+
+        self.incoming_seen = current
+        self.after(500, self.poll_incoming)
+
+    def _process_polled_file(self, path):
+        if wait_until_file_ready(path):
+            self.process_incoming(path)
+
     def process_incoming(self, path):
         if not path.exists():
             return
@@ -717,8 +749,9 @@ class StickerManager(tk.Tk):
 
     def on_close(self):
         try:
-            self.observer.stop()
-            self.observer.join(timeout=2)
+            if self.observer is not None:
+                self.observer.stop()
+                self.observer.join(timeout=2)
         except Exception:
             pass
 
