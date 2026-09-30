@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { menuItems } from '../data/config.js';
 
 export default function MenuPanel({ open, currentPage, onNavigate, onClose }) {
@@ -6,6 +6,24 @@ export default function MenuPanel({ open, currentPage, onNavigate, onClose }) {
   // (как setTimeout(..., 400) в оригинале).
   const [mounted, setMounted] = useState(open);
   const [animate, setAnimate] = useState(open);
+  const scrollRef = useRef(null);
+  const touchStartY = useRef(0);
+  const touchScrollStart = useRef(0);
+
+  const handleTouchStart = (e) => {
+    const container = scrollRef.current;
+    if (!container) return;
+    touchStartY.current = e.touches[0].clientY;
+    touchScrollStart.current = container.scrollTop;
+  };
+
+  const handleTouchMove = (e) => {
+    const container = scrollRef.current;
+    if (!container) return;
+    const deltaY = e.touches[0].clientY - touchStartY.current;
+    container.scrollTop = touchScrollStart.current - deltaY;
+    e.preventDefault();
+  };
 
   useEffect(() => {
     if (open) {
@@ -39,16 +57,23 @@ export default function MenuPanel({ open, currentPage, onNavigate, onClose }) {
         id="menuPanel"
         style={{ display: 'flex' }}
       >
-        {menuItems.map((item) => (
-          <a
-            key={item.page}
-            href="#"
-            className={currentPage === item.page ? 'active-link' : ''}
-            onClick={(e) => { e.preventDefault(); onNavigate(item.page); }}
-          >
-            {item.label}
-          </a>
-        ))}
+        <div
+          ref={scrollRef}
+          className="menu-panel-content"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+        >
+          {menuItems.map((item) => (
+            <a
+              key={item.page}
+              href="#"
+              className={currentPage === item.page ? 'active-link' : ''}
+              onClick={(e) => { e.preventDefault(); onNavigate(item.page); }}
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
       </nav>
     </>
   );

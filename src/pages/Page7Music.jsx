@@ -16,6 +16,11 @@ export default function Page7Music({ foundHearts, unlocked, pauseMusic }) {
               <>
                 <p>Ты нашла все сердечки! Теперь 7 страница открыта.</p>
                 <SecretAudioPlayer pauseOthers={pauseMusic} />
+                <SecretAudioPlayer
+                  pauseOthers={pauseMusic}
+                  src="assets/sounds/Две ладони, один дом.mp3"
+                  title="Две ладони, один дом"
+                />
               </>
             ) : (
               <p>Сердечек пока не хватает...</p>

@@ -13,6 +13,7 @@ import PatchNote from './components/PatchNote.jsx';
 import SecretHeartsLayer from './components/SecretHeartsLayer.jsx';
 import StoryModal from './components/StoryModal.jsx';
 import StickerModal from './components/StickerModal.jsx';
+import ComicViewer from './components/ComicViewer.jsx';
 
 import Page1Profile from './pages/Page1Profile.jsx';
 import Page2Memes from './pages/Page2Memes.jsx';
@@ -22,8 +23,10 @@ import Page5Stories from './pages/Page5Stories.jsx';
 import Page6Stickers from './pages/Page6Stickers.jsx';
 import Page7Music from './pages/Page7Music.jsx';
 import Page8Stats from './pages/Page8Stats.jsx';
-import Page9Other from './pages/Page9Other.jsx';
-import Page10Settings from './pages/Page10Settings.jsx';
+import Page9MiniGames from './pages/Page9MiniGames.jsx';
+import Page10Comics from './pages/Page10Comics.jsx';
+import Page11Other from './pages/Page11Other.jsx';
+import Page12Settings from './pages/Page12Settings.jsx';
 
 import { useRandomBackground } from './hooks/useRandomBackground.js';
 import { useBackgroundMode } from './hooks/useBackgroundMode.js';
@@ -34,7 +37,7 @@ import { useMusicPlayer } from './hooks/useMusicPlayer.js';
 import { useSecretHearts } from './hooks/useSecretHearts.js';
 import { useHeartBurst } from './hooks/useHeartBurst.js';
 
-const PAGE_IDS = ['page1', 'page2', 'page3', 'page4', 'page5', 'page6', 'page7', 'page8', 'page9', 'page10'];
+const PAGE_IDS = ['page1', 'page2', 'page3', 'page4', 'page5', 'page6', 'page7', 'page8', 'page9', 'page10', 'page11', 'page12'];
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('page1');
@@ -48,6 +51,7 @@ export default function App() {
 
   // Стикеры: { pack, list, index }
   const [stickerView, setStickerView] = useState(null);
+  const [activeComic, setActiveComic] = useState(null);
 
   const burstCanvasRef = useRef(null);
   const burst = useHeartBurst(burstCanvasRef);
@@ -201,9 +205,11 @@ export default function App() {
                 <Page7Music foundHearts={foundHearts} unlocked={unlocked} pauseMusic={music.pause} />
               )}
               {pageId === 'page8' && <Page8Stats />}
-              {pageId === 'page9' && <Page9Other />}
-              {pageId === 'page10' && (
-                <Page10Settings
+              {pageId === 'page9' && <Page9MiniGames onBurst={(x, y, stickers) => burst(x, y, stickers)} />}
+              {pageId === 'page10' && <Page10Comics onOpenComic={setActiveComic} />}
+              {pageId === 'page11' && <Page11Other />}
+              {pageId === 'page12' && (
+                <Page12Settings
                   music={music}
                   backgroundMode={backgroundMode}
                   onSetBackgroundMode={setBackgroundMode}
@@ -226,6 +232,7 @@ export default function App() {
 
       <StoryModal story={story} onClose={() => setStory(null)} />
       <StickerModal sticker={stickerView} onClose={() => setStickerView(null)} onNavigate={navigateSticker} />
+      <ComicViewer comic={activeComic} onClose={() => setActiveComic(null)} />
       <HeartBurstCanvas ref={burstCanvasRef} />
       <PatchNote />
     </>

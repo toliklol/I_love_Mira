@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
+let activeAudio = null;
+
 function formatTime(seconds) {
   if (!Number.isFinite(seconds) || seconds < 0) return '0:00';
   const mins = Math.floor(seconds / 60);
@@ -7,16 +9,15 @@ function formatTime(seconds) {
   return `${mins}:${String(secs).padStart(2, '0')}`;
 }
 
-// Плеер секретной песни ("Мира в огне.mp3"), открывающейся после сбора всех сердечек.
-// pauseOthers — функция, останавливающая фоновую музыку при запуске (как в оригинале).
-export default function SecretAudioPlayer({ pauseOthers }) {
+// pauseOthers — функция, останавливающая фоновую музыку при запуске.
+export default function SecretAudioPlayer({ pauseOthers, src = 'assets/sounds/Мира в огне.mp3', title = 'Мира в огне' }) {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [time, setTime] = useState(0);
 
   useEffect(() => {
-    const audio = new Audio('assets/sounds/Мира в огне.mp3');
+    const audio = new Audio(src);
     audio.preload = 'auto';
     audio.volume = 0.45;
     audio.loop = false;
@@ -33,19 +34,27 @@ export default function SecretAudioPlayer({ pauseOthers }) {
     audio.addEventListener('play', update);
     audio.addEventListener('pause', update);
     audio.addEventListener('loadedmetadata', update);
-    audio.addEventListener('ended', () => { audio.currentTime = 0; update(); });
+    const onEnded = () => { audio.currentTime = 0; update(); };
+    audio.addEventListener('ended', onEnded);
 
     return () => {
       audio.pause();
       audio.removeEventListener('timeupdate', update);
+      audio.removeEventListener('play', update);
+      audio.removeEventListener('pause', update);
+      audio.removeEventListener('loadedmetadata', update);
+      audio.removeEventListener('ended', onEnded);
+      if (activeAudio === audio) activeAudio = null;
     };
-  }, []);
+  }, [src]);
 
   function togglePlay() {
     const audio = audioRef.current;
     if (!audio) return;
     if (audio.paused) {
+      if (activeAudio && activeAudio !== audio) activeAudio.pause();
       pauseOthers?.();
+      activeAudio = audio;
       audio.play().catch(() => {});
     } else {
       audio.pause();
@@ -64,6 +73,7 @@ export default function SecretAudioPlayer({ pauseOthers }) {
 
   return (
     <div className="secret-player">
+      <div className="secret-player-title">{title}</div>
       <div className="secret-player-row">
         <button
           className="secret-player-toggle"

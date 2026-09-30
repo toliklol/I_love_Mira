@@ -142,5 +142,125 @@ export const memes = [
     "caption": "🧃 Ожидающая Мира 😐",
     "type": "image",
     "src": "assets/MiraWait.webp"
-  }
+  },
+  {
+    "stickers": "",
+    "caption": "💖 Воздушный поцелуйчик 💕",
+    "type": "image",
+    "src": "assets/mystickers/blowkiss.webp"
+  },
+  {
+    "stickers": "",
+    "caption": "💗 Дарю цветы 🌸",
+    "type": "image",
+    "src": "assets/mystickers/flowers.webp"
+  },
+  {
+    "stickers": "",
+    "caption": "🎉 Давай ты сможешь! 🎇",
+    "type": "image",
+    "src": "assets/mystickers/boycheer.webp"
+  },
+  {
+    "stickers": "",
+    "caption": "💞 Я как только увидел тебя) 💕",
+    "type": "image",
+    "src": "assets/mystickers/catboy.webp"
+  },
+  {
+    "stickers": "",
+    "caption": "💝 От всего сердца 💖",
+    "type": "image",
+    "src": "assets/mystickers/greybigheart.webp"
+  },
+  {
+    "stickers": "",
+    "caption": "❣ Ещё поцелуйчик) 😽",
+    "type": "image",
+    "src": "assets/mystickers/greyblowkiss.webp"
+  },
+  {
+    "stickers": "",
+    "caption": "🥰 <3 😊",
+    "type": "image",
+    "src": "assets/mystickers/greyheart.webp"
+  },
+  {
+    "stickers": "",
+    "caption": "😘 Поцелуев много не бывает) 🤗",
+    "type": "image",
+    "src": "assets/mystickers/greykiss.webp"
+  },
+  {
+    "stickers": "",
+    "caption": "🥰 Обожаю тебя 😍",
+    "type": "image",
+    "src": "assets/mystickers/mehug.webp"
+  },
+  {
+    "stickers": "",
+    "caption": "🤗 Хочу быть с тобой всегда 💟",
+    "type": "image",
+    "src": "assets/mystickers/melove.webp"
+  },
+  {
+    "stickers": "",
+    "caption": "😚 Приветик от Росси 😜",
+    "type": "image",
+    "src": "assets/mystickers/rossi.webp"
+  },
+  {
+    "stickers": "",
+    "caption": "😘 ПОЦЕЛУЕВ МНОГО НЕ БЫВАЕТ))) 😘",
+    "type": "image",
+    "src": "assets/mystickers/whitekissing.webp"
+  },
+  {
+    "stickers": "",
+    "caption": "😁 Трясу жопкой ☺",
+    "type": "image",
+    "src": "assets/mystickers/sealass.webp"
+  },
+  {
+    "stickers": "",
+    "caption": "🤩 Что я говорил про поцелуи?)))😏",
+    "type": "image",
+    "src": "assets/mystickers/sealblowkiss.webp"
+  },
+  {
+    "stickers": "",
+    "caption": "😎 Давай, давай, давай! 🙌",
+    "type": "image",
+    "src": "assets/mystickers/sealcheer.webp"
+  },
+  {
+    "stickers": "",
+    "caption": "🖌 Смотри, нарисовал) ❤",
+    "type": "image",
+    "src": "assets/mystickers/sealheart.webp"
+  },
+  {
+    "stickers": "",
+    "caption": "💌 ОБОЖАЮ 🥰",
+    "type": "image",
+    "src": "assets/mystickers/seallove.webp"
+  },
+  {
+    "stickers": "",
+    "caption": "☺ Немножко дурачусь 😄",
+    "type": "image",
+    "src": "assets/mystickers/sealroll.webp"
+  },
+  {
+    "stickers": "",
+    "caption": "🤨 Где же ты) 😳",
+    "type": "image",
+    "src": "assets/mystickers/sealseak.webp"
+  },
+  {
+    "stickers": "",
+    "caption": "😉 Да да да 😌",
+    "type": "image",
+    "src": "assets/mystickers/sealyes.webp"
+  },
 ];

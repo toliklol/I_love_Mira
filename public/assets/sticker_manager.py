@@ -32,11 +32,12 @@ except ImportError:
 BASE_DIR = Path(__file__).resolve().parent
 STICKERPACK_DIR = BASE_DIR / "Stickerpack"
 INCOMING_DIR = BASE_DIR / "Incoming"
+DELETE_DIR = STICKERPACK_DIR / "delete"
 PACK_COUNT = 7
 
 THUMB_SIZE = 130
 CELL_W = 160
-CELL_H = 175
+CELL_H = 205
 POLL_DELAY = 0.4
 
 
@@ -50,6 +51,7 @@ STICKER_RE = re.compile(r"^sticker(\d+)\.png$", re.IGNORECASE)
 def ensure_directories():
     STICKERPACK_DIR.mkdir(parents=True, exist_ok=True)
     INCOMING_DIR.mkdir(parents=True, exist_ok=True)
+    DELETE_DIR.mkdir(parents=True, exist_ok=True)
 
     for i in range(1, PACK_COUNT + 1):
         (STICKERPACK_DIR / f"pack{i}").mkdir(parents=True, exist_ok=True)
@@ -68,6 +70,71 @@ def sticker_files(pack_dir: Path):
 
     items.sort(key=lambda x: x[0])
     return [path for _, path in items]
+
+
+def delete_files():
+    """
+    Все PNG из общего архива delete.
+
+    Файлы вида stickerN.png сортируются по номеру N (как в паках).
+    Любые прочие PNG (например, временный .deleted_*.png только что
+    перемещённого стикера, ещё не переименованный) считаются вновь
+    добавленными и ставятся в конец, в порядке их появления (по mtime).
+    Благодаря этому только что удалённый стикер всегда попадает в
+    конец архива, а не становится sticker1.
+    """
+    numbered = []
+    others = []
+
+    for path in DELETE_DIR.iterdir():
+        if not path.is_file() or path.suffix.lower() != ".png":
+            continue
+
+        match = STICKER_RE.match(path.name)
+        if match:
+            numbered.append((int(match.group(1)), path))
+        else:
+            others.append(path)
+
+    numbered.sort(key=lambda x: x[0])
+    others.sort(key=lambda p: p.stat().st_mtime)
+
+    return [path for _, path in numbered] + others
+
+
+def move_to_delete(pack_dir: Path, index: int):
+    """Перемещает стикер из пака в общий архив Stickerpack/delete."""
+    paths = sticker_files(pack_dir)
+
+    if index < 1 or index > len(paths):
+        raise ValueError("Некорректный номер стикера.")
+
+    source = paths[index - 1]
+    DELETE_DIR.mkdir(parents=True, exist_ok=True)
+
+    # Уникальное временное имя предотвращает конфликт с delete/stickerN.png.
+    temp = DELETE_DIR / f".deleted_{time.time_ns()}.png"
+    os.replace(source, temp)
+
+    try:
+        # Оставшиеся файлы пака становятся sticker1...N.
+        atomic_rename_sequence(sticker_files(pack_dir), pack_dir)
+
+        # Архив тоже становится одной последовательностью sticker1...N.
+        archived = delete_files()
+        atomic_rename_sequence(archived, DELETE_DIR)
+    except Exception:
+        # Если дальнейшая операция не удалась, файл остаётся в delete,
+        # а не уничтожается.
+        raise
+
+
+def normalize_delete():
+    """Перенумеровывает все PNG в Stickerpack/delete."""
+    files = delete_files()
+    if files:
+        atomic_rename_sequence(files, DELETE_DIR)
+    return len(files)
 
 
 def wait_until_file_ready(path: Path, timeout=30):
@@ -281,6 +348,13 @@ class StickerManager(tk.Tk):
             pass
 
         ensure_directories()
+        try:
+            normalize_delete()
+        except Exception as exc:
+            messagebox.showwarning(
+                "Архив delete",
+                f"Не удалось упорядочить архив delete:\n{exc}"
+            )
         self.create_ui()
         self.load_pack()
 
@@ -424,6 +498,12 @@ class StickerManager(tk.Tk):
 
         ttk.Button(
             footer,
+            text="Открыть delete",
+            command=self.open_delete
+        ).pack(side="right", padx=(8, 0))
+
+        ttk.Button(
+            footer,
             text="Открыть Incoming",
             command=self.open_incoming
         ).pack(side="right")
@@ -528,9 +608,18 @@ class StickerManager(tk.Tk):
             background="white",
             font=("Segoe UI", 10)
         )
-        number_label.pack(pady=(3, 6))
+        number_label.pack(pady=(3, 3))
 
-        # Поддерживаем drag за любую часть карточки.
+        delete_button = tk.Button(
+            card,
+            text="🗑 Удалить в архив",
+            command=lambda i=index: self.confirm_delete(i),
+            font=("Segoe UI", 9),
+            cursor="hand2"
+        )
+        delete_button.pack(pady=(0, 6))
+
+        # Поддерживаем drag за карточку, картинку и имя.
         for widget in (card, image_label, number_label):
             widget.bind(
                 "<ButtonPress-1>",
@@ -546,6 +635,49 @@ class StickerManager(tk.Tk):
             )
 
         return card
+
+    def confirm_delete(self, index):
+        if self.busy:
+            return
+
+        if not messagebox.askyesno(
+            "Удалить в архив",
+            (
+                f"Переместить sticker{index}.png в "
+                f"Stickerpack\\delete?\n\n"
+                "Файл не будет удалён. Он попадёт в общий архив, "
+                "а текущий Pack автоматически перенумеруется."
+            )
+        ):
+            return
+
+        self.delete_sticker(index)
+
+    def delete_sticker(self, index):
+        self.set_busy(True)
+        pack_number = self.selected_pack
+
+        def worker():
+            try:
+                move_to_delete(
+                    STICKERPACK_DIR / f"pack{pack_number}",
+                    index
+                )
+                self.after(
+                    0,
+                    lambda: self.operation_finished(
+                        f"sticker{index}.png перемещён в архив delete"
+                    )
+                )
+            except Exception as exc:
+                self.after(
+                    0,
+                    lambda: self.operation_error(
+                        f"Не удалось переместить стикер в архив:\n{exc}"
+                    )
+                )
+
+        threading.Thread(target=worker, daemon=True).start()
 
     # --------------------------------------------------------
     # DRAG & DROP
@@ -745,6 +877,15 @@ class StickerManager(tk.Tk):
             messagebox.showerror(
                 "Ошибка",
                 f"Не удалось открыть папку:\n{exc}"
+            )
+
+    def open_delete(self):
+        try:
+            os.startfile(DELETE_DIR)
+        except Exception as exc:
+            messagebox.showerror(
+                "Ошибка",
+                f"Не удалось открыть папку delete:\n{exc}"
             )
 
     def on_close(self):

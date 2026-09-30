@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-const MIN_SIZE = 92;
-const MAX_SIZE = 150;
+const MIN_SIZE = 80;
+const MAX_SIZE = 130;
 
 // Клэмпит размер к [MIN_SIZE, MAX_SIZE] по большей/меньшей стороне,
 // сохраняя пропорции строго — сначала подтягивает слишком маленькую

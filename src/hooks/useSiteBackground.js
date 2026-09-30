@@ -14,7 +14,7 @@ function pickRandom(arr, count) {
 // было заметных пустых промежутков.
 function albumPhotoCount(pageHeight) {
   const height = Math.max(pageHeight, window.innerHeight);
-  return Math.max(10, Math.min(40, Math.round(height / 140)));
+  return Math.max(12, Math.min(40, Math.round(height / 140)));
 }
 
 // Раскладка сеткой с небольшим случайным сдвигом внутри своей ячейки —
@@ -44,7 +44,7 @@ function buildAlbumPhotos(pageHeight) {
     const jitterX = (Math.random() * 0.6 - 0.3) * cellW;
     const jitterY = (Math.random() * 0.5 - 0.25) * cellH;
     const left = Math.min(95, Math.max(5, col * cellW + cellW / 2 + jitterX));
-    const top = Math.min(98, Math.max(2, row * cellH + cellH / 2 + jitterY));
+    const top = Math.min(120, Math.max(2, row * cellH + cellH / 2 + jitterY));
 
     return {
       key: `album-${i}`,

@@ -17,8 +17,8 @@ export default function PairedStickers({ refreshKey }) {
   return (
     <div className="paired-stickers" aria-hidden="true">
       <img className="paired-sticker paired-sticker_top-left" src={leftPair.left} alt="" />
-      <img className="paired-sticker paired-sticker_bottom-left" src={leftPair.right} alt="" />
-      <img className="paired-sticker paired-sticker_top-right" src={rightPair.left} alt="" />
+      <img className="paired-sticker paired-sticker_bottom-left" src={rightPair.left} alt="" />
+      <img className="paired-sticker paired-sticker_top-right" src={leftPair.right} alt="" />
       <img className="paired-sticker paired-sticker_bottom-right" src={rightPair.right} alt="" />
     </div>
   );

@@ -15,8 +15,8 @@ export const secretHeartPositions = [
   { id: 6, page: 'page5', left: '45%', bottom: '-250px' },
   { id: 7, page: 'page6', left: '80%', top: '25%' },
   { id: 8, page: 'page7', left: '60%', top: '2px' },
-  { id: 9, page: 'page9', left: '5%', bottom: '-80px' },
-  { id: 10, page: 'page9', left: '58%', top: '62%' },
+  { id: 9, page: 'page11', left: '5%', bottom: '-80px' },
+  { id: 10, page: 'page11', left: '58%', top: '62%' },
 ];
 
 export const musicTracks = [
@@ -25,6 +25,10 @@ export const musicTracks = [
   'assets/sounds/ron-gelinas-chillout-lounge-where-will-i-go(chosic.com).mp3',
   'assets/sounds/scott-buckley-reverie(chosic.com).mp3',
   'assets/sounds/The-Kyoto-Connection-Hachiko-The-Faithtful-Dog(chosic.com).mp3',
+  'assets/sounds/fluid-vibes_89490.mp3',
+  'assets/sounds/keys-of-moon-white-petals(chosic.com).mp3',
+  'assets/sounds/rhythmic-machine_89496.mp3',
+  'assets/sounds/Transcendence-chosic.com_.mp3'
 ];
 
 export const menuItems = [
@@ -36,8 +40,10 @@ export const menuItems = [
   { page: 'page6', label: '🤗 Наши стикеры' },
   { page: 'page7', label: '🎶 Музыка' },
   { page: 'page8', label: '📊 Статистика переписки' },
-  { page: 'page9', label: '😏 Продолжение следует...' },
-  { page: 'page10', label: '⚙️ Настройки' },
+  { page: 'page9', label: '🎮 Мини-игры' },
+  { page: 'page10', label: '📖 Комиксы' },
+  { page: 'page11', label: '😏 Продолжение следует...' },
+  { page: 'page12', label: '⚙️ Настройки' },
 ];
 
 export const pageEmojis = {
@@ -49,8 +55,10 @@ export const pageEmojis = {
   page6: ['💞', '💌', '📈', '📩', '❤', '🤗', '☺', '😚'],
   page7: ['🎶', '🎵', '🎼', '🎧', '🎙', '🎤', '😘'],
   page8: ['📊', '📈', '🔢', '💚', '✨', '📌'],
-  page9: ['🕳', '🥽', '🔑', '🧱', '🛠', '⛑', '⏳'],
-  page10: ['⚙️', '🎛️', '🖼️', '📸', '💞', '🔧'],
+  page9: ['🎮', '🧠', '💚', '🃏', '✨', '🎉'],
+  page10: ['📖', '🖼️', '💬', '✨', '😆', '❤️'],
+  page11: ['🕳', '🥽', '🔑', '🧱', '🛠', '⛑', '⏳'],
+  page12: ['⚙️', '🎛️', '🖼️', '📸', '💞', '🔧'],
   default: ['❤️', '💚', '🌸', '🌿'],
 };
 
