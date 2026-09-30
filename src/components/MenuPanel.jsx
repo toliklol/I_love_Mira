@@ -7,23 +7,6 @@ export default function MenuPanel({ open, currentPage, onNavigate, onClose }) {
   const [mounted, setMounted] = useState(open);
   const [animate, setAnimate] = useState(open);
   const scrollRef = useRef(null);
-  const touchStartY = useRef(0);
-  const touchScrollStart = useRef(0);
-
-  const handleTouchStart = (e) => {
-    const container = scrollRef.current;
-    if (!container) return;
-    touchStartY.current = e.touches[0].clientY;
-    touchScrollStart.current = container.scrollTop;
-  };
-
-  const handleTouchMove = (e) => {
-    const container = scrollRef.current;
-    if (!container) return;
-    const deltaY = e.touches[0].clientY - touchStartY.current;
-    container.scrollTop = touchScrollStart.current - deltaY;
-    e.preventDefault();
-  };
 
   useEffect(() => {
     if (open) {
@@ -60,8 +43,6 @@ export default function MenuPanel({ open, currentPage, onNavigate, onClose }) {
         <div
           ref={scrollRef}
           className="menu-panel-content"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
         >
           {menuItems.map((item) => (
             <a

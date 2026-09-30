@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const VERSION = '2.0' 
+const VERSION = '2.1' 
 const PATCH_VERSION = `2026-09-20-${VERSION}`;
 const STORAGE_KEY = 'lastSeenPatchVersion';
 

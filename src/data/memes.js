@@ -143,7 +143,7 @@ export const memes = [
     "type": "image",
     "src": "assets/MiraWait.webp"
   },
-  {
+  { // TODO Добавить кастомные разлетающиеся эмодзи
     "stickers": "",
     "caption": "💖 Воздушный поцелуйчик 💕",
     "type": "image",

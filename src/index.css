@@ -2179,10 +2179,15 @@ body {
     max-width: 420px;
     width: 100%;
     padding: 24px;
+    box-sizing: border-box;
     box-shadow: 0 10px 40px rgba(0,0,0,0.4);
     transform: translateY(-12px);
     transition: transform 0.3s ease;
     font-family: inherit;
+    height: 80vh;
+    max-height: calc(100vh - 40px);
+    display: flex;
+    flex-direction: column;
 }
 .patch-note-overlay.visible .patch-note-modal {
     transform: translateY(0);
@@ -2194,6 +2199,11 @@ body {
 }
 .patch-note-body p {
     margin: 0 0 8px;
+}
+.patch-note-body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
 }
 .patch-note-body ul {
     margin: 0 0 16px;
