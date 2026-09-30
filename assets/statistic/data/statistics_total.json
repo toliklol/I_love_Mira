@@ -1,0 +1,114 @@
+{
+    "source": "Telegram + TikTok",
+    "total_messages": 155591,
+    "participants": {
+        "Толя": {
+            "messages": 80597,
+            "percentage": 51.8
+        },
+        "Мира": {
+            "messages": 74994,
+            "percentage": 48.2
+        }
+    },
+    "top_5_days": [
+        {
+            "date": "2026-09-09",
+            "messages": 2167,
+            "percentage": 1.39
+        },
+        {
+            "date": "2026-08-29",
+            "messages": 1931,
+            "percentage": 1.24
+        },
+        {
+            "date": "2026-09-07",
+            "messages": 1692,
+            "percentage": 1.09
+        },
+        {
+            "date": "2026-08-31",
+            "messages": 1588,
+            "percentage": 1.02
+        },
+        {
+            "date": "2026-08-17",
+            "messages": 1511,
+            "percentage": 0.97
+        }
+    ],
+    "top_5_months": [
+        {
+            "month": "2026-08",
+            "messages": 30534,
+            "percentage": 19.62
+        },
+        {
+            "month": "2026-06",
+            "messages": 27276,
+            "percentage": 17.53
+        },
+        {
+            "month": "2026-07",
+            "messages": 25935,
+            "percentage": 16.67
+        },
+        {
+            "month": "2026-09",
+            "messages": 23581,
+            "percentage": 15.16
+        },
+        {
+            "month": "2026-05",
+            "messages": 21766,
+            "percentage": 13.99
+        }
+    ],
+    "top_5_words_by_participant": {
+        "Толя": [
+            {
+                "word": "xd",
+                "count": 11700
+            },
+            {
+                "word": "надо",
+                "count": 2422
+            },
+            {
+                "word": "будет",
+                "count": 1949
+            },
+            {
+                "word": "знаю",
+                "count": 1848
+            },
+            {
+                "word": "тоже",
+                "count": 1719
+            }
+        ],
+        "Мира": [
+            {
+                "word": "xd",
+                "count": 10747
+            },
+            {
+                "word": "ток",
+                "count": 2714
+            },
+            {
+                "word": "надо",
+                "count": 1822
+            },
+            {
+                "word": "тебе",
+                "count": 1802
+            },
+            {
+                "word": "тебя",
+                "count": 1588
+            }
+        ]
+    }
+}

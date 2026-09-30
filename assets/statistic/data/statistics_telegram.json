@@ -1,0 +1,114 @@
+{
+    "source": "Telegram",
+    "total_messages": 16918,
+    "participants": {
+        "Мирочка❤️‍🔥": {
+            "messages": 9330,
+            "percentage": 55.15
+        },
+        "Толя Константинов": {
+            "messages": 7588,
+            "percentage": 44.85
+        }
+    },
+    "top_5_days": [
+        {
+            "date": "2026-02-28",
+            "messages": 824,
+            "percentage": 4.87
+        },
+        {
+            "date": "2026-02-24",
+            "messages": 709,
+            "percentage": 4.19
+        },
+        {
+            "date": "2026-02-26",
+            "messages": 708,
+            "percentage": 4.18
+        },
+        {
+            "date": "2026-03-26",
+            "messages": 678,
+            "percentage": 4.01
+        },
+        {
+            "date": "2026-03-03",
+            "messages": 675,
+            "percentage": 3.99
+        }
+    ],
+    "top_5_months": [
+        {
+            "month": "2026-03",
+            "messages": 7572,
+            "percentage": 44.76
+        },
+        {
+            "month": "2026-02",
+            "messages": 3543,
+            "percentage": 20.94
+        },
+        {
+            "month": "2026-04",
+            "messages": 3453,
+            "percentage": 20.41
+        },
+        {
+            "month": "2026-05",
+            "messages": 1457,
+            "percentage": 8.61
+        },
+        {
+            "month": "2026-07",
+            "messages": 564,
+            "percentage": 3.33
+        }
+    ],
+    "top_5_words_by_participant": {
+        "Толя Константинов": [
+            {
+                "word": "xd",
+                "count": 462
+            },
+            {
+                "word": "понял",
+                "count": 181
+            },
+            {
+                "word": "надо",
+                "count": 152
+            },
+            {
+                "word": "типо",
+                "count": 142
+            },
+            {
+                "word": "ага",
+                "count": 139
+            }
+        ],
+        "Мирочка❤️‍🔥": [
+            {
+                "word": "xd",
+                "count": 784
+            },
+            {
+                "word": "тебя",
+                "count": 237
+            },
+            {
+                "word": "ток",
+                "count": 236
+            },
+            {
+                "word": "тебе",
+                "count": 217
+            },
+            {
+                "word": "толя",
+                "count": 191
+            }
+        ]
+    }
+}

@@ -1,0 +1,114 @@
+{
+    "source": "TikTok",
+    "total_messages": 138673,
+    "participants": {
+        "toliklol777": {
+            "messages": 73009,
+            "percentage": 52.65
+        },
+        "zaika_mira24": {
+            "messages": 65664,
+            "percentage": 47.35
+        }
+    },
+    "top_5_days": [
+        {
+            "date": "2026-09-09",
+            "messages": 2167,
+            "percentage": 1.56
+        },
+        {
+            "date": "2026-08-29",
+            "messages": 1931,
+            "percentage": 1.39
+        },
+        {
+            "date": "2026-09-07",
+            "messages": 1692,
+            "percentage": 1.22
+        },
+        {
+            "date": "2026-08-31",
+            "messages": 1588,
+            "percentage": 1.15
+        },
+        {
+            "date": "2026-08-17",
+            "messages": 1511,
+            "percentage": 1.09
+        }
+    ],
+    "top_5_months": [
+        {
+            "month": "2026-08",
+            "messages": 30520,
+            "percentage": 22.01
+        },
+        {
+            "month": "2026-06",
+            "messages": 26961,
+            "percentage": 19.44
+        },
+        {
+            "month": "2026-07",
+            "messages": 25371,
+            "percentage": 18.3
+        },
+        {
+            "month": "2026-09",
+            "messages": 23581,
+            "percentage": 17.0
+        },
+        {
+            "month": "2026-05",
+            "messages": 20309,
+            "percentage": 14.65
+        }
+    ],
+    "top_5_words_by_participant": {
+        "toliklol777": [
+            {
+                "word": "xd",
+                "count": 11238
+            },
+            {
+                "word": "надо",
+                "count": 2270
+            },
+            {
+                "word": "будет",
+                "count": 1822
+            },
+            {
+                "word": "знаю",
+                "count": 1713
+            },
+            {
+                "word": "тоже",
+                "count": 1621
+            }
+        ],
+        "zaika_mira24": [
+            {
+                "word": "xd",
+                "count": 9963
+            },
+            {
+                "word": "ток",
+                "count": 2478
+            },
+            {
+                "word": "надо",
+                "count": 1662
+            },
+            {
+                "word": "тебе",
+                "count": 1585
+            },
+            {
+                "word": "тебя",
+                "count": 1351
+            }
+        ]
+    }
+}
