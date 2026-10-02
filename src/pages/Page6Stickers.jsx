@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { stickerPackConfigs } from '../data/stickerPacks.js';
+import LoadingImage from '../components/LoadingImage.jsx';
 
 export default function Page6Stickers({ onOpenSticker }) {
   const [openPacks, setOpenPacks] = useState(() => new Set(
@@ -36,26 +37,28 @@ export default function Page6Stickers({ onOpenSticker }) {
                   <span className="sticker-pack-toggle-icon">{isOpen ? '▼' : '▶'}</span>
                   <span>{pack.label}</span>
                 </button>
-                <div className="sticker-pack-content">
-                  <div className="stickers-grid">
-                    {stickers.map((n) => {
-                      const src = `${pack.folder}/sticker${n}.png`;
-                      const caption = `✨ Стикер ${n}`;
-                      return (
-                        <div
-                          key={n}
-                          className="sticker"
-                          data-image={src}
-                          data-caption={caption}
-                          onClick={() => onOpenSticker(pack, stickers, n)}
-                        >
-                          <img src={src} alt={`${pack.label} ${n}`} />
-                          <div className="caption">{caption}</div>
-                        </div>
-                      );
-                    })}
+                {isOpen && (
+                  <div className="sticker-pack-content">
+                    <div className="stickers-grid">
+                      {stickers.map((n) => {
+                        const src = `${pack.folder}/sticker${n}.png`;
+                        const caption = `✨ Стикер ${n}`;
+                        return (
+                          <div
+                            key={n}
+                            className="sticker"
+                            data-image={src}
+                            data-caption={caption}
+                            onClick={() => onOpenSticker(pack, stickers, n)}
+                          >
+                            <LoadingImage src={src} alt={`${pack.label} ${n}`} loading="lazy" />
+                            <div className="caption">{caption}</div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             );
           })}

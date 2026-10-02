@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import LoadingImage from './LoadingImage.jsx';
 
 const MIN_SCALE = 0.5;
 const MAX_SCALE = 5;
@@ -177,7 +178,7 @@ export default function StickerModal({ sticker, onClose, onNavigate }) {
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
-          <img
+          <LoadingImage
             className="sticker-modal-image"
             id="stickerModalImage"
             src={sticker.src}

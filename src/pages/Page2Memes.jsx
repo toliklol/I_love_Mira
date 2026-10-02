@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { memes } from '../data/memes.js';
+import LoadingImage from '../components/LoadingImage.jsx';
 
 export default function Page2Memes({ onBurst }) {
   const [pressed, setPressed] = useState(null);
@@ -45,7 +46,7 @@ export default function Page2Memes({ onBurst }) {
                 controls={meme.controls}
               />
             ) : (
-              <img
+              <LoadingImage
                 src={meme.src}
                 alt="мем"
                 style={meme.style ? Object.fromEntries(

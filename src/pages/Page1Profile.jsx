@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { tags } from '../data/config.js';
+import LoadingImage from '../components/LoadingImage.jsx';
 
 const TOTAL_PICS = 15; // profilePhoto0..15 участвуют в перекрёстном фейде
 const INTERVAL = 3000; // задержка между сменами
@@ -28,7 +29,7 @@ export default function Page1Profile() {
         <div className="avatar-frame" id="avatarContainer">
           <div className="sun-rays" aria-hidden="true"></div>
           {Array.from({ length: TOTAL_PICS }, (_, n) => (
-            <img
+            <LoadingImage
               key={n}
               className="profile-photo"
               id={`profilePhoto${n}`}

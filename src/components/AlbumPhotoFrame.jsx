@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import LoadingImage from './LoadingImage.jsx';
 
 const MIN_SIZE = 80;
 const MAX_SIZE = 130;
@@ -46,7 +47,7 @@ export default function AlbumPhotoFrame({ photo }) {
         height: size ? size.height : MIN_SIZE,
       }}
     >
-      <img src={photo.src} alt="" onLoad={handleLoad} />
+      <LoadingImage src={photo.src} alt="" onLoad={handleLoad} />
     </div>
   );
 }

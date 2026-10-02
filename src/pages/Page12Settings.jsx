@@ -1,5 +1,6 @@
 import { BACKGROUND_MODES, RANDOM_SOLID } from '../data/backgroundConfig.js';
 import { SEASONS } from '../data/seasonConfig.js';
+import LoadingImage from '../components/LoadingImage.jsx';
 
 export default function Page12Settings({
   music, backgroundMode, onSetBackgroundMode,
@@ -101,7 +102,7 @@ export default function Page12Settings({
                   className={`settings-photo-thumb${solidChoice === src ? ' active' : ''}`}
                   onClick={() => onSetSolidChoice(src)}
                 >
-                  <img src={src} alt="" />
+                  <LoadingImage src={src} alt="" />
                 </button>
               ))}
             </div>

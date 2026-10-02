@@ -4,3 +4,4 @@ assets/stickerpack/delete
 node_modules/
 dist/
 .DS_Store
+.env

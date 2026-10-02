@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { stickerPairs } from '../data/backgroundConfig.js';
+import LoadingImage from './LoadingImage.jsx';
 
 function pickTwoDistinctPairs() {
   const shuffled = [...stickerPairs].sort(() => Math.random() - 0.5);
@@ -16,10 +17,10 @@ export default function PairedStickers({ refreshKey }) {
 
   return (
     <div className="paired-stickers" aria-hidden="true">
-      <img className="paired-sticker paired-sticker_top-left" src={leftPair.left} alt="" />
-      <img className="paired-sticker paired-sticker_bottom-left" src={rightPair.left} alt="" />
-      <img className="paired-sticker paired-sticker_top-right" src={leftPair.right} alt="" />
-      <img className="paired-sticker paired-sticker_bottom-right" src={rightPair.right} alt="" />
+      <LoadingImage className="paired-sticker paired-sticker_top-left" src={leftPair.left} alt="" />
+      <LoadingImage className="paired-sticker paired-sticker_bottom-left" src={rightPair.left} alt="" />
+      <LoadingImage className="paired-sticker paired-sticker_top-right" src={leftPair.right} alt="" />
+      <LoadingImage className="paired-sticker paired-sticker_bottom-right" src={rightPair.right} alt="" />
     </div>
   );
 }

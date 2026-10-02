@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import LoadingImage from './LoadingImage.jsx';
 
 // Клик по самой картинке — перелистывает на следующую страницу. Картинка
 // теперь показывается по ширине экрана (а не сжатой под высоту) — так
@@ -73,14 +74,14 @@ export default function ComicViewer({ comic, onClose }) {
           
             <div className="comic-viewer-scroll">
           {comic.id === 'comic8' ?
-            <img
+            <LoadingImage
               key={pageIndex}
               className={`comic-viewer-image comic-viewer-image_${direction}`}
               src={comic.pages[pageIndex].page}
               alt={`${comic.title}, страница ${pageIndex + 1}`}
               onClick={goNext}
             />:
-            <img
+            <LoadingImage
               key={pageIndex}
               className={`comic-viewer-image comic-viewer-image_${direction}`}
               src={comic.pages[pageIndex]}

@@ -19,8 +19,7 @@ export const RANDOM_SOLID = 'random'; // значение "выбора" фон�
 const PHOTO_EXCLUDED_RANGES = [
   { pack: 'pack5', from: 1, to: 41 },
   { pack: 'pack5', from: 60, to: 70 },
-  { pack: 'pack6', from: 41, to: 42 },
-  { pack: 'pack6', from: 57, to: 68 },
+  { pack: 'pack6', from: 55, to: 72 },
 ];
 
 export function PHOTO_EXCLUDED() {

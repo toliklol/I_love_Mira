@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { stickerPackConfigs } from '../data/stickerPacks.js';
+import LoadingImage from '../components/LoadingImage.jsx';
 
 const DIFFICULTIES = {
-  easy: { label: 'Легко', cards: 16, maxMoves: 20, peek: 1200 },
-  medium: { label: 'Нормально', cards: 32, maxMoves: 35, peek: 750 },
+  easy: { label: 'Легко', cards: 16, maxMoves: 15, peek: 1200 },
+  medium: { label: 'Нормально', cards: 32, maxMoves: 20, peek: 750 },
   hard: { label: 'Сложно', cards: 64, maxMoves: 60, peek: 400 },
 };
 
@@ -124,14 +125,13 @@ export default function Page9MiniGames({ onBurst }) {
     const nextFlipped = [...flipped, card];
     setFlipped(nextFlipped);
     if (nextFlipped.length !== 2) return;
-    setMoves((value) => value + 1);
-
     if (nextFlipped[0].id === nextFlipped[1].id) {
       setMatched((items) => [...items, card.id]);
       setFlipped([]);
       return;
     }
 
+    setMoves((value) => value + 1);
     setLocked(true);
     window.setTimeout(() => {
       setFlipped([]);
@@ -152,7 +152,7 @@ export default function Page9MiniGames({ onBurst }) {
       <div className="memory-intro">
         <div>
           <h1>Стикерная память</h1>
-          <p>Открой все пары из нашей коллекции и проверь, насколько хорошо ты помнишь любимые картинки.</p>
+          <p>Открой все пары из нашей коллекции и проверь, насколько хорошо ты помнишь любимые картинки. Правильная пара не тратит ход!</p>
         </div>
         <div className="memory-stats" aria-live="polite">
           <div><span>Время</span><strong>{formatTime(elapsed)}</strong></div>
@@ -213,7 +213,7 @@ export default function Page9MiniGames({ onBurst }) {
                 <span className="memory-card-inner">
                   <span className="memory-card-face memory-card-back">💚</span>
                   <span className="memory-card-face memory-card-front">
-                    <img src={card.src} alt={card.label} />
+                    <LoadingImage src={card.src} alt={card.label} />
                   </span>
                 </span>
               </button>

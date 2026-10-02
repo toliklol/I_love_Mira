@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import LoadingImage from './LoadingImage.jsx';
 
 const SPIN_DURATION = 700; // мс, должно совпадать с длительностью .spin-once в CSS
 
@@ -28,7 +29,7 @@ export default function BgStickers({ stickers }) {
       {stickers.map((s) => {
         const isSpinning = spinning.has(s.key);
         return (
-          <img
+          <LoadingImage
             key={s.key}
             src={s.src}
             alt=""
