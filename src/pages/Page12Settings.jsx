@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { BACKGROUND_MODES, RANDOM_SOLID } from '../data/backgroundConfig.js';
 import { SEASONS } from '../data/seasonConfig.js';
+import { updateHistory } from '../data/updateHistory.js';
 import LoadingImage from '../components/LoadingImage.jsx';
 
 export default function Page12Settings({
@@ -7,12 +9,34 @@ export default function Page12Settings({
   solidChoice, onSetSolidChoice, photoPool,
   seasonSetting, onSetSeasonSetting, activeSeason,
 }) {
+  const [activeTab, setActiveTab] = useState('settings');
+
   return (
     <section className="page active" id="page12">
       <div className="page-subtitle">
         ⚙️ Настройки <span>Сайт</span>
       </div>
 
+      <div className="settings-tabs" role="tablist" aria-label="Настройки и обновления">
+        <button
+          className={`settings-tab${activeTab === 'settings' ? ' active' : ''}`}
+          type="button"
+          role="tab"
+          aria-selected={activeTab === 'settings'}
+          aria-controls="settings-panel"
+          onClick={() => setActiveTab('settings')}
+        >Настройки</button>
+        <button
+          className={`settings-tab${activeTab === 'updates' ? ' active' : ''}`}
+          type="button"
+          role="tab"
+          aria-selected={activeTab === 'updates'}
+          aria-controls="updates-panel"
+          onClick={() => setActiveTab('updates')}
+        >Обновления · {updateHistory.length}</button>
+      </div>
+
+      <div id="settings-panel" role="tabpanel" hidden={activeTab !== 'settings'}>
       <div className="settings-block">
         <div className="settings-block-title">Музыка</div>
         <div className="menu-controls settings-music-controls">
@@ -122,6 +146,37 @@ export default function Page12Settings({
             Список пар я создавал сам) Будет добавляться)
           </p>
         )}
+      </div>
+      </div>
+
+      <div className="updates-panel" id="updates-panel" role="tabpanel" hidden={activeTab !== 'updates'}>
+        <ol className="updates-timeline">
+          {updateHistory.map((update) => (
+            <li className="update-entry" key={update.commit}>
+              <div className="update-entry-meta">
+                <time dateTime={update.date}>
+                  {new Intl.DateTimeFormat('ru-RU', {
+                    day: 'numeric', month: 'long', year: 'numeric',
+                  }).format(new Date(`${update.date}T12:00:00`))}
+                </time>
+                {update.version && (
+                  <span className="update-version">
+                    {update.version.startsWith('2026-') ? `Патч ${update.version}` : `v${update.version}`}
+                  </span>
+                )}
+                <span className={`update-branch update-branch_${update.branch}`}>{update.branch}</span>
+                <code>{update.commit}</code>
+              </div>
+              <h2>{update.title}</h2>
+              <p className="update-commit-message">{update.message}</p>
+              {update.details && (
+                <ul>
+                  {update.details.map((detail) => <li key={detail}>{detail}</li>)}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );

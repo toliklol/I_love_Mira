@@ -2485,6 +2485,94 @@ img[data-image-loaded="true"] {
 }
 
 /* ---------- СТРАНИЦА НАСТРОЕК ---------- */
+.settings-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.settings-tab {
+    padding: 11px 15px;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    color: rgba(255, 255, 255, 0.62);
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+}
+
+.settings-tab.active {
+    border-bottom-color: #a5d6a7;
+    color: #d9f4d9;
+}
+
+.updates-timeline {
+    margin: 0;
+    padding: 0 0 0 18px;
+    border-left: 1px solid rgba(165, 214, 167, 0.32);
+    list-style: none;
+}
+
+.update-entry {
+    position: relative;
+    padding: 2px 0 22px 18px;
+}
+
+.update-entry::before {
+    position: absolute;
+    top: 5px;
+    left: -23px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid rgba(165, 214, 167, 0.8);
+    border-radius: 50%;
+    background: #173626;
+    content: '';
+}
+
+.update-entry-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    color: rgba(255, 255, 255, 0.52);
+    font-size: 0.72rem;
+}
+
+.update-version,
+.update-branch {
+    color: #c8e9c8;
+}
+
+.update-entry-meta code {
+    color: rgba(255, 255, 255, 0.42);
+    font-size: 0.68rem;
+}
+
+.update-entry h2 {
+    margin: 7px 0 3px;
+    color: #edf7ed;
+    font-size: 1rem;
+}
+
+.update-commit-message {
+    margin: 0 0 6px;
+    color: rgba(255, 255, 255, 0.44);
+    font-size: 0.72rem;
+    overflow-wrap: anywhere;
+}
+
+.update-entry ul {
+    margin: 7px 0 0;
+    padding-left: 18px;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.82rem;
+    line-height: 1.55;
+}
+
+.update-entry li + li { margin-top: 3px; }
+
 .settings-block {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);

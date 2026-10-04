@@ -45,6 +45,7 @@ export default function PatchNote() {
           <p>Что изменилось:</p>
           <ul>
             <li>Добавил две новые мини-игры</li>
+            <li>Добавил историю обновлений в настройках</li>
           </ul>
         </div>
         <button className="patch-note-close" id="patchNoteClose" onClick={close}>
