@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-const VERSION = '2.1.2'
-const PATCH_VERSION = `2026-10-02-${VERSION}`;
+const VERSION = '2.2'
+const PATCH_VERSION = `2026-10-04-${VERSION}`;
 const STORAGE_KEY = 'lastSeenPatchVersion';
 
 export default function PatchNote() {
@@ -44,10 +44,7 @@ export default function PatchNote() {
         <div className="patch-note-body">
           <p>Что изменилось:</p>
           <ul>
-            <li>Добавил загрузчик для всех картинок</li>
-            <li>В мини-игре правильные пары не тратят ход, а на средней и сложной сложности ходов стало больше</li>
-            <li>Оптимизировал загрузку стикеров: закрытые наборы не загружаются, картинки подгружаются по мере прокрутки</li>
-            <li>Добавил новые стикеры в наборы</li>
+            <li>Добавил две новые мини-игры</li>
           </ul>
         </div>
         <button className="patch-note-close" id="patchNoteClose" onClick={close}>

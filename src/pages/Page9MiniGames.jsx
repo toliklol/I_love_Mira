@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { stickerPackConfigs } from '../data/stickerPacks.js';
+import { stickerQuizGroups, stickerShadowGroups } from '../data/stickerQuizGroups.js';
 import LoadingImage from '../components/LoadingImage.jsx';
 
 const DIFFICULTIES = {
@@ -40,13 +41,182 @@ function createDeck(cardCount) {
   ]));
 }
 
+function createStickerPool() {
+  return stickerPackConfigs.filter((pack) => pack.id !== 'pack8').flatMap((pack) => (
+    Array.from({ length: pack.count }, (_, index) => ({
+      id: `${pack.id}-${index + 1}`,
+      packId: pack.id,
+      src: `${pack.folder}/sticker${index + 1}.png`,
+      label: `${pack.label}, стикер ${index + 1}`,
+    }))
+  ));
+}
+
+function createChallengeRound(groups, choiceCount, previousId = null) {
+  const availableGroups = shuffle(groups.filter((group) => (
+    group.some((sticker) => sticker.id !== previousId)
+  )));
+  const candidates = availableGroups[0].filter((sticker) => sticker.id !== previousId);
+  const choices = shuffle(candidates).slice(0, choiceCount);
+  const target = choices[Math.floor(Math.random() * choices.length)];
+  return {
+    target,
+    cropX: `${Math.random() * 100}%`,
+    cropY: `${Math.random() * 100}%`,
+    spotX: `${35 + Math.random() * 30}%`,
+    spotY: `${35 + Math.random() * 30}%`,
+    choices,
+  };
+}
+
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60).toString().padStart(2, '0');
   const remainder = (seconds % 60).toString().padStart(2, '0');
   return `${minutes}:${remainder}`;
 }
 
+function StickerChallenge({ mode, stickerPool }) {
+  const isShadow = mode === 'shadow';
+  const choiceCount = isShadow ? 4 : 6;
+  const sourceGroups = isShadow ? stickerShadowGroups : stickerQuizGroups;
+  const [status, setStatus] = useState('idle');
+  const [round, setRound] = useState(null);
+  const [roundNumber, setRoundNumber] = useState(0);
+  const [answeredId, setAnsweredId] = useState(null);
+  const [score, setScore] = useState(0);
+  const [lives, setLives] = useState(3);
+
+  const groups = useMemo(() => {
+    const stickersById = new Map(stickerPool.map((sticker) => [sticker.id, sticker]));
+    return sourceGroups
+      .filter((group) => group.packId !== 'pack8')
+      .map((group) => group.stickerIds
+        .map((stickerId) => stickersById.get(stickerId))
+        .filter((sticker) => sticker?.packId === group.packId))
+      .filter((group) => group.length >= choiceCount);
+  }, [choiceCount, sourceGroups, stickerPool]);
+
+  function startGame() {
+    setRound(createChallengeRound(groups, choiceCount));
+    setRoundNumber(1);
+    setAnsweredId(null);
+    setScore(0);
+    setLives(3);
+    setStatus('running');
+  }
+
+  function answer(choice) {
+    if (answeredId || status !== 'running') return;
+    setAnsweredId(choice.id);
+    if (choice.id === round.target.id) {
+      setScore((value) => value + 1);
+      return;
+    }
+
+    const nextLives = lives - 1;
+    setLives(nextLives);
+    if (nextLives === 0) setStatus('finished');
+  }
+
+  function nextRound() {
+    if (!answeredId || lives === 0) return;
+    setRound(createChallengeRound(groups, choiceCount, round.target.id));
+    setRoundNumber((value) => value + 1);
+    setAnsweredId(null);
+  }
+
+  const title = isShadow ? 'Угадай по тени' : 'Угадай стикер';
+
+  return (
+    <div className="sticker-quiz" role="tabpanel" id={`game-panel-${mode}`}>
+      <div className="memory-intro">
+        <div>
+          <h1>{title}</h1>
+          <p>{isShadow
+            ? 'Узнай стикер по фрагменту тени. В каждом раунде четыре похожих варианта.'
+            : 'Узнай стикер по фрагменту. В каждом раунде выбери один из шести похожих вариантов.'}</p>
+        </div>
+        {status === 'running' && (
+          <div className="memory-stats" aria-live="polite">
+            <div><span>Раунд</span><strong>{roundNumber}</strong></div>
+            <div><span>Счёт</span><strong>{score}</strong></div>
+            <div>
+              <span>Жизни</span>
+              <strong className="sticker-lives" aria-label={`${lives} из 3 жизней`}>
+                {[1, 2, 3].map((life) => <span className={life > lives ? 'is-lost' : ''} key={life}>♥</span>)}
+              </strong>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {status === 'idle' && (
+        <div className="memory-empty">
+          <span className="memory-empty-icon">{isShadow ? '🌑' : '🔎'}</span>
+          <strong>Три жизни. Раунды без конца.</strong>
+          <span>{isShadow ? 'Варианты собраны из похожих стикеров с прозрачным фоном' : 'Ошибки отнимают сердечки, правильные ответы увеличивают счёт'}</span>
+          <button className="memory-start" type="button" onClick={startGame}>Начать игру</button>
+        </div>
+      )}
+
+      {status === 'running' && round && (
+        <>
+          <div className="sticker-quiz-round">
+            <div className={`sticker-quiz-crop${isShadow ? ' sticker-quiz-crop_shadow' : ''}`} aria-label={isShadow ? 'Тень стикера' : 'Фрагмент стикера'}>
+              <LoadingImage
+                src={round.target.src}
+                alt={isShadow ? 'Тень стикера' : 'Фрагмент стикера'}
+                style={isShadow
+                  ? { '--spot-x': round.spotX, '--spot-y': round.spotY }
+                  : { '--crop-x': round.cropX, '--crop-y': round.cropY }}
+              />
+            </div>
+            <div className={`sticker-quiz-choices${isShadow ? ' sticker-quiz-choices_shadow' : ''}`} role="group" aria-label="Варианты ответа">
+              {round.choices.map((choice) => {
+                const isCorrect = choice.id === round.target.id;
+                const isSelected = answeredId === choice.id;
+                const answerClass = answeredId
+                  ? isCorrect ? ' is-correct' : isSelected ? ' is-wrong' : ''
+                  : '';
+                return (
+                  <button
+                    className={`sticker-quiz-choice${answerClass}`}
+                    key={choice.id}
+                    type="button"
+                    onClick={() => answer(choice)}
+                    disabled={Boolean(answeredId)}
+                    aria-label={choice.label}
+                  >
+                    <LoadingImage src={choice.src} alt="" />
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          {answeredId && lives > 0 && (
+            <div className="sticker-quiz-feedback" aria-live="polite">
+              <strong>{answeredId === round.target.id ? 'Верно! 💚' : 'Не совсем! 💭'}</strong>
+              <span>{round.target.label}</span>
+              <button className="memory-start" type="button" onClick={nextRound}>Следующий раунд</button>
+            </div>
+          )}
+        </>
+      )}
+
+      {status === 'finished' && (
+        <div className="memory-win memory-lose" role="status">
+          <span>💔</span>
+          <strong>Игра окончена</strong>
+          <p>Счёт: {score} · раундов пройдено: {roundNumber}</p>
+          <button className="memory-start" type="button" onClick={startGame}>Играть снова</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Page9MiniGames({ onBurst }) {
+  const [activeGame, setActiveGame] = useState('memory');
   const [difficulty, setDifficulty] = useState('medium');
   const [deck, setDeck] = useState([]);
   const [flipped, setFlipped] = useState([]);
@@ -58,16 +228,17 @@ export default function Page9MiniGames({ onBurst }) {
   const bannerRef = useRef(null);
   const hasCelebratedRef = useRef(false);
 
-  const stickerPoolSize = useMemo(() => stickerPackConfigs.reduce((sum, pack) => sum + pack.count, 0), []);
+  const stickerPool = useMemo(() => createStickerPool(), []);
+  const stickerPoolSize = stickerPool.length;
   const difficultyConfig = DIFFICULTIES[difficulty];
   const pairCount = difficultyConfig.cards / 2;
   const progress = pairCount ? Math.round((matched.length / pairCount) * 100) : 0;
 
   useEffect(() => {
-    if (status !== 'running') return undefined;
+    if (status !== 'running' || activeGame !== 'memory') return undefined;
     const interval = window.setInterval(() => setElapsed((value) => value + 1), 1000);
     return () => window.clearInterval(interval);
-  }, [status]);
+  }, [activeGame, status]);
 
   useEffect(() => {
     if (status !== 'running' || deck.length === 0) return;
@@ -145,10 +316,34 @@ export default function Page9MiniGames({ onBurst }) {
         🎮 Мини-игры <span>Играем вместе</span>
       </div>
 
-      <div className="mini-games-menu" aria-label="Выбор мини-игры">
-        <button className="mini-game-choice active" type="button">🧠 Найди пару</button>
+      <div className="mini-games-menu" role="tablist" aria-label="Выбор мини-игры">
+        <button
+          className={`mini-game-choice${activeGame === 'memory' ? ' active' : ''}`}
+          type="button"
+          role="tab"
+          aria-selected={activeGame === 'memory'}
+          aria-controls="game-panel-memory"
+          onClick={() => setActiveGame('memory')}
+        >🧠 Найди пару</button>
+        <button
+          className={`mini-game-choice${activeGame === 'quiz' ? ' active' : ''}`}
+          type="button"
+          role="tab"
+          aria-selected={activeGame === 'quiz'}
+          aria-controls="game-panel-quiz"
+          onClick={() => setActiveGame('quiz')}
+        >🔎 Фрагмент</button>
+        <button
+          className={`mini-game-choice${activeGame === 'shadow' ? ' active' : ''}`}
+          type="button"
+          role="tab"
+          aria-selected={activeGame === 'shadow'}
+          aria-controls="game-panel-shadow"
+          onClick={() => setActiveGame('shadow')}
+        >🌑 Тень</button>
       </div>
 
+      {activeGame === 'memory' && <div role="tabpanel" id="game-panel-memory">
       <div className="memory-intro">
         <div>
           <h1>Стикерная память</h1>
@@ -237,6 +432,14 @@ export default function Page9MiniGames({ onBurst }) {
           <p>Ходы закончились. Попробуй ещё раз, запоминая открытые пары.</p>
         </div>
       )}
+      </div>}
+
+      <div hidden={activeGame !== 'quiz'}>
+        <StickerChallenge mode="quiz" stickerPool={stickerPool} />
+      </div>
+      <div hidden={activeGame !== 'shadow'}>
+        <StickerChallenge mode="shadow" stickerPool={stickerPool} />
+      </div>
     </section>
   );
 }
