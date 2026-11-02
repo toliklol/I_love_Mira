@@ -3,5 +3,9 @@ file_0000000073e8820a91b1952a9e8c8106.png
 assets/stickerpack/delete
 node_modules/
 dist/
+.venv/
+__pycache__/
+*.py[cod]
 .DS_Store
 .env
+src/data/Endfield

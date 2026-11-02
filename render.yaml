@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: i-love-mira-endfield-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: python -m backend.server
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: ALLOWED_ORIGINS
+        value: https://toliklol.github.io,http://localhost:5173,http://127.0.0.1:5173
+      - key: ENDFIELD_TOKEN_TOLIK
+        sync: false
+      - key: ENDFIELD_TOKEN_MIRA
+        sync: false
